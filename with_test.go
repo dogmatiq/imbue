@@ -106,6 +106,43 @@ var _ = Describe("func WithX()", func() {
 		)
 	})
 
+	It("can obtain dependencies that have dependencies of their own", func() {
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete1, error) {
+				return "<concrete-1>", nil
+			},
+		)
+
+		imbue.With1(
+			container,
+			func(ctx *imbue.Context, dep Concrete1) (Concrete2, error) {
+				Expect(dep).To(Equal(Concrete1("<concrete-1>")))
+				return "<concrete-2>", nil
+			},
+		)
+
+		imbue.With1(
+			container,
+			func(ctx *imbue.Context, dep Concrete2) (Concrete3, error) {
+				Expect(dep).To(Equal(Concrete2("<concrete-2>")))
+				return "<concrete-3>", nil
+			},
+		)
+
+		imbue.InvokeWith1(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+				dep Concrete3,
+			) error {
+				Expect(dep).To(Equal(Concrete3("<concrete-3>")))
+				return nil
+			},
+		)
+	})
+
 	It("only invokes the constructor once even if the value is requested multiple times", func() {
 		called := false
 		imbue.With0(
