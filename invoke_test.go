@@ -89,4 +89,27 @@ var _ = Describe("func InvokeX()", func() {
 		)
 		Expect(err).To(MatchError("<error>"))
 	})
+
+	It("returns an error when a constructor returns an error", func() {
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete1, error) {
+				return "", errors.New("<error>")
+			},
+		)
+
+		err := imbue.InvokeWith1(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+				dep Concrete1,
+			) error {
+				Fail("unexpected call")
+				return nil
+			},
+		)
+		Expect(err).Should(HaveOccurred())
+		Expect(err.Error()).To(MatchRegexp(`unable to construct dependency of type 'imbue_test.Concrete1' \(invoke_test.go:\d+\): <error>`))
+	})
 })

@@ -2,7 +2,9 @@ package imbue
 
 import (
 	"fmt"
+	"path/filepath"
 	"reflect"
+	"runtime"
 	"sync"
 )
 
@@ -24,6 +26,13 @@ type entry struct {
 
 	// New constructs the value.
 	New func(*Context, *Container) (any, error)
+
+	// File is the file name of the source code that registered the dependency.
+	File string
+
+	// Line is the line number of the source code that registered the
+	// dependency.
+	Line int
 }
 
 // Close closes the container, calling any deferred functions registered
@@ -41,6 +50,8 @@ func (c *Container) register(
 	typ reflect.Type,
 	new func(*Context, *Container) (any, error),
 ) {
+	_, file, line, _ := runtime.Caller(3)
+
 	c.m.Lock()
 	defer c.m.Unlock()
 
@@ -49,7 +60,9 @@ func (c *Container) register(
 	}
 
 	c.types[typ] = &entry{
-		New: new,
+		New:  new,
+		File: file,
+		Line: line,
 	}
 }
 
@@ -68,7 +81,13 @@ func (c *Container) get(typ reflect.Type) (any, error) {
 
 	v, err := e.New(nil, c)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf(
+			"unable to construct dependency of type '%s' (%s:%d): %w",
+			typ,
+			filepath.Base(e.File),
+			e.Line,
+			err,
+		)
 	}
 
 	e.IsConstructed = true
