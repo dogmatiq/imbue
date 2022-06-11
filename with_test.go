@@ -36,18 +36,19 @@ var _ = Describe("func WithX()", func() {
 		)
 	})
 
-	It("can obtain dependencies from the container", func() {
+	It("can obtain a single dependency from the container", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
-				return "<concrete>", nil
+				return "<concrete-1>", nil
 			},
 		)
 
 		imbue.With1(
 			container,
 			func(ctx *imbue.Context, dep Concrete1) (Concrete2, error) {
-				return Concrete2(dep), nil
+				Expect(dep).To(Equal(Concrete1("<concrete-1>")))
+				return "<concrete-2>", nil
 			},
 		)
 
@@ -58,7 +59,48 @@ var _ = Describe("func WithX()", func() {
 				ctx context.Context,
 				dep Concrete2,
 			) error {
-				Expect(dep).To(Equal(Concrete2("<concrete>")))
+				Expect(dep).To(Equal(Concrete2("<concrete-2>")))
+				return nil
+			},
+		)
+	})
+
+	It("can obtain multiple dependencies from the container", func() {
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete1, error) {
+				return "<concrete-1>", nil
+			},
+		)
+
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete2, error) {
+				return "<concrete-2>", nil
+			},
+		)
+
+		imbue.With2(
+			container,
+			func(
+				ctx *imbue.Context,
+				dep1 Concrete1,
+				dep2 Concrete2,
+			) (Concrete3, error) {
+				Expect(dep1).To(Equal(Concrete1("<concrete-1>")))
+				Expect(dep2).To(Equal(Concrete2("<concrete-2>")))
+				return Concrete3("<concrete-3>"), nil
+			},
+		)
+
+		imbue.InvokeWith1(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+				dep Concrete3,
+			) error {
+				Expect(dep).To(Equal(Concrete3("<concrete-3>")))
 				return nil
 			},
 		)
