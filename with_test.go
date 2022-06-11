@@ -8,14 +8,14 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("func With0()", func() {
+var _ = Describe("func WithX()", func() {
 	var container *imbue.Container
 
 	BeforeEach(func() {
 		container = imbue.New()
 	})
 
-	It("registers a dependency with the container", func() {
+	It("registers a constructor with the container", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
@@ -31,6 +31,34 @@ var _ = Describe("func With0()", func() {
 				dep Concrete1,
 			) error {
 				Expect(dep).To(Equal(Concrete1("<concrete>")))
+				return nil
+			},
+		)
+	})
+
+	It("can obtain dependencies from the container", func() {
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete1, error) {
+				return "<concrete>", nil
+			},
+		)
+
+		imbue.With1(
+			container,
+			func(ctx *imbue.Context, dep Concrete1) (Concrete2, error) {
+				return Concrete2(dep), nil
+			},
+		)
+
+		imbue.InvokeWith1(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+				dep Concrete2,
+			) error {
+				Expect(dep).To(Equal(Concrete2("<concrete>")))
 				return nil
 			},
 		)
