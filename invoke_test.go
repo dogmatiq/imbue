@@ -113,19 +113,21 @@ var _ = Describe("func InvokeX()", func() {
 		Expect(err.Error()).To(MatchRegexp(`unable to construct dependency of type 'imbue_test.Concrete1' \(invoke_test.go:\d+\): <error>`))
 	})
 
-	It("returns an error when a requested dependency is not registered", func() {
-		err := imbue.InvokeWith1(
-			context.Background(),
-			container,
-			func(
-				ctx context.Context,
-				dep Concrete1,
-			) error {
-				Fail("unexpected call")
-				return nil
-			},
-		)
-		Expect(err).Should(HaveOccurred())
-		Expect(err.Error()).To(MatchRegexp(`the container has no constructor registered for dependencies of type 'imbue_test.Concrete1'`))
+	It("panics when a requested dependency is not registered", func() {
+		Expect(func() {
+			imbue.InvokeWith1(
+				context.Background(),
+				container,
+				func(
+					ctx context.Context,
+					dep Concrete1,
+				) error {
+					Fail("unexpected call")
+					return nil
+				},
+			)
+		}).To(PanicWith(
+			MatchRegexp(`the container has no constructor registered for dependencies of type 'imbue_test.Concrete1'`),
+		))
 	})
 })
