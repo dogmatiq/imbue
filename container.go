@@ -10,7 +10,7 @@ import (
 
 // Container is a dependency injection container.
 type Container struct {
-	m     sync.RWMutex
+	m     sync.Mutex
 	types map[reflect.Type]*entry
 }
 
@@ -24,15 +24,15 @@ type entry struct {
 	// It is only valid if IsConstructed is true.
 	Value any
 
-	// New constructs the value.
-	New func(*Context, *Container) (any, error)
-
 	// File is the file name of the source code that registered the dependency.
 	File string
 
 	// Line is the line number of the source code that registered the
 	// dependency.
 	Line int
+
+	// New constructs the value.
+	New func(*Context, *Container) (any, error)
 }
 
 // Close closes the container, calling any deferred functions registered
@@ -66,14 +66,16 @@ func (c *Container) register(
 	}
 }
 
-func (c *Container) get(typ reflect.Type) (any, error) {
-	c.m.RLock()
-	defer c.m.RUnlock()
+func (c *Container) get(ctx *Context, typ reflect.Type) (any, error) {
+	if ctx.parent == nil {
+		c.m.Lock()
+		defer c.m.Unlock()
+	}
 
 	e, ok := c.types[typ]
 	if !ok {
 		panic(fmt.Sprintf(
-			"the container has no constructor registered for dependencies of type '%s'",
+			"container has no constructor for %s",
 			typ,
 		))
 	}
@@ -82,10 +84,13 @@ func (c *Container) get(typ reflect.Type) (any, error) {
 		return e.Value, nil
 	}
 
-	v, err := e.New(nil, c)
+	v, err := e.New(
+		childContext(ctx),
+		c,
+	)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"unable to construct dependency of type '%s' (%s:%d): %w",
+			"container is unable to construct %s (%s:%d): %w",
 			typ,
 			filepath.Base(e.File),
 			e.Line,
@@ -114,8 +119,8 @@ func register[T any](
 }
 
 // get is a helper function for getting typed values out of a container.
-func get[T any](c *Container) (result T, _ error) {
-	v, err := c.get(reflect.TypeOf(result))
+func get[T any](ctx *Context, c *Container) (result T, _ error) {
+	v, err := c.get(ctx, reflect.TypeOf(result))
 	if err != nil {
 		return result, err
 	}

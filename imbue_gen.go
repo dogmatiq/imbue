@@ -25,7 +25,7 @@ func With1[T, D any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep, err := get[D](con)
+			dep, err := get[D](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -42,11 +42,11 @@ func With2[T, D1, D2 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -63,15 +63,15 @@ func With3[T, D1, D2, D3 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -88,19 +88,19 @@ func With4[T, D1, D2, D3, D4 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -117,23 +117,23 @@ func With5[T, D1, D2, D3, D4, D5 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -150,27 +150,27 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -187,31 +187,31 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep7, err := get[D7](con)
+			dep7, err := get[D7](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -228,35 +228,35 @@ func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep7, err := get[D7](con)
+			dep7, err := get[D7](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep8, err := get[D8](con)
+			dep8, err := get[D8](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -273,39 +273,39 @@ func With9[T, D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep7, err := get[D7](con)
+			dep7, err := get[D7](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep8, err := get[D8](con)
+			dep8, err := get[D8](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep9, err := get[D9](con)
+			dep9, err := get[D9](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -322,43 +322,43 @@ func With10[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep7, err := get[D7](con)
+			dep7, err := get[D7](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep8, err := get[D8](con)
+			dep8, err := get[D8](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep9, err := get[D9](con)
+			dep9, err := get[D9](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep10, err := get[D10](con)
+			dep10, err := get[D10](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -375,47 +375,47 @@ func With11[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep7, err := get[D7](con)
+			dep7, err := get[D7](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep8, err := get[D8](con)
+			dep8, err := get[D8](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep9, err := get[D9](con)
+			dep9, err := get[D9](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep10, err := get[D10](con)
+			dep10, err := get[D10](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep11, err := get[D11](con)
+			dep11, err := get[D11](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -432,51 +432,51 @@ func With12[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep7, err := get[D7](con)
+			dep7, err := get[D7](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep8, err := get[D8](con)
+			dep8, err := get[D8](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep9, err := get[D9](con)
+			dep9, err := get[D9](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep10, err := get[D10](con)
+			dep10, err := get[D10](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep11, err := get[D11](con)
+			dep11, err := get[D11](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep12, err := get[D12](con)
+			dep12, err := get[D12](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -493,55 +493,55 @@ func With13[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep7, err := get[D7](con)
+			dep7, err := get[D7](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep8, err := get[D8](con)
+			dep8, err := get[D8](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep9, err := get[D9](con)
+			dep9, err := get[D9](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep10, err := get[D10](con)
+			dep10, err := get[D10](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep11, err := get[D11](con)
+			dep11, err := get[D11](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep12, err := get[D12](con)
+			dep12, err := get[D12](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep13, err := get[D13](con)
+			dep13, err := get[D13](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -558,59 +558,59 @@ func With14[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep7, err := get[D7](con)
+			dep7, err := get[D7](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep8, err := get[D8](con)
+			dep8, err := get[D8](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep9, err := get[D9](con)
+			dep9, err := get[D9](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep10, err := get[D10](con)
+			dep10, err := get[D10](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep11, err := get[D11](con)
+			dep11, err := get[D11](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep12, err := get[D12](con)
+			dep12, err := get[D12](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep13, err := get[D13](con)
+			dep13, err := get[D13](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep14, err := get[D14](con)
+			dep14, err := get[D14](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -627,63 +627,63 @@ func With15[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 
 	register(
 		con,
 		func(ctx *Context, con *Container) (value T, _ error) {
-			dep1, err := get[D1](con)
+			dep1, err := get[D1](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep2, err := get[D2](con)
+			dep2, err := get[D2](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep3, err := get[D3](con)
+			dep3, err := get[D3](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep4, err := get[D4](con)
+			dep4, err := get[D4](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep5, err := get[D5](con)
+			dep5, err := get[D5](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep6, err := get[D6](con)
+			dep6, err := get[D6](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep7, err := get[D7](con)
+			dep7, err := get[D7](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep8, err := get[D8](con)
+			dep8, err := get[D8](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep9, err := get[D9](con)
+			dep9, err := get[D9](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep10, err := get[D10](con)
+			dep10, err := get[D10](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep11, err := get[D11](con)
+			dep11, err := get[D11](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep12, err := get[D12](con)
+			dep12, err := get[D12](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep13, err := get[D13](con)
+			dep13, err := get[D13](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep14, err := get[D14](con)
+			dep14, err := get[D14](ctx, con)
 			if err != nil {
 				return value, err
 			}
-			dep15, err := get[D15](con)
+			dep15, err := get[D15](ctx, con)
 			if err != nil {
 				return value, err
 			}
@@ -698,7 +698,7 @@ func InvokeWith1[D any](
 	con *Container,
 	fn func(context.Context, D) error,
 ) error {
-	dep, err := get[D](con)
+	dep, err := get[D](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -711,11 +711,11 @@ func InvokeWith2[D1, D2 any](
 	con *Container,
 	fn func(context.Context, D1, D2) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -728,15 +728,15 @@ func InvokeWith3[D1, D2, D3 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -749,19 +749,19 @@ func InvokeWith4[D1, D2, D3, D4 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -774,23 +774,23 @@ func InvokeWith5[D1, D2, D3, D4, D5 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -803,27 +803,27 @@ func InvokeWith6[D1, D2, D3, D4, D5, D6 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -836,31 +836,31 @@ func InvokeWith7[D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep7, err := get[D7](con)
+	dep7, err := get[D7](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -873,35 +873,35 @@ func InvokeWith8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep7, err := get[D7](con)
+	dep7, err := get[D7](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep8, err := get[D8](con)
+	dep8, err := get[D8](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -914,39 +914,39 @@ func InvokeWith9[D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep7, err := get[D7](con)
+	dep7, err := get[D7](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep8, err := get[D8](con)
+	dep8, err := get[D8](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep9, err := get[D9](con)
+	dep9, err := get[D9](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -959,43 +959,43 @@ func InvokeWith10[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep7, err := get[D7](con)
+	dep7, err := get[D7](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep8, err := get[D8](con)
+	dep8, err := get[D8](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep9, err := get[D9](con)
+	dep9, err := get[D9](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep10, err := get[D10](con)
+	dep10, err := get[D10](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -1008,47 +1008,47 @@ func InvokeWith11[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep7, err := get[D7](con)
+	dep7, err := get[D7](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep8, err := get[D8](con)
+	dep8, err := get[D8](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep9, err := get[D9](con)
+	dep9, err := get[D9](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep10, err := get[D10](con)
+	dep10, err := get[D10](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep11, err := get[D11](con)
+	dep11, err := get[D11](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -1061,51 +1061,51 @@ func InvokeWith12[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep7, err := get[D7](con)
+	dep7, err := get[D7](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep8, err := get[D8](con)
+	dep8, err := get[D8](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep9, err := get[D9](con)
+	dep9, err := get[D9](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep10, err := get[D10](con)
+	dep10, err := get[D10](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep11, err := get[D11](con)
+	dep11, err := get[D11](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep12, err := get[D12](con)
+	dep12, err := get[D12](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -1118,55 +1118,55 @@ func InvokeWith13[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep7, err := get[D7](con)
+	dep7, err := get[D7](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep8, err := get[D8](con)
+	dep8, err := get[D8](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep9, err := get[D9](con)
+	dep9, err := get[D9](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep10, err := get[D10](con)
+	dep10, err := get[D10](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep11, err := get[D11](con)
+	dep11, err := get[D11](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep12, err := get[D12](con)
+	dep12, err := get[D12](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep13, err := get[D13](con)
+	dep13, err := get[D13](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -1179,59 +1179,59 @@ func InvokeWith14[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 an
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep7, err := get[D7](con)
+	dep7, err := get[D7](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep8, err := get[D8](con)
+	dep8, err := get[D8](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep9, err := get[D9](con)
+	dep9, err := get[D9](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep10, err := get[D10](con)
+	dep10, err := get[D10](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep11, err := get[D11](con)
+	dep11, err := get[D11](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep12, err := get[D12](con)
+	dep12, err := get[D12](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep13, err := get[D13](con)
+	dep13, err := get[D13](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep14, err := get[D14](con)
+	dep14, err := get[D14](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
@@ -1244,63 +1244,63 @@ func InvokeWith15[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15) error,
 ) error {
-	dep1, err := get[D1](con)
+	dep1, err := get[D1](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep2, err := get[D2](con)
+	dep2, err := get[D2](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep3, err := get[D3](con)
+	dep3, err := get[D3](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep4, err := get[D4](con)
+	dep4, err := get[D4](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep5, err := get[D5](con)
+	dep5, err := get[D5](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep6, err := get[D6](con)
+	dep6, err := get[D6](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep7, err := get[D7](con)
+	dep7, err := get[D7](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep8, err := get[D8](con)
+	dep8, err := get[D8](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep9, err := get[D9](con)
+	dep9, err := get[D9](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep10, err := get[D10](con)
+	dep10, err := get[D10](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep11, err := get[D11](con)
+	dep11, err := get[D11](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep12, err := get[D12](con)
+	dep12, err := get[D12](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep13, err := get[D13](con)
+	dep13, err := get[D13](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep14, err := get[D14](con)
+	dep14, err := get[D14](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}
-	dep15, err := get[D15](con)
+	dep15, err := get[D15](rootContext(ctx), con)
 	if err != nil {
 		return err
 	}

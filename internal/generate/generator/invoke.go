@@ -41,6 +41,10 @@ func generateInvokeWithFunc(code *jen.File, depCount int) {
 					jen.Id(dependencyTypeName(depCount, n)),
 				).
 				Call(
+					jen.Qual(pkgPath, "rootContext").
+						Call(
+							contextName(),
+						),
 					containerName(),
 				),
 		)

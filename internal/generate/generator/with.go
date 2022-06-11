@@ -47,6 +47,7 @@ func generateWithFunc(code *jen.File, depCount int) {
 					jen.Id(dependencyTypeName(depCount, n)),
 				).
 				Call(
+					contextName(),
 					containerName(),
 				),
 		)
