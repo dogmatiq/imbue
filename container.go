@@ -72,7 +72,10 @@ func (c *Container) get(typ reflect.Type) (any, error) {
 
 	e, ok := c.types[typ]
 	if !ok {
-		return nil, fmt.Errorf("container does not now how to construct %s", typ)
+		return nil, fmt.Errorf(
+			"the container has no constructor registered for dependencies of type '%s'",
+			typ,
+		)
 	}
 
 	if e.IsConstructed {
