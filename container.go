@@ -16,6 +16,9 @@ type Container struct {
 
 // entry is an entry within a container for a specific type.
 type entry struct {
+	// Type is the type that is constructed/stored by this entry.
+	Type reflect.Type
+
 	// IsConstructed indicates whether the dependency has been constructed.
 	// If it is true, then Value contains the constructed value.
 	IsConstructed bool
@@ -60,6 +63,7 @@ func (c *Container) register(
 	}
 
 	c.types[typ] = &entry{
+		Type: typ,
 		New:  new,
 		File: file,
 		Line: line,
@@ -84,8 +88,10 @@ func (c *Container) get(ctx *Context, typ reflect.Type) (any, error) {
 		return e.Value, nil
 	}
 
+	checkForCycle(ctx, e)
+
 	v, err := e.New(
-		childContext(ctx),
+		childContext(ctx, e),
 		c,
 	)
 	if err != nil {
