@@ -55,6 +55,643 @@ func With2[T, D1, D2 any](
 	)
 }
 
+// With3 describes how to construct values of type T from 3 dependencies.
+func With3[T, D1, D2, D3 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3)
+		},
+	)
+}
+
+// With4 describes how to construct values of type T from 4 dependencies.
+func With4[T, D1, D2, D3, D4 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4)
+		},
+	)
+}
+
+// With5 describes how to construct values of type T from 5 dependencies.
+func With5[T, D1, D2, D3, D4, D5 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5)
+		},
+	)
+}
+
+// With6 describes how to construct values of type T from 6 dependencies.
+func With6[T, D1, D2, D3, D4, D5, D6 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6)
+		},
+	)
+}
+
+// With7 describes how to construct values of type T from 7 dependencies.
+func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			dep7, err := get[D7](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7)
+		},
+	)
+}
+
+// With8 describes how to construct values of type T from 8 dependencies.
+func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			dep7, err := get[D7](con)
+			if err != nil {
+				return value, err
+			}
+			dep8, err := get[D8](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8)
+		},
+	)
+}
+
+// With9 describes how to construct values of type T from 9 dependencies.
+func With9[T, D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			dep7, err := get[D7](con)
+			if err != nil {
+				return value, err
+			}
+			dep8, err := get[D8](con)
+			if err != nil {
+				return value, err
+			}
+			dep9, err := get[D9](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9)
+		},
+	)
+}
+
+// With10 describes how to construct values of type T from 10 dependencies.
+func With10[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			dep7, err := get[D7](con)
+			if err != nil {
+				return value, err
+			}
+			dep8, err := get[D8](con)
+			if err != nil {
+				return value, err
+			}
+			dep9, err := get[D9](con)
+			if err != nil {
+				return value, err
+			}
+			dep10, err := get[D10](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10)
+		},
+	)
+}
+
+// With11 describes how to construct values of type T from 11 dependencies.
+func With11[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			dep7, err := get[D7](con)
+			if err != nil {
+				return value, err
+			}
+			dep8, err := get[D8](con)
+			if err != nil {
+				return value, err
+			}
+			dep9, err := get[D9](con)
+			if err != nil {
+				return value, err
+			}
+			dep10, err := get[D10](con)
+			if err != nil {
+				return value, err
+			}
+			dep11, err := get[D11](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11)
+		},
+	)
+}
+
+// With12 describes how to construct values of type T from 12 dependencies.
+func With12[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			dep7, err := get[D7](con)
+			if err != nil {
+				return value, err
+			}
+			dep8, err := get[D8](con)
+			if err != nil {
+				return value, err
+			}
+			dep9, err := get[D9](con)
+			if err != nil {
+				return value, err
+			}
+			dep10, err := get[D10](con)
+			if err != nil {
+				return value, err
+			}
+			dep11, err := get[D11](con)
+			if err != nil {
+				return value, err
+			}
+			dep12, err := get[D12](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12)
+		},
+	)
+}
+
+// With13 describes how to construct values of type T from 13 dependencies.
+func With13[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			dep7, err := get[D7](con)
+			if err != nil {
+				return value, err
+			}
+			dep8, err := get[D8](con)
+			if err != nil {
+				return value, err
+			}
+			dep9, err := get[D9](con)
+			if err != nil {
+				return value, err
+			}
+			dep10, err := get[D10](con)
+			if err != nil {
+				return value, err
+			}
+			dep11, err := get[D11](con)
+			if err != nil {
+				return value, err
+			}
+			dep12, err := get[D12](con)
+			if err != nil {
+				return value, err
+			}
+			dep13, err := get[D13](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12, dep13)
+		},
+	)
+}
+
+// With14 describes how to construct values of type T from 14 dependencies.
+func With14[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			dep7, err := get[D7](con)
+			if err != nil {
+				return value, err
+			}
+			dep8, err := get[D8](con)
+			if err != nil {
+				return value, err
+			}
+			dep9, err := get[D9](con)
+			if err != nil {
+				return value, err
+			}
+			dep10, err := get[D10](con)
+			if err != nil {
+				return value, err
+			}
+			dep11, err := get[D11](con)
+			if err != nil {
+				return value, err
+			}
+			dep12, err := get[D12](con)
+			if err != nil {
+				return value, err
+			}
+			dep13, err := get[D13](con)
+			if err != nil {
+				return value, err
+			}
+			dep14, err := get[D14](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12, dep13, dep14)
+		},
+	)
+}
+
+// With15 describes how to construct values of type T from 15 dependencies.
+func With15[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15) (T, error),
+) {
+	register(
+		con,
+		func(ctx *Context, con *Container) (value T, _ error) {
+			dep1, err := get[D1](con)
+			if err != nil {
+				return value, err
+			}
+			dep2, err := get[D2](con)
+			if err != nil {
+				return value, err
+			}
+			dep3, err := get[D3](con)
+			if err != nil {
+				return value, err
+			}
+			dep4, err := get[D4](con)
+			if err != nil {
+				return value, err
+			}
+			dep5, err := get[D5](con)
+			if err != nil {
+				return value, err
+			}
+			dep6, err := get[D6](con)
+			if err != nil {
+				return value, err
+			}
+			dep7, err := get[D7](con)
+			if err != nil {
+				return value, err
+			}
+			dep8, err := get[D8](con)
+			if err != nil {
+				return value, err
+			}
+			dep9, err := get[D9](con)
+			if err != nil {
+				return value, err
+			}
+			dep10, err := get[D10](con)
+			if err != nil {
+				return value, err
+			}
+			dep11, err := get[D11](con)
+			if err != nil {
+				return value, err
+			}
+			dep12, err := get[D12](con)
+			if err != nil {
+				return value, err
+			}
+			dep13, err := get[D13](con)
+			if err != nil {
+				return value, err
+			}
+			dep14, err := get[D14](con)
+			if err != nil {
+				return value, err
+			}
+			dep15, err := get[D15](con)
+			if err != nil {
+				return value, err
+			}
+			return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12, dep13, dep14, dep15)
+		},
+	)
+}
+
 // InvokeWith1 calls a function with a single dependency.
 func InvokeWith1[D any](
 	ctx context.Context,
@@ -83,4 +720,589 @@ func InvokeWith2[D1, D2 any](
 		return err
 	}
 	return fn(ctx, dep1, dep2)
+}
+
+// InvokeWith3 calls a function with 3 dependencies.
+func InvokeWith3[D1, D2, D3 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3)
+}
+
+// InvokeWith4 calls a function with 4 dependencies.
+func InvokeWith4[D1, D2, D3, D4 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4)
+}
+
+// InvokeWith5 calls a function with 5 dependencies.
+func InvokeWith5[D1, D2, D3, D4, D5 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5)
+}
+
+// InvokeWith6 calls a function with 6 dependencies.
+func InvokeWith6[D1, D2, D3, D4, D5, D6 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6)
+}
+
+// InvokeWith7 calls a function with 7 dependencies.
+func InvokeWith7[D1, D2, D3, D4, D5, D6, D7 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	dep7, err := get[D7](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7)
+}
+
+// InvokeWith8 calls a function with 8 dependencies.
+func InvokeWith8[D1, D2, D3, D4, D5, D6, D7, D8 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	dep7, err := get[D7](con)
+	if err != nil {
+		return err
+	}
+	dep8, err := get[D8](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8)
+}
+
+// InvokeWith9 calls a function with 9 dependencies.
+func InvokeWith9[D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	dep7, err := get[D7](con)
+	if err != nil {
+		return err
+	}
+	dep8, err := get[D8](con)
+	if err != nil {
+		return err
+	}
+	dep9, err := get[D9](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9)
+}
+
+// InvokeWith10 calls a function with 10 dependencies.
+func InvokeWith10[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	dep7, err := get[D7](con)
+	if err != nil {
+		return err
+	}
+	dep8, err := get[D8](con)
+	if err != nil {
+		return err
+	}
+	dep9, err := get[D9](con)
+	if err != nil {
+		return err
+	}
+	dep10, err := get[D10](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10)
+}
+
+// InvokeWith11 calls a function with 11 dependencies.
+func InvokeWith11[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	dep7, err := get[D7](con)
+	if err != nil {
+		return err
+	}
+	dep8, err := get[D8](con)
+	if err != nil {
+		return err
+	}
+	dep9, err := get[D9](con)
+	if err != nil {
+		return err
+	}
+	dep10, err := get[D10](con)
+	if err != nil {
+		return err
+	}
+	dep11, err := get[D11](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11)
+}
+
+// InvokeWith12 calls a function with 12 dependencies.
+func InvokeWith12[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	dep7, err := get[D7](con)
+	if err != nil {
+		return err
+	}
+	dep8, err := get[D8](con)
+	if err != nil {
+		return err
+	}
+	dep9, err := get[D9](con)
+	if err != nil {
+		return err
+	}
+	dep10, err := get[D10](con)
+	if err != nil {
+		return err
+	}
+	dep11, err := get[D11](con)
+	if err != nil {
+		return err
+	}
+	dep12, err := get[D12](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12)
+}
+
+// InvokeWith13 calls a function with 13 dependencies.
+func InvokeWith13[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	dep7, err := get[D7](con)
+	if err != nil {
+		return err
+	}
+	dep8, err := get[D8](con)
+	if err != nil {
+		return err
+	}
+	dep9, err := get[D9](con)
+	if err != nil {
+		return err
+	}
+	dep10, err := get[D10](con)
+	if err != nil {
+		return err
+	}
+	dep11, err := get[D11](con)
+	if err != nil {
+		return err
+	}
+	dep12, err := get[D12](con)
+	if err != nil {
+		return err
+	}
+	dep13, err := get[D13](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12, dep13)
+}
+
+// InvokeWith14 calls a function with 14 dependencies.
+func InvokeWith14[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	dep7, err := get[D7](con)
+	if err != nil {
+		return err
+	}
+	dep8, err := get[D8](con)
+	if err != nil {
+		return err
+	}
+	dep9, err := get[D9](con)
+	if err != nil {
+		return err
+	}
+	dep10, err := get[D10](con)
+	if err != nil {
+		return err
+	}
+	dep11, err := get[D11](con)
+	if err != nil {
+		return err
+	}
+	dep12, err := get[D12](con)
+	if err != nil {
+		return err
+	}
+	dep13, err := get[D13](con)
+	if err != nil {
+		return err
+	}
+	dep14, err := get[D14](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12, dep13, dep14)
+}
+
+// InvokeWith15 calls a function with 15 dependencies.
+func InvokeWith15[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15) error,
+) error {
+	dep1, err := get[D1](con)
+	if err != nil {
+		return err
+	}
+	dep2, err := get[D2](con)
+	if err != nil {
+		return err
+	}
+	dep3, err := get[D3](con)
+	if err != nil {
+		return err
+	}
+	dep4, err := get[D4](con)
+	if err != nil {
+		return err
+	}
+	dep5, err := get[D5](con)
+	if err != nil {
+		return err
+	}
+	dep6, err := get[D6](con)
+	if err != nil {
+		return err
+	}
+	dep7, err := get[D7](con)
+	if err != nil {
+		return err
+	}
+	dep8, err := get[D8](con)
+	if err != nil {
+		return err
+	}
+	dep9, err := get[D9](con)
+	if err != nil {
+		return err
+	}
+	dep10, err := get[D10](con)
+	if err != nil {
+		return err
+	}
+	dep11, err := get[D11](con)
+	if err != nil {
+		return err
+	}
+	dep12, err := get[D12](con)
+	if err != nil {
+		return err
+	}
+	dep13, err := get[D13](con)
+	if err != nil {
+		return err
+	}
+	dep14, err := get[D14](con)
+	if err != nil {
+		return err
+	}
+	dep15, err := get[D15](con)
+	if err != nil {
+		return err
+	}
+	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12, dep13, dep14, dep15)
 }

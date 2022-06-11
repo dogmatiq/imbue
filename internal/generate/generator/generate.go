@@ -14,7 +14,7 @@ const (
 
 	// maxDependencies is the maximum number of dependencies that can be
 	// provided in one invocation.
-	maxDependencies = 2
+	maxDependencies = 15
 )
 
 // Generate generates the code that implements the CallX, InvokeX, and WithX
