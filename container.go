@@ -70,7 +70,7 @@ func (c *Container) register(
 	}
 }
 
-func (c *Container) get(ctx *Context, typ reflect.Type) (any, error) {
+func (c *Container) resolve(ctx *Context, typ reflect.Type) (any, error) {
 	if ctx.parent == nil {
 		c.m.Lock()
 		defer c.m.Unlock()
@@ -124,9 +124,9 @@ func register[T any](
 	)
 }
 
-// get is a helper function for getting typed values out of a container.
-func get[T any](ctx *Context, c *Container) (result T, _ error) {
-	v, err := c.get(ctx, reflect.TypeOf(result))
+// resolve is a helper function for resolved values by type.
+func resolve[T any](ctx *Context, c *Container) (result T, _ error) {
+	v, err := c.resolve(ctx, reflect.TypeOf(result))
 	if err != nil {
 		return result, err
 	}

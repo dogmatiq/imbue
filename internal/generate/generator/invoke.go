@@ -47,7 +47,7 @@ func generateInvokeWithFunc(code *jen.File, depCount int) {
 				jen.Err(),
 			).
 				Op(":=").
-				Qual(pkgPath, "get").
+				Qual(pkgPath, "resolve").
 				Index(
 					jen.Id(dependencyTypeName(depCount, n)),
 				).
