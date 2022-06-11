@@ -62,6 +62,10 @@ func generateWithFunc(code *jen.File, depCount int) {
 				),
 			),
 		)
+
+		impl.Add(
+			jen.Line(),
+		)
 	}
 
 	impl.Add(

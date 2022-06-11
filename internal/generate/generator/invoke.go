@@ -29,6 +29,17 @@ func generateInvokeWithFunc(code *jen.File, depCount int) {
 
 	impl := &jen.Statement{}
 
+	impl.Add(
+		jen.Id("rctx").Op(":=").Qual(pkgPath, "rootContext").
+			Call(
+				contextName(),
+			),
+	)
+
+	impl.Add(
+		jen.Line(),
+	)
+
 	for n := 0; n < depCount; n++ {
 		impl.Add(
 			jen.List(
@@ -41,10 +52,7 @@ func generateInvokeWithFunc(code *jen.File, depCount int) {
 					jen.Id(dependencyTypeName(depCount, n)),
 				).
 				Call(
-					jen.Qual(pkgPath, "rootContext").
-						Call(
-							contextName(),
-						),
+					jen.Id("rctx"),
 					containerName(),
 				),
 		)
@@ -57,6 +65,10 @@ func generateInvokeWithFunc(code *jen.File, depCount int) {
 					jen.Err(),
 				),
 			),
+		)
+
+		impl.Add(
+			jen.Line(),
 		)
 	}
 
