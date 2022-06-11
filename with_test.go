@@ -35,4 +35,40 @@ var _ = Describe("func With0()", func() {
 			},
 		)
 	})
+
+	It("only invokes the constructor once even if the value is requested multiple times", func() {
+		called := false
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete1, error) {
+				Expect(called).To(BeFalse(), "constructor called multiple times")
+				called = true
+				return "<concrete>", nil
+			},
+		)
+
+		imbue.InvokeWith1(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+				dep Concrete1,
+			) error {
+				Expect(dep).To(Equal(Concrete1("<concrete>")))
+				return nil
+			},
+		)
+
+		imbue.InvokeWith1(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+				dep Concrete1,
+			) error {
+				Expect(dep).To(Equal(Concrete1("<concrete>")))
+				return nil
+			},
+		)
+	})
 })

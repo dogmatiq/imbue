@@ -9,12 +9,20 @@ import (
 // Container is a dependency injection container.
 type Container struct {
 	m     sync.RWMutex
-	types map[reflect.Type]entry
+	types map[reflect.Type]*entry
 }
 
 // entry is an entry within a container for a specific type.
 type entry struct {
-	// New returns a new instance of the dependency.
+	// IsConstructed indicates whether the dependency has been constructed.
+	// If it is true, then Value contains the constructed value.
+	IsConstructed bool
+
+	// Value is the constructed value, which may be nil.
+	// It is only valid if IsConstructed is true.
+	Value any
+
+	// New constructs the value.
 	New func(*Context, *Container) (any, error)
 }
 
@@ -37,10 +45,10 @@ func (c *Container) register(
 	defer c.m.Unlock()
 
 	if c.types == nil {
-		c.types = map[reflect.Type]entry{}
+		c.types = map[reflect.Type]*entry{}
 	}
 
-	c.types[typ] = entry{
+	c.types[typ] = &entry{
 		New: new,
 	}
 }
@@ -54,7 +62,20 @@ func (c *Container) get(typ reflect.Type) (any, error) {
 		return nil, fmt.Errorf("container does not now how to construct %s", typ)
 	}
 
-	return e.New(nil, c)
+	if e.IsConstructed {
+		return e.Value, nil
+	}
+
+	v, err := e.New(nil, c)
+	if err != nil {
+		return nil, err
+	}
+
+	e.IsConstructed = true
+	e.Value = v
+	e.New = nil
+
+	return e.Value, nil
 }
 
 // register is a helper function for registering a constructor with a type.
