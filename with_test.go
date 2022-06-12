@@ -23,7 +23,7 @@ var _ = Describe("func WithX()", func() {
 			},
 		)
 
-		imbue.InvokeWith1(
+		imbue.Invoke1(
 			context.Background(),
 			container,
 			func(
@@ -52,7 +52,7 @@ var _ = Describe("func WithX()", func() {
 			},
 		)
 
-		imbue.InvokeWith1(
+		imbue.Invoke1(
 			context.Background(),
 			container,
 			func(
@@ -93,7 +93,7 @@ var _ = Describe("func WithX()", func() {
 			},
 		)
 
-		imbue.InvokeWith1(
+		imbue.Invoke1(
 			context.Background(),
 			container,
 			func(
@@ -130,7 +130,7 @@ var _ = Describe("func WithX()", func() {
 			},
 		)
 
-		imbue.InvokeWith1(
+		imbue.Invoke1(
 			context.Background(),
 			container,
 			func(
@@ -154,7 +154,7 @@ var _ = Describe("func WithX()", func() {
 			},
 		)
 
-		imbue.InvokeWith1(
+		imbue.Invoke1(
 			context.Background(),
 			container,
 			func(
@@ -166,7 +166,7 @@ var _ = Describe("func WithX()", func() {
 			},
 		)
 
-		imbue.InvokeWith1(
+		imbue.Invoke1(
 			context.Background(),
 			container,
 			func(

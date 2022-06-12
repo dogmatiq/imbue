@@ -24,7 +24,7 @@ var _ = Describe("func InvokeX()", func() {
 			},
 		)
 
-		err := imbue.InvokeWith1(
+		err := imbue.Invoke1(
 			context.Background(),
 			container,
 			func(
@@ -53,7 +53,7 @@ var _ = Describe("func InvokeX()", func() {
 			},
 		)
 
-		err := imbue.InvokeWith2(
+		err := imbue.Invoke2(
 			context.Background(),
 			container,
 			func(
@@ -77,7 +77,7 @@ var _ = Describe("func InvokeX()", func() {
 			},
 		)
 
-		err := imbue.InvokeWith1(
+		err := imbue.Invoke1(
 			context.Background(),
 			container,
 			func(
@@ -98,7 +98,7 @@ var _ = Describe("func InvokeX()", func() {
 			},
 		)
 
-		err := imbue.InvokeWith1(
+		err := imbue.Invoke1(
 			context.Background(),
 			container,
 			func(
@@ -117,7 +117,7 @@ var _ = Describe("func InvokeX()", func() {
 
 	It("panics when a requested dependency is not registered", func() {
 		Expect(func() {
-			imbue.InvokeWith1(
+			imbue.Invoke1(
 				context.Background(),
 				container,
 				func(
@@ -159,7 +159,7 @@ var _ = Describe("func InvokeX()", func() {
 		)
 
 		Expect(func() {
-			imbue.InvokeWith1(
+			imbue.Invoke1(
 				context.Background(),
 				container,
 				func(

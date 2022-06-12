@@ -812,8 +812,8 @@ func With15[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 
 	)
 }
 
-// InvokeWith1 calls a function with a single dependency.
-func InvokeWith1[D any](
+// Invoke1 calls a function with a single dependency.
+func Invoke1[D any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D) error,
@@ -828,8 +828,8 @@ func InvokeWith1[D any](
 	return fn(ctx, dep)
 }
 
-// InvokeWith2 calls a function with 2 dependencies.
-func InvokeWith2[D1, D2 any](
+// Invoke2 calls a function with 2 dependencies.
+func Invoke2[D1, D2 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2) error,
@@ -849,8 +849,8 @@ func InvokeWith2[D1, D2 any](
 	return fn(ctx, dep1, dep2)
 }
 
-// InvokeWith3 calls a function with 3 dependencies.
-func InvokeWith3[D1, D2, D3 any](
+// Invoke3 calls a function with 3 dependencies.
+func Invoke3[D1, D2, D3 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3) error,
@@ -875,8 +875,8 @@ func InvokeWith3[D1, D2, D3 any](
 	return fn(ctx, dep1, dep2, dep3)
 }
 
-// InvokeWith4 calls a function with 4 dependencies.
-func InvokeWith4[D1, D2, D3, D4 any](
+// Invoke4 calls a function with 4 dependencies.
+func Invoke4[D1, D2, D3, D4 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4) error,
@@ -906,8 +906,8 @@ func InvokeWith4[D1, D2, D3, D4 any](
 	return fn(ctx, dep1, dep2, dep3, dep4)
 }
 
-// InvokeWith5 calls a function with 5 dependencies.
-func InvokeWith5[D1, D2, D3, D4, D5 any](
+// Invoke5 calls a function with 5 dependencies.
+func Invoke5[D1, D2, D3, D4, D5 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5) error,
@@ -942,8 +942,8 @@ func InvokeWith5[D1, D2, D3, D4, D5 any](
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5)
 }
 
-// InvokeWith6 calls a function with 6 dependencies.
-func InvokeWith6[D1, D2, D3, D4, D5, D6 any](
+// Invoke6 calls a function with 6 dependencies.
+func Invoke6[D1, D2, D3, D4, D5, D6 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
@@ -983,8 +983,8 @@ func InvokeWith6[D1, D2, D3, D4, D5, D6 any](
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6)
 }
 
-// InvokeWith7 calls a function with 7 dependencies.
-func InvokeWith7[D1, D2, D3, D4, D5, D6, D7 any](
+// Invoke7 calls a function with 7 dependencies.
+func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
@@ -1029,8 +1029,8 @@ func InvokeWith7[D1, D2, D3, D4, D5, D6, D7 any](
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7)
 }
 
-// InvokeWith8 calls a function with 8 dependencies.
-func InvokeWith8[D1, D2, D3, D4, D5, D6, D7, D8 any](
+// Invoke8 calls a function with 8 dependencies.
+func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
@@ -1080,8 +1080,8 @@ func InvokeWith8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8)
 }
 
-// InvokeWith9 calls a function with 9 dependencies.
-func InvokeWith9[D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
+// Invoke9 calls a function with 9 dependencies.
+func Invoke9[D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9) error,
@@ -1136,8 +1136,8 @@ func InvokeWith9[D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9)
 }
 
-// InvokeWith10 calls a function with 10 dependencies.
-func InvokeWith10[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
+// Invoke10 calls a function with 10 dependencies.
+func Invoke10[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10) error,
@@ -1197,8 +1197,8 @@ func InvokeWith10[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10)
 }
 
-// InvokeWith11 calls a function with 11 dependencies.
-func InvokeWith11[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
+// Invoke11 calls a function with 11 dependencies.
+func Invoke11[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11) error,
@@ -1263,8 +1263,8 @@ func InvokeWith11[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11)
 }
 
-// InvokeWith12 calls a function with 12 dependencies.
-func InvokeWith12[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
+// Invoke12 calls a function with 12 dependencies.
+func Invoke12[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12) error,
@@ -1334,8 +1334,8 @@ func InvokeWith12[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12)
 }
 
-// InvokeWith13 calls a function with 13 dependencies.
-func InvokeWith13[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
+// Invoke13 calls a function with 13 dependencies.
+func Invoke13[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13) error,
@@ -1410,8 +1410,8 @@ func InvokeWith13[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12, dep13)
 }
 
-// InvokeWith14 calls a function with 14 dependencies.
-func InvokeWith14[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
+// Invoke14 calls a function with 14 dependencies.
+func Invoke14[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14) error,
@@ -1491,8 +1491,8 @@ func InvokeWith14[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 an
 	return fn(ctx, dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12, dep13, dep14)
 }
 
-// InvokeWith15 calls a function with 15 dependencies.
-func InvokeWith15[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 any](
+// Invoke15 calls a function with 15 dependencies.
+func Invoke15[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15) error,

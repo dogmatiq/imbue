@@ -28,7 +28,7 @@ func Generate(w io.Writer) error {
 	}
 
 	for depCount := 1; depCount <= maxDependencies; depCount++ {
-		generateInvokeWithFunc(code, depCount)
+		generateInvokeFunc(code, depCount)
 	}
 
 	return code.Render(w)

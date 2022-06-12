@@ -6,10 +6,10 @@ import (
 	"github.com/dave/jennifer/jen"
 )
 
-// generateInvokeWithFunc generates the InvokeWithX function for the given
-// number of dependencies.
-func generateInvokeWithFunc(code *jen.File, depCount int) {
-	name := fmt.Sprintf("InvokeWith%d", depCount)
+// generateInvokeFunc generates the InvokeX function for the given number of
+// dependencies.
+func generateInvokeFunc(code *jen.File, depCount int) {
+	name := fmt.Sprintf("Invoke%d", depCount)
 
 	switch depCount {
 	case 1:

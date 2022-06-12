@@ -26,7 +26,7 @@ func ExampleWith0() {
 
 	// Invoke a function that depends on the SomeDependency value constructed by
 	// the container.
-	err := imbue.InvokeWith1(
+	err := imbue.Invoke1(
 		context.Background(),
 		con,
 		func(
