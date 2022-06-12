@@ -31,10 +31,6 @@ func Generate(w io.Writer) error {
 		generateInvokeWithFunc(code, depCount)
 	}
 
-	// for depCount := 1; depCount <= maxDependencies; depCount++ {
-	// 	generateCallWithFunc(code, depCount)
-	// }
-
 	return code.Render(w)
 }
 
