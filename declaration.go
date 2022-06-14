@@ -71,8 +71,6 @@ func (d *declarationOf[T]) AddDependency(t declaration) error {
 			d.getType(),
 		)
 
-		_ = cycle
-
 		for i := len(cycle) - 1; i >= 0; i-- {
 			dep := cycle[i]
 			file, line := dep.location()
@@ -111,7 +109,7 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 	if d.construct == nil {
 		panic(fmt.Sprintf(
 			"no constructor is declared for %s",
-			typeOf[T](),
+			d.getType(),
 		))
 	}
 
