@@ -101,6 +101,1644 @@ func With2[T, D1, D2 any](
 	}
 }
 
+// With3 describes how to construct values of type T from 3 dependencies.
+func With3[T, D1, D2, D3 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With4 describes how to construct values of type T from 4 dependencies.
+func With4[T, D1, D2, D3, D4 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With5 describes how to construct values of type T from 5 dependencies.
+func With5[T, D1, D2, D3, D4, D5 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With6 describes how to construct values of type T from 6 dependencies.
+func With6[T, D1, D2, D3, D4, D5, D6 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With7 describes how to construct values of type T from 7 dependencies.
+func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With8 describes how to construct values of type T from 8 dependencies.
+func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			d8 := get[D8](con)
+			if err := t.AddDependency(d8); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With9 describes how to construct values of type T from 9 dependencies.
+func With9[T, D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			d8 := get[D8](con)
+			if err := t.AddDependency(d8); err != nil {
+				return nil, err
+			}
+
+			d9 := get[D9](con)
+			if err := t.AddDependency(d9); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v9, err := d9.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With10 describes how to construct values of type T from 10 dependencies.
+func With10[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			d8 := get[D8](con)
+			if err := t.AddDependency(d8); err != nil {
+				return nil, err
+			}
+
+			d9 := get[D9](con)
+			if err := t.AddDependency(d9); err != nil {
+				return nil, err
+			}
+
+			d10 := get[D10](con)
+			if err := t.AddDependency(d10); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v9, err := d9.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v10, err := d10.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With11 describes how to construct values of type T from 11 dependencies.
+func With11[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			d8 := get[D8](con)
+			if err := t.AddDependency(d8); err != nil {
+				return nil, err
+			}
+
+			d9 := get[D9](con)
+			if err := t.AddDependency(d9); err != nil {
+				return nil, err
+			}
+
+			d10 := get[D10](con)
+			if err := t.AddDependency(d10); err != nil {
+				return nil, err
+			}
+
+			d11 := get[D11](con)
+			if err := t.AddDependency(d11); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v9, err := d9.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v10, err := d10.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v11, err := d11.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With12 describes how to construct values of type T from 12 dependencies.
+func With12[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			d8 := get[D8](con)
+			if err := t.AddDependency(d8); err != nil {
+				return nil, err
+			}
+
+			d9 := get[D9](con)
+			if err := t.AddDependency(d9); err != nil {
+				return nil, err
+			}
+
+			d10 := get[D10](con)
+			if err := t.AddDependency(d10); err != nil {
+				return nil, err
+			}
+
+			d11 := get[D11](con)
+			if err := t.AddDependency(d11); err != nil {
+				return nil, err
+			}
+
+			d12 := get[D12](con)
+			if err := t.AddDependency(d12); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v9, err := d9.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v10, err := d10.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v11, err := d11.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v12, err := d12.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With13 describes how to construct values of type T from 13 dependencies.
+func With13[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			d8 := get[D8](con)
+			if err := t.AddDependency(d8); err != nil {
+				return nil, err
+			}
+
+			d9 := get[D9](con)
+			if err := t.AddDependency(d9); err != nil {
+				return nil, err
+			}
+
+			d10 := get[D10](con)
+			if err := t.AddDependency(d10); err != nil {
+				return nil, err
+			}
+
+			d11 := get[D11](con)
+			if err := t.AddDependency(d11); err != nil {
+				return nil, err
+			}
+
+			d12 := get[D12](con)
+			if err := t.AddDependency(d12); err != nil {
+				return nil, err
+			}
+
+			d13 := get[D13](con)
+			if err := t.AddDependency(d13); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v9, err := d9.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v10, err := d10.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v11, err := d11.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v12, err := d12.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v13, err := d13.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With14 describes how to construct values of type T from 14 dependencies.
+func With14[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			d8 := get[D8](con)
+			if err := t.AddDependency(d8); err != nil {
+				return nil, err
+			}
+
+			d9 := get[D9](con)
+			if err := t.AddDependency(d9); err != nil {
+				return nil, err
+			}
+
+			d10 := get[D10](con)
+			if err := t.AddDependency(d10); err != nil {
+				return nil, err
+			}
+
+			d11 := get[D11](con)
+			if err := t.AddDependency(d11); err != nil {
+				return nil, err
+			}
+
+			d12 := get[D12](con)
+			if err := t.AddDependency(d12); err != nil {
+				return nil, err
+			}
+
+			d13 := get[D13](con)
+			if err := t.AddDependency(d13); err != nil {
+				return nil, err
+			}
+
+			d14 := get[D14](con)
+			if err := t.AddDependency(d14); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v9, err := d9.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v10, err := d10.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v11, err := d11.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v12, err := d12.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v13, err := d13.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v14, err := d14.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With15 describes how to construct values of type T from 15 dependencies.
+func With15[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			d8 := get[D8](con)
+			if err := t.AddDependency(d8); err != nil {
+				return nil, err
+			}
+
+			d9 := get[D9](con)
+			if err := t.AddDependency(d9); err != nil {
+				return nil, err
+			}
+
+			d10 := get[D10](con)
+			if err := t.AddDependency(d10); err != nil {
+				return nil, err
+			}
+
+			d11 := get[D11](con)
+			if err := t.AddDependency(d11); err != nil {
+				return nil, err
+			}
+
+			d12 := get[D12](con)
+			if err := t.AddDependency(d12); err != nil {
+				return nil, err
+			}
+
+			d13 := get[D13](con)
+			if err := t.AddDependency(d13); err != nil {
+				return nil, err
+			}
+
+			d14 := get[D14](con)
+			if err := t.AddDependency(d14); err != nil {
+				return nil, err
+			}
+
+			d15 := get[D15](con)
+			if err := t.AddDependency(d15); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v9, err := d9.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v10, err := d10.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v11, err := d11.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v12, err := d12.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v13, err := d13.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v14, err := d14.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v15, err := d15.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
+// With16 describes how to construct values of type T from 16 dependencies.
+func With16[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16) (T, error),
+) {
+	_, file, line, _ := runtime.Caller(1)
+
+	t := get[T](con)
+
+	if err := t.Declare(
+		file,
+		line,
+		func() (constructor[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddDependency(d1); err != nil {
+				return nil, err
+			}
+
+			d2 := get[D2](con)
+			if err := t.AddDependency(d2); err != nil {
+				return nil, err
+			}
+
+			d3 := get[D3](con)
+			if err := t.AddDependency(d3); err != nil {
+				return nil, err
+			}
+
+			d4 := get[D4](con)
+			if err := t.AddDependency(d4); err != nil {
+				return nil, err
+			}
+
+			d5 := get[D5](con)
+			if err := t.AddDependency(d5); err != nil {
+				return nil, err
+			}
+
+			d6 := get[D6](con)
+			if err := t.AddDependency(d6); err != nil {
+				return nil, err
+			}
+
+			d7 := get[D7](con)
+			if err := t.AddDependency(d7); err != nil {
+				return nil, err
+			}
+
+			d8 := get[D8](con)
+			if err := t.AddDependency(d8); err != nil {
+				return nil, err
+			}
+
+			d9 := get[D9](con)
+			if err := t.AddDependency(d9); err != nil {
+				return nil, err
+			}
+
+			d10 := get[D10](con)
+			if err := t.AddDependency(d10); err != nil {
+				return nil, err
+			}
+
+			d11 := get[D11](con)
+			if err := t.AddDependency(d11); err != nil {
+				return nil, err
+			}
+
+			d12 := get[D12](con)
+			if err := t.AddDependency(d12); err != nil {
+				return nil, err
+			}
+
+			d13 := get[D13](con)
+			if err := t.AddDependency(d13); err != nil {
+				return nil, err
+			}
+
+			d14 := get[D14](con)
+			if err := t.AddDependency(d14); err != nil {
+				return nil, err
+			}
+
+			d15 := get[D15](con)
+			if err := t.AddDependency(d15); err != nil {
+				return nil, err
+			}
+
+			d16 := get[D16](con)
+			if err := t.AddDependency(d16); err != nil {
+				return nil, err
+			}
+
+			return func(ctx *Context) (v T, _ error) {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v9, err := d9.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v10, err := d10.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v11, err := d11.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v12, err := d12.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v13, err := d13.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v14, err := d14.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v15, err := d15.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				v16, err := d16.Resolve(ctx)
+				if err != nil {
+					return v, err
+				}
+
+				return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16)
+			}, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
 // Invoke1 calls a function with a single dependency.
 func Invoke1[D any](
 	ctx context.Context,
@@ -136,4 +1774,823 @@ func Invoke2[D1, D2 any](
 	}
 
 	return fn(ctx, v1, v2)
+}
+
+// Invoke3 calls a function with 3 dependencies.
+func Invoke3[D1, D2, D3 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3)
+}
+
+// Invoke4 calls a function with 4 dependencies.
+func Invoke4[D1, D2, D3, D4 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4)
+}
+
+// Invoke5 calls a function with 5 dependencies.
+func Invoke5[D1, D2, D3, D4, D5 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5)
+}
+
+// Invoke6 calls a function with 6 dependencies.
+func Invoke6[D1, D2, D3, D4, D5, D6 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6)
+}
+
+// Invoke7 calls a function with 7 dependencies.
+func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7)
+}
+
+// Invoke8 calls a function with 8 dependencies.
+func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v8, err := get[D8](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8)
+}
+
+// Invoke9 calls a function with 9 dependencies.
+func Invoke9[D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v8, err := get[D8](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v9, err := get[D9](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9)
+}
+
+// Invoke10 calls a function with 10 dependencies.
+func Invoke10[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v8, err := get[D8](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v9, err := get[D9](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v10, err := get[D10](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10)
+}
+
+// Invoke11 calls a function with 11 dependencies.
+func Invoke11[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v8, err := get[D8](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v9, err := get[D9](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v10, err := get[D10](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v11, err := get[D11](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11)
+}
+
+// Invoke12 calls a function with 12 dependencies.
+func Invoke12[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v8, err := get[D8](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v9, err := get[D9](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v10, err := get[D10](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v11, err := get[D11](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v12, err := get[D12](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12)
+}
+
+// Invoke13 calls a function with 13 dependencies.
+func Invoke13[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v8, err := get[D8](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v9, err := get[D9](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v10, err := get[D10](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v11, err := get[D11](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v12, err := get[D12](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v13, err := get[D13](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13)
+}
+
+// Invoke14 calls a function with 14 dependencies.
+func Invoke14[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v8, err := get[D8](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v9, err := get[D9](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v10, err := get[D10](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v11, err := get[D11](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v12, err := get[D12](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v13, err := get[D13](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v14, err := get[D14](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14)
+}
+
+// Invoke15 calls a function with 15 dependencies.
+func Invoke15[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v8, err := get[D8](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v9, err := get[D9](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v10, err := get[D10](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v11, err := get[D11](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v12, err := get[D12](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v13, err := get[D13](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v14, err := get[D14](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v15, err := get[D15](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15)
+}
+
+// Invoke16 calls a function with 16 dependencies.
+func Invoke16[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16) error,
+) error {
+	rctx := rootContext(ctx)
+
+	v1, err := get[D1](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v2, err := get[D2](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v3, err := get[D3](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v4, err := get[D4](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v5, err := get[D5](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v6, err := get[D6](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v7, err := get[D7](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v8, err := get[D8](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v9, err := get[D9](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v10, err := get[D10](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v11, err := get[D11](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v12, err := get[D12](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v13, err := get[D13](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v14, err := get[D14](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v15, err := get[D15](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	v16, err := get[D16](con).Resolve(rctx)
+	if err != nil {
+		return err
+	}
+
+	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16)
 }
