@@ -2,23 +2,16 @@
 
 package imbue
 
-import (
-	"context"
-	"runtime"
-)
+import "context"
 
 // With0 describes how to construct values of type T.
 func With0[T any](
 	con *Container,
 	fn func(*Context) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			return fn, nil
 		},
@@ -32,13 +25,9 @@ func With1[T, D any](
 	con *Container,
 	fn func(*Context, D) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -64,13 +53,9 @@ func With2[T, D1, D2 any](
 	con *Container,
 	fn func(*Context, D1, D2) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -106,13 +91,9 @@ func With3[T, D1, D2, D3 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -158,13 +139,9 @@ func With4[T, D1, D2, D3, D4 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -220,13 +197,9 @@ func With5[T, D1, D2, D3, D4, D5 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -292,13 +265,9 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -374,13 +343,9 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -466,13 +431,9 @@ func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -568,13 +529,9 @@ func With9[T, D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -680,13 +637,9 @@ func With10[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -802,13 +755,9 @@ func With11[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -934,13 +883,9 @@ func With12[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -1076,13 +1021,9 @@ func With13[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -1228,13 +1169,9 @@ func With14[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -1390,13 +1327,9 @@ func With15[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {
@@ -1562,13 +1495,9 @@ func With16[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15,
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16) (T, error),
 ) {
-	_, file, line, _ := runtime.Caller(1)
-
 	t := get[T](con)
 
 	if err := t.Declare(
-		file,
-		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
 			if err := t.AddDependency(d1); err != nil {

@@ -58,21 +58,6 @@ func generateWithFunc(code *jen.File, depCount int) {
 
 func generateWithFuncBody(depCount int, code *jen.Group) {
 	code.
-		List(
-			jen.Id("_"),
-			jen.Id("file"),
-			jen.Id("line"),
-			jen.Id("_"),
-		).
-		Op(":=").
-		Qual("runtime", "Caller").
-		Call(
-			jen.Lit(1),
-		)
-
-	code.Line()
-
-	code.
 		Add(declaringDeclVar(depCount)).
 		Op(":=").
 		Qual(pkgPath, "get").
@@ -91,10 +76,6 @@ func generateWithFuncBody(depCount int, code *jen.Group) {
 				Op(":=").
 				Add(declaringDeclVar(depCount)).Dot("Declare").
 				Call(
-					jen.Line().
-						Id("file"),
-					jen.Line().
-						Id("line"),
 					jen.Line().
 						Func().
 						Params().

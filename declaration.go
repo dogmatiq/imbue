@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"path/filepath"
 	"reflect"
+	"runtime"
+	"strings"
 	"sync"
 )
 
@@ -32,10 +34,10 @@ type declarationOf[T any] struct {
 }
 
 func (d *declarationOf[T]) Declare(
-	file string,
-	line int,
 	decl func() (constructor[T], error),
 ) error {
+	file, line := findLocation()
+
 	d.m.Lock()
 	d.file = file
 	d.line = line
@@ -158,4 +160,25 @@ func (d *declarationOf[T]) dependsOn(t declaration, cycle []declaration) ([]decl
 	}
 
 	return nil, false
+}
+
+// findLocation returns the file and line number of the first frame in the
+// current goroutine's stack that is NOT part of the imbue package.
+func findLocation() (string, int) {
+	var pointers [8]uintptr
+	skip := 2 // Always skip runtime.Callers() and findLocation().
+
+	for {
+		count := runtime.Callers(skip, pointers[:])
+		iter := runtime.CallersFrames(pointers[:count])
+		skip += count
+
+		for {
+			fr, more := iter.Next()
+
+			if !more || !strings.HasPrefix(fr.Function, "github.com/dogmatiq/imbue.") {
+				return fr.File, fr.Line
+			}
+		}
+	}
 }
