@@ -15,7 +15,7 @@ var _ = Describe("func WithX()", func() {
 		container = imbue.New()
 	})
 
-	It("registers a constructor with the container", func() {
+	It("enables the container to construct values of the declared type", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
@@ -36,7 +36,7 @@ var _ = Describe("func WithX()", func() {
 		)
 	})
 
-	It("can obtain a single dependency from the container", func() {
+	It("can request a single dependency via the constructor's input parameters", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
@@ -46,7 +46,10 @@ var _ = Describe("func WithX()", func() {
 
 		imbue.With1(
 			container,
-			func(ctx *imbue.Context, dep Concrete1) (Concrete2, error) {
+			func(
+				ctx *imbue.Context,
+				dep Concrete1,
+			) (Concrete2, error) {
 				Expect(dep).To(Equal(Concrete1("<concrete-1>")))
 				return "<concrete-2>", nil
 			},
@@ -65,7 +68,7 @@ var _ = Describe("func WithX()", func() {
 		)
 	})
 
-	It("can obtain multiple dependencies from the container", func() {
+	It("can request multiple dependencies via the constructor's input parameters", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
@@ -106,7 +109,7 @@ var _ = Describe("func WithX()", func() {
 		)
 	})
 
-	It("can obtain dependencies that have dependencies of their own", func() {
+	It("can request dependencies that have dependencies of their own", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
@@ -116,7 +119,10 @@ var _ = Describe("func WithX()", func() {
 
 		imbue.With1(
 			container,
-			func(ctx *imbue.Context, dep Concrete1) (Concrete2, error) {
+			func(
+				ctx *imbue.Context,
+				dep Concrete1,
+			) (Concrete2, error) {
 				Expect(dep).To(Equal(Concrete1("<concrete-1>")))
 				return "<concrete-2>", nil
 			},
@@ -124,7 +130,10 @@ var _ = Describe("func WithX()", func() {
 
 		imbue.With1(
 			container,
-			func(ctx *imbue.Context, dep Concrete2) (Concrete3, error) {
+			func(
+				ctx *imbue.Context,
+				dep Concrete2,
+			) (Concrete3, error) {
 				Expect(dep).To(Equal(Concrete2("<concrete-2>")))
 				return "<concrete-3>", nil
 			},
@@ -179,51 +188,70 @@ var _ = Describe("func WithX()", func() {
 		)
 	})
 
-	XIt("panics when a cyclic dependency is introduced in the same with call", func() {
+	It("panics when a cyclic dependency is introduced within a single declaration", func() {
 		Expect(func() {
 			imbue.With1(
 				container,
-				func(ctx *imbue.Context, dep Concrete1) (Concrete1, error) {
-					Fail("unexpected call")
-					return "", nil
+				func(
+					ctx *imbue.Context,
+					dep Concrete1,
+				) (Concrete1, error) {
+					panic("unexpected call")
 				},
 			)
-		}).To(PanicWith(MatchRegexp(
-			`(?m)constructor for imbue_test\.Concrete1 introduces a cyclic dependency:` +
-				`\n\t-> imbue_test\.Concrete1 \(invoke_test\.go:\d+\)`,
-		)))
+		}).To(
+			PanicWith(
+				MatchError(
+					MatchRegexp(
+						`constructor for imbue_test\.Concrete1 \(with_test\.go:\d+\) depends on itself`,
+					),
+				),
+			),
+		)
 	})
 
-	XIt("panics when a cyclic dependency is introduced", func() {
+	It("panics when a cyclic dependency is introduced across multiple declarations", func() {
 		imbue.With1(
 			container,
-			func(ctx *imbue.Context, dep Concrete3) (Concrete1, error) {
-				Fail("unexpected call")
-				return "", nil
+			func(
+				ctx *imbue.Context,
+				dep Concrete3,
+			) (Concrete1, error) {
+				panic("unexpected call")
 			},
 		)
 
 		imbue.With1(
 			container,
-			func(ctx *imbue.Context, dep Concrete1) (Concrete2, error) {
-				Fail("unexpected call")
-				return "", nil
+			func(
+				ctx *imbue.Context,
+				dep Concrete1,
+			) (Concrete2, error) {
+				panic("unexpected call")
 			},
 		)
 
 		Expect(func() {
 			imbue.With1(
 				container,
-				func(ctx *imbue.Context, dep Concrete2) (Concrete3, error) {
-					Fail("unexpected call")
-					return "", nil
+				func(
+					ctx *imbue.Context,
+					dep Concrete2,
+				) (Concrete3, error) {
+					panic("unexpected call")
 				},
 			)
-		}).To(PanicWith(MatchRegexp(
-			`(?m)constructor for imbue_test\.Concrete3 introduces a cyclic dependency:` +
-				`\n\t-> imbue_test\.Concrete2 \(invoke_test\.go:\d+\)` +
-				`\n\t-> imbue_test\.Concrete1 \(invoke_test\.go:\d+\)` +
-				`\n\t-> imbue_test\.Concrete3 \(invoke_test\.go:\d+\)`,
-		)))
+		}).To(
+			PanicWith(
+				MatchError(
+					MatchRegexp(
+						`(?m)constructor for imbue_test\.Concrete3 introduces a cyclic dependency:` +
+							`\n\t-> imbue_test\.Concrete2 \(with_test\.go:\d+\)` +
+							`\n\t-> imbue_test\.Concrete1 \(with_test\.go:\d+\)` +
+							`\n\t-> imbue_test\.Concrete3 \(with_test\.go:\d+\)`,
+					),
+				),
+			),
+		)
 	})
 })

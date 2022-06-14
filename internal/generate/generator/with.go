@@ -147,9 +147,9 @@ func generateDeclareFuncBody(depCount int, code *jen.Group) {
 				jen.
 					Err().
 					Op(":=").
-					Qual(pkgPath, "addDependency").
+					Add(declaringDeclVar(depCount)).
+					Dot("AddDependency").
 					Call(
-						declaringDeclVar(depCount),
 						dependencyDeclVar(depCount, n),
 					).
 					Op(";").

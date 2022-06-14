@@ -41,7 +41,7 @@ func With1[T, D any](
 		line,
 		func() (constructor[T], error) {
 			d1 := get[D](con)
-			if err := addDependency(t, d1); err != nil {
+			if err := t.AddDependency(d1); err != nil {
 				return nil, err
 			}
 
@@ -73,12 +73,12 @@ func With2[T, D1, D2 any](
 		line,
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
-			if err := addDependency(t, d1); err != nil {
+			if err := t.AddDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := addDependency(t, d2); err != nil {
+			if err := t.AddDependency(d2); err != nil {
 				return nil, err
 			}
 
