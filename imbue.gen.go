@@ -20,6 +20,20 @@ func With0[T any](
 	}
 }
 
+// With0Named describes how to construct values of type T.
+func With0Named[N Name[T], T any](
+	con *Container,
+	fn func(*Context) (T, error),
+) {
+	With0(
+		con,
+		func(ctx *Context) (ByName[N, T], error) {
+			v, err := fn(ctx)
+			return withName[N](v), err
+		},
+	)
+}
+
 // With1 describes how to construct values of type T from a single dependency.
 func With1[T, D any](
 	con *Container,
@@ -46,6 +60,20 @@ func With1[T, D any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With1Named describes how to construct values of type T from a single dependency.
+func With1Named[N Name[T], T, D any](
+	con *Container,
+	fn func(*Context, D) (T, error),
+) {
+	With1(
+		con,
+		func(ctx *Context, v1 D) (ByName[N, T], error) {
+			v, err := fn(ctx, v1)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With2 describes how to construct values of type T from 2 dependencies.
@@ -84,6 +112,20 @@ func With2[T, D1, D2 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With2Named describes how to construct values of type T from 2 dependencies.
+func With2Named[N Name[T], T, D1, D2 any](
+	con *Container,
+	fn func(*Context, D1, D2) (T, error),
+) {
+	With2(
+		con,
+		func(ctx *Context, v1 D1, v2 D2) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With3 describes how to construct values of type T from 3 dependencies.
@@ -132,6 +174,20 @@ func With3[T, D1, D2, D3 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With3Named describes how to construct values of type T from 3 dependencies.
+func With3Named[N Name[T], T, D1, D2, D3 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3) (T, error),
+) {
+	With3(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With4 describes how to construct values of type T from 4 dependencies.
@@ -190,6 +246,20 @@ func With4[T, D1, D2, D3, D4 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With4Named describes how to construct values of type T from 4 dependencies.
+func With4Named[N Name[T], T, D1, D2, D3, D4 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4) (T, error),
+) {
+	With4(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With5 describes how to construct values of type T from 5 dependencies.
@@ -258,6 +328,20 @@ func With5[T, D1, D2, D3, D4, D5 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With5Named describes how to construct values of type T from 5 dependencies.
+func With5Named[N Name[T], T, D1, D2, D3, D4, D5 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5) (T, error),
+) {
+	With5(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With6 describes how to construct values of type T from 6 dependencies.
@@ -336,6 +420,20 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With6Named describes how to construct values of type T from 6 dependencies.
+func With6Named[N Name[T], T, D1, D2, D3, D4, D5, D6 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6) (T, error),
+) {
+	With6(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With7 describes how to construct values of type T from 7 dependencies.
@@ -424,6 +522,20 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With7Named describes how to construct values of type T from 7 dependencies.
+func With7Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7) (T, error),
+) {
+	With7(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With8 describes how to construct values of type T from 8 dependencies.
@@ -522,6 +634,20 @@ func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With8Named describes how to construct values of type T from 8 dependencies.
+func With8Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
+) {
+	With8(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7, v8 D8) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With9 describes how to construct values of type T from 9 dependencies.
@@ -630,6 +756,20 @@ func With9[T, D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With9Named describes how to construct values of type T from 9 dependencies.
+func With9Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9) (T, error),
+) {
+	With9(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7, v8 D8, v9 D9) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With10 describes how to construct values of type T from 10 dependencies.
@@ -748,6 +888,20 @@ func With10[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With10Named describes how to construct values of type T from 10 dependencies.
+func With10Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10) (T, error),
+) {
+	With10(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7, v8 D8, v9 D9, v10 D10) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With11 describes how to construct values of type T from 11 dependencies.
@@ -876,6 +1030,20 @@ func With11[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With11Named describes how to construct values of type T from 11 dependencies.
+func With11Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11) (T, error),
+) {
+	With11(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7, v8 D8, v9 D9, v10 D10, v11 D11) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With12 describes how to construct values of type T from 12 dependencies.
@@ -1014,6 +1182,20 @@ func With12[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With12Named describes how to construct values of type T from 12 dependencies.
+func With12Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12) (T, error),
+) {
+	With12(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7, v8 D8, v9 D9, v10 D10, v11 D11, v12 D12) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With13 describes how to construct values of type T from 13 dependencies.
@@ -1162,6 +1344,20 @@ func With13[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With13Named describes how to construct values of type T from 13 dependencies.
+func With13Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13) (T, error),
+) {
+	With13(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7, v8 D8, v9 D9, v10 D10, v11 D11, v12 D12, v13 D13) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With14 describes how to construct values of type T from 14 dependencies.
@@ -1320,6 +1516,20 @@ func With14[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With14Named describes how to construct values of type T from 14 dependencies.
+func With14Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14) (T, error),
+) {
+	With14(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7, v8 D8, v9 D9, v10 D10, v11 D11, v12 D12, v13 D13, v14 D14) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With15 describes how to construct values of type T from 15 dependencies.
@@ -1488,6 +1698,20 @@ func With15[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With15Named describes how to construct values of type T from 15 dependencies.
+func With15Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15) (T, error),
+) {
+	With15(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7, v8 D8, v9 D9, v10 D10, v11 D11, v12 D12, v13 D13, v14 D14, v15 D15) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15)
+			return withName[N](v), err
+		},
+	)
 }
 
 // With16 describes how to construct values of type T from 16 dependencies.
@@ -1666,6 +1890,20 @@ func With16[T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15,
 	); err != nil {
 		panic(err)
 	}
+}
+
+// With16Named describes how to construct values of type T from 16 dependencies.
+func With16Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16 any](
+	con *Container,
+	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16) (T, error),
+) {
+	With16(
+		con,
+		func(ctx *Context, v1 D1, v2 D2, v3 D3, v4 D4, v5 D5, v6 D6, v7 D7, v8 D8, v9 D9, v10 D10, v11 D11, v12 D12, v13 D13, v14 D14, v15 D15, v16 D16) (ByName[N, T], error) {
+			v, err := fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16)
+			return withName[N](v), err
+		},
+	)
 }
 
 // Invoke1 calls a function with a single dependency.

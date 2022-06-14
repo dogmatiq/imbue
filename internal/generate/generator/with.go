@@ -34,7 +34,10 @@ func generateWithFunc(code *jen.File, depCount int) {
 		Func().
 		Id(name).
 		Types(
-			types(true, depCount)...,
+			types(
+				depCount,
+				declaringType(depCount),
+			)...,
 		).
 		Params(
 			jen.Line().

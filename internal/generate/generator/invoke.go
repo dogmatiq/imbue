@@ -29,7 +29,7 @@ func generateInvokeFunc(code *jen.File, depCount int) {
 		Func().
 		Id(name).
 		Types(
-			types(false, depCount)...,
+			types(depCount)...,
 		).
 		Params(
 			jen.Line().
