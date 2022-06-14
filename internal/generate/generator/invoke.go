@@ -13,77 +13,24 @@ func generateInvokeFunc(code *jen.File, depCount int) {
 
 	switch depCount {
 	case 1:
-		code.
-			Commentf(
-				"%s calls a function with a single dependency.",
-				name,
-			)
+		code.Commentf(
+			"%s calls a function with a single dependency.",
+			name,
+		)
 	default:
-		code.
-			Commentf(
-				"%s calls a function with %d dependencies.",
-				name,
-				depCount,
-			)
-	}
-
-	impl := &jen.Statement{}
-
-	impl.Add(
-		jen.Id("rctx").Op(":=").Qual(pkgPath, "rootContext").
-			Call(
-				contextName(),
-			),
-	)
-
-	impl.Add(
-		jen.Line(),
-	)
-
-	for n := 0; n < depCount; n++ {
-		impl.Add(
-			jen.List(
-				jen.Id(dependencyParamName(depCount, n)),
-				jen.Err(),
-			).
-				Op(":=").
-				Qual(pkgPath, "resolve").
-				Index(
-					jen.Id(dependencyTypeName(depCount, n)),
-				).
-				Call(
-					jen.Id("rctx"),
-					containerName(),
-				),
-		)
-
-		impl.Add(
-			jen.If(
-				jen.Err().Op("!=").Nil(),
-			).Block(
-				jen.Return(
-					jen.Err(),
-				),
-			),
-		)
-
-		impl.Add(
-			jen.Line(),
+		code.Commentf(
+			"%s calls a function with %d dependencies.",
+			name,
+			depCount,
 		)
 	}
-
-	impl.Add(
-		jen.Return(
-			jen.Id("fn").Call(
-				inputParamNames(depCount)...,
-			),
-		),
-	)
 
 	code.
 		Func().
 		Id(name).
-		Types(typeParams(false, depCount)...).
+		Types(
+			types(false, depCount)...,
+		).
 		Params(
 			jen.Line().
 				Add(stdContextParam()),
@@ -93,7 +40,7 @@ func generateInvokeFunc(code *jen.File, depCount int) {
 				Id("fn").
 				Func().
 				Params(
-					inputParamTypes(stdContextType(), depCount)...,
+					inputTypes(stdContextType(), depCount)...,
 				).
 				Params(
 					jen.Error(),
@@ -103,5 +50,57 @@ func generateInvokeFunc(code *jen.File, depCount int) {
 		Params(
 			jen.Error(),
 		).
-		Block(*impl...)
+		BlockFunc(func(g *jen.Group) {
+			generateInvokeFuncBody(depCount, g)
+		})
+}
+
+func generateInvokeFuncBody(depCount int, code *jen.Group) {
+	code.
+		Id("rctx").
+		Op(":=").
+		Qual(pkgPath, "rootContext").
+		Call(
+			contextVar(),
+		)
+
+	code.Line()
+
+	for n := 0; n < depCount; n++ {
+		code.
+			List(
+				dependencyVar(depCount, n),
+				jen.Err(),
+			).
+			Op(":=").
+			Qual(pkgPath, "get").
+			Types(
+				dependencyType(depCount, n),
+			).
+			Call(
+				containerVar(),
+			).
+			Dot("Resolve").
+			Call(
+				jen.Id("rctx"),
+			)
+
+		code.If(
+			jen.Err().Op("!=").Nil(),
+		).Block(
+			jen.Return(
+				jen.Err(),
+			),
+		)
+
+		code.Line()
+	}
+
+	code.Return(
+		jen.
+			Id("fn").
+			Call(
+				inputVars(depCount)...,
+			),
+	)
 }

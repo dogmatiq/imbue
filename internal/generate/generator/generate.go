@@ -14,7 +14,7 @@ const (
 
 	// maxDependencies is the maximum number of dependencies that can be
 	// provided in one invocation.
-	maxDependencies = 15
+	maxDependencies = 2
 )
 
 // Generate generates the code that implements the CallX, InvokeX, and WithX
@@ -34,36 +34,106 @@ func Generate(w io.Writer) error {
 	return code.Render(w)
 }
 
-// dependencyTypeName returns the type name to use for the n'th dependency.
-func dependencyTypeName(depCount, n int) string {
-	if depCount == 1 {
-		return "D"
-	}
-
-	return fmt.Sprintf("D%d", n+1)
+// containerVar returns the name to use for the container parameter.
+func containerVar() *jen.Statement {
+	return jen.Id("con")
 }
 
-// dependencyParamName returns the parameter name to use for the n'th dependency.
-func dependencyParamName(depCount, n int) string {
-	if depCount == 1 {
-		return "dep"
-	}
-
-	return fmt.Sprintf("dep%d", n+1)
+// contextVar returns the name to use for the context parameter.
+func contextVar() *jen.Statement {
+	return jen.Id("ctx")
 }
 
-// typeParamers returns the type parameters to use for a function with the given
-// number of dependencies.
-func typeParams(includeT bool, depCount int) []jen.Code {
+// containerType returns the type to use for the container parameter.
+func containerType() *jen.Statement {
+	return jen.Op("*").Qual(pkgPath, "Container")
+}
+
+// stdContextType returns the type to use for a context.Context parameter.
+func stdContextType() *jen.Statement {
+	return jen.Qual("context", "Context")
+}
+
+// imbueContextType returns the type to use for Imbue's own context type.
+func imbueContextType() *jen.Statement {
+	return jen.Op("*").Qual(pkgPath, "Context")
+}
+
+// containerParam returns the name and type for the container parameter.
+func containerParam() *jen.Statement {
+	return containerVar().Add(containerType())
+}
+
+// stdContextParam returns the name and type of a context.Context parameter.
+func stdContextParam() *jen.Statement {
+	return contextVar().Add(stdContextType())
+}
+
+// imbueContextParam returns the name and type to use for Imbue's context
+// parameter.
+func imbueContextParam() *jen.Statement {
+	return contextVar().Add(imbueContextType())
+}
+
+// declaringType returns the type name to use for the type being declared.
+func declaringType(depCount int) *jen.Statement {
+	return jen.Id("T")
+}
+
+// declaringVar returns the name to use for the value of the type being declared.
+func declaringVar(depCount int) *jen.Statement {
+	return jen.Id("v")
+}
+
+// declaringDeclVar returns the name to use for the varaible containing the
+// n'th dependency's declaration.
+func declaringDeclVar(depCount int) *jen.Statement {
+	return jen.Id("t")
+}
+
+// dependencyType returns the type name to use for the n'th dependency.
+func dependencyType(depCount, n int) *jen.Statement {
+	if depCount == 1 {
+		return jen.Id("D")
+	}
+
+	return jen.Id(
+		fmt.Sprintf("D%d", n+1),
+	)
+}
+
+// dependencyVar returns the parameter name to use for the n'th dependency.
+func dependencyVar(depCount, n int) *jen.Statement {
+	return jen.Id(
+		fmt.Sprintf("v%d", n+1),
+	)
+}
+
+// dependencyDeclVar returns the name to use for the varaible containing the
+// n'th dependency's declaration.
+func dependencyDeclVar(depCount, n int) *jen.Statement {
+	return jen.Id(
+		fmt.Sprintf("d%d", n+1),
+	)
+}
+
+// types returns the type names to use for a function with the given number
+// of dependencies.
+func types(includeT bool, depCount int) []jen.Code {
 	var types []jen.Code
 
 	if includeT {
-		types = append(types, jen.Id("T"))
+		types = append(
+			types,
+			declaringType(depCount),
+		)
 	}
 
 	for n := 0; n < depCount; n++ {
-		typeName := dependencyTypeName(depCount, n)
-		types = append(types, jen.Id(typeName))
+		types = append(
+			types,
+			dependencyType(depCount, n),
+		)
 	}
 
 	return []jen.Code{
@@ -71,34 +141,33 @@ func typeParams(includeT bool, depCount int) []jen.Code {
 	}
 }
 
-// inputParamNames returns the names of the input parameters to a function with
-// the given number of dependencies, including the "ctx" parameter.
-func inputParamNames(depCount int) []jen.Code {
+// inputVars returns the names of the input parameters to a function with the
+// given number of dependencies, including the "ctx" parameter.
+func inputVars(depCount int) []jen.Code {
 	params := []jen.Code{
-		jen.Id("ctx"),
+		contextVar(),
 	}
 
 	for n := 0; n < depCount; n++ {
 		params = append(
 			params,
-			jen.Id(dependencyParamName(depCount, n)),
+			dependencyVar(depCount, n),
 		)
 	}
 	return params
 }
 
-// inputParamTypes returns the types of the input parameters to a function with
+// inputTypes returns the types of the input parameters to a function with
 // the given number of dependencies, including the "ctx" parameter.
-func inputParamTypes(ctxType *jen.Statement, depCount int) []jen.Code {
+func inputTypes(ctxType *jen.Statement, depCount int) []jen.Code {
 	types := []jen.Code{
 		ctxType,
 	}
 
 	for n := 0; n < depCount; n++ {
-		name := dependencyTypeName(depCount, n)
 		types = append(
 			types,
-			jen.Id(name),
+			dependencyType(depCount, n),
 		)
 	}
 
@@ -110,50 +179,18 @@ func inputParamTypes(ctxType *jen.Statement, depCount int) []jen.Code {
 // parameter.
 func inputParams(ctxType *jen.Statement, depCount int) []jen.Code {
 	params := []jen.Code{
-		contextName().Add(ctxType),
+		contextVar().Add(ctxType),
 	}
 
 	for n := 0; n < depCount; n++ {
-		typ := dependencyTypeName(depCount, n)
-		name := dependencyParamName(depCount, n)
+		typ := dependencyType(depCount, n)
+		name := dependencyVar(depCount, n)
 
 		params = append(
 			params,
-			jen.Id(name).Id(typ),
+			name.Add(typ),
 		)
 	}
 
 	return params
-}
-
-func containerName() *jen.Statement {
-	return jen.Id("con")
-}
-
-func contextName() *jen.Statement {
-	return jen.Id("ctx")
-}
-
-func containerType() *jen.Statement {
-	return jen.Op("*").Qual(pkgPath, "Container")
-}
-
-func stdContextType() *jen.Statement {
-	return jen.Qual("context", "Context")
-}
-
-func imbueContextType() *jen.Statement {
-	return jen.Op("*").Qual(pkgPath, "Context")
-}
-
-func containerParam() *jen.Statement {
-	return containerName().Add(containerType())
-}
-
-func stdContextParam() *jen.Statement {
-	return contextName().Add(stdContextType())
-}
-
-func imbueContextParam() *jen.Statement {
-	return contextName().Add(imbueContextType())
 }

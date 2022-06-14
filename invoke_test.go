@@ -111,7 +111,7 @@ var _ = Describe("func InvokeX()", func() {
 		)
 		Expect(err).Should(HaveOccurred())
 		Expect(err.Error()).To(MatchRegexp(
-			`container is unable to construct imbue_test\.Concrete1 \(invoke_test\.go:\d+\): <error>`,
+			`constructor for imbue_test\.Concrete1 \(invoke_test\.go:\d+\) failed: <error>`,
 		))
 	})
 
@@ -129,52 +129,7 @@ var _ = Describe("func InvokeX()", func() {
 				},
 			)
 		}).To(PanicWith(MatchRegexp(
-			`container has no constructor for imbue_test.Concrete1`,
-		)))
-	})
-
-	It("panics when there is a cyclic dependency", func() {
-		imbue.With1(
-			container,
-			func(ctx *imbue.Context, dep Concrete3) (Concrete1, error) {
-				Fail("unexpected call")
-				return "", nil
-			},
-		)
-
-		imbue.With1(
-			container,
-			func(ctx *imbue.Context, dep Concrete1) (Concrete2, error) {
-				Fail("unexpected call")
-				return "", nil
-			},
-		)
-
-		imbue.With1(
-			container,
-			func(ctx *imbue.Context, dep Concrete2) (Concrete3, error) {
-				Fail("unexpected call")
-				return "", nil
-			},
-		)
-
-		Expect(func() {
-			imbue.Invoke1(
-				context.Background(),
-				container,
-				func(
-					ctx context.Context,
-					dep Concrete1,
-				) error {
-					Fail("unexpected call")
-					return nil
-				},
-			)
-		}).To(PanicWith(MatchRegexp(
-			`(?m)container has cyclic dependency involving imbue_test\.Concrete1:` +
-				`\n\t-> imbue_test\.Concrete2 \(invoke_test\.go:\d+\)` +
-				`\n\t-> imbue_test\.Concrete3 \(invoke_test\.go:\d+\)` +
-				`\n\t-> imbue_test\.Concrete1 \(invoke_test\.go:\d+\)`,
+			`no constructor is declared for imbue_test.Concrete1`,
 		)))
 	})
 })

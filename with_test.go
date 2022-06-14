@@ -178,4 +178,52 @@ var _ = Describe("func WithX()", func() {
 			},
 		)
 	})
+
+	XIt("panics when a cyclic dependency is introduced in the same with call", func() {
+		Expect(func() {
+			imbue.With1(
+				container,
+				func(ctx *imbue.Context, dep Concrete1) (Concrete1, error) {
+					Fail("unexpected call")
+					return "", nil
+				},
+			)
+		}).To(PanicWith(MatchRegexp(
+			`(?m)constructor for imbue_test\.Concrete1 introduces a cyclic dependency:` +
+				`\n\t-> imbue_test\.Concrete1 \(invoke_test\.go:\d+\)`,
+		)))
+	})
+
+	XIt("panics when a cyclic dependency is introduced", func() {
+		imbue.With1(
+			container,
+			func(ctx *imbue.Context, dep Concrete3) (Concrete1, error) {
+				Fail("unexpected call")
+				return "", nil
+			},
+		)
+
+		imbue.With1(
+			container,
+			func(ctx *imbue.Context, dep Concrete1) (Concrete2, error) {
+				Fail("unexpected call")
+				return "", nil
+			},
+		)
+
+		Expect(func() {
+			imbue.With1(
+				container,
+				func(ctx *imbue.Context, dep Concrete2) (Concrete3, error) {
+					Fail("unexpected call")
+					return "", nil
+				},
+			)
+		}).To(PanicWith(MatchRegexp(
+			`(?m)constructor for imbue_test\.Concrete3 introduces a cyclic dependency:` +
+				`\n\t-> imbue_test\.Concrete2 \(invoke_test\.go:\d+\)` +
+				`\n\t-> imbue_test\.Concrete1 \(invoke_test\.go:\d+\)` +
+				`\n\t-> imbue_test\.Concrete3 \(invoke_test\.go:\d+\)`,
+		)))
+	})
 })
