@@ -1,6 +1,7 @@
 package imbue
 
 import (
+	"fmt"
 	"reflect"
 	"sync"
 )
@@ -12,10 +13,21 @@ type Container struct {
 	closers      []func() error
 }
 
+// closeError is returned when there are one or more errors closing the
+// container.
 type closeError []error
 
 func (e closeError) Error() string {
-	panic("not implemented")
+	message := fmt.Sprintf(
+		"%d error(s) occurred while closing the container:",
+		len(e),
+	)
+
+	for _, err := range e {
+		message += fmt.Sprintf("\n\t%s", err)
+	}
+
+	return message
 }
 
 // Close closes the container, calling any deferred functions registered
