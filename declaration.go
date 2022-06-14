@@ -10,8 +10,6 @@ import (
 
 // declaration is an interface that describes how to build a dependency.
 type declaration interface {
-	AddDependency(t declaration) error
-
 	getType() reflect.Type
 	location() (string, int)
 	dependsOn(t declaration, cycle []declaration) ([]declaration, bool)

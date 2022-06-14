@@ -29,7 +29,7 @@ func typeOf[T any]() reflect.Type {
 	return reflect.TypeOf([0]T{}).Elem()
 }
 
-// get returns the declration for type T.
+// get returns the declaration for type T.
 func get[T any](con *Container) *declarationOf[T] {
 	t := typeOf[T]()
 
