@@ -18,7 +18,7 @@ type (
 	Background imbue.Name[Color]
 )
 
-func Example_named_dependencies() {
+func Example_namedDependencies() {
 	con := imbue.New()
 	defer con.Close()
 
