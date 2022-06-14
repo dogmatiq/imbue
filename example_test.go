@@ -7,7 +7,7 @@ import (
 	"github.com/dogmatiq/imbue"
 )
 
-func ExampleWith0() {
+func Example() {
 	con := imbue.New()
 
 	type SomeDependency struct {

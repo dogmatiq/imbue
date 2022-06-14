@@ -15,6 +15,10 @@ var _ = Describe("func WithX()", func() {
 		container = imbue.New()
 	})
 
+	AfterEach(func() {
+		container.Close()
+	})
+
 	It("enables the container to construct values of the declared type", func() {
 		imbue.With0(
 			container,

@@ -16,6 +16,10 @@ var _ = Describe("func InvokeX()", func() {
 		container = imbue.New()
 	})
 
+	AfterEach(func() {
+		container.Close()
+	})
+
 	It("can obtain a single dependency from the container", func() {
 		imbue.With0(
 			container,
