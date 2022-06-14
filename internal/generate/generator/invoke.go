@@ -62,6 +62,7 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 		Qual(pkgPath, "rootContext").
 		Call(
 			contextVar(),
+			containerVar(),
 		)
 
 	code.Line()

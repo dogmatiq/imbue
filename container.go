@@ -9,12 +9,45 @@ import (
 type Container struct {
 	m            sync.Mutex
 	declarations map[reflect.Type]declaration
+	closers      []func() error
+}
+
+type closeError []error
+
+func (e closeError) Error() string {
+	panic("not implemented")
 }
 
 // Close closes the container, calling any deferred functions registered
 // during construction of dependencies.
 func (c *Container) Close() error {
+	c.m.Lock()
+	defer c.m.Unlock()
+
+	closers := c.closers
+	c.closers = nil
+
+	var errors closeError
+
+	for i := len(closers) - 1; i >= 0; i-- {
+		if err := closers[i](); err != nil {
+			errors = append(errors, err)
+		}
+	}
+
+	if len(errors) > 0 {
+		return errors
+	}
+
 	return nil
+}
+
+// addDefer registers a function to be called when the container is closed.
+func (c *Container) addDefer(fn func() error) {
+	c.m.Lock()
+	defer c.m.Unlock()
+
+	c.closers = append(c.closers, fn)
 }
 
 // New returns a new, empty container.

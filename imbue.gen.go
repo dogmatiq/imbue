@@ -1912,7 +1912,7 @@ func Invoke1[D any](
 	con *Container,
 	fn func(context.Context, D) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D](con).Resolve(rctx)
 	if err != nil {
@@ -1928,7 +1928,7 @@ func Invoke2[D1, D2 any](
 	con *Container,
 	fn func(context.Context, D1, D2) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -1949,7 +1949,7 @@ func Invoke3[D1, D2, D3 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -1975,7 +1975,7 @@ func Invoke4[D1, D2, D3, D4 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2006,7 +2006,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2042,7 +2042,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2083,7 +2083,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2129,7 +2129,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2180,7 +2180,7 @@ func Invoke9[D1, D2, D3, D4, D5, D6, D7, D8, D9 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2236,7 +2236,7 @@ func Invoke10[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2297,7 +2297,7 @@ func Invoke11[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2363,7 +2363,7 @@ func Invoke12[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2434,7 +2434,7 @@ func Invoke13[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2510,7 +2510,7 @@ func Invoke14[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14 any](
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2591,7 +2591,7 @@ func Invoke15[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15 a
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -2677,7 +2677,7 @@ func Invoke16[D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, 
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16) error,
 ) error {
-	rctx := rootContext(ctx)
+	rctx := rootContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
