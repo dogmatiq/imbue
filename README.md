@@ -1,6 +1,6 @@
 # Imbue
 
-[![Build Status](https://github.com/dogmatiq/imbue/workflows/CI/badge.svg)](https://github.com/dogmatiq/imbue/actions?workflow=CI)
+[![Build Status](https://github.com/dogmatiq/imbue/actions/workflows/ci.yml/badge.svg)](https://github.com/dogmatiq/imbue/actions/workflows/ci.yml)
 [![Code Coverage](https://img.shields.io/codecov/c/github/dogmatiq/imbue/main.svg)](https://codecov.io/github/dogmatiq/imbue)
 [![Latest Version](https://img.shields.io/github/tag/dogmatiq/imbue.svg?label=semver)](https://semver.org)
 [![Documentation](https://img.shields.io/badge/go.dev-reference-007d9c)](https://pkg.go.dev/github.com/dogmatiq/imbue)
