@@ -52,10 +52,10 @@ func Example_namedDependencies() {
 			fg imbue.ByName[Foreground, Color],
 			bg imbue.ByName[Background, Color],
 		) error {
-			// Named dependencies are exposed as functions. Calling the function
-			// returns the underlying color.
-			fmt.Println("foreground:", fg())
-			fmt.Println("background:", bg())
+			// Named dependencies have a Value field which in this case is the
+			// Color value.
+			fmt.Println("foreground:", fg.Value)
+			fmt.Println("background:", bg.Value)
 			return nil
 		},
 	)

@@ -6,13 +6,14 @@ type Name[T any] interface {
 }
 
 // ByName declares a dependency on a named type.
-//
-// It is a function that returns the dependency of type T that is named N.
-type ByName[N Name[T], T any] func() T
+type ByName[N Name[T], T any] struct {
+	// Value is the dependency itself.
+	Value T
+}
 
-// withName wraps a value of type T to present it as a ByName[N, T] function.
+// withName wraps a value of type T to present it as a ByName[N, T].
 func withName[N Name[T], T any](v T) ByName[N, T] {
-	return func() T {
-		return v
+	return ByName[N, T]{
+		Value: v,
 	}
 }
