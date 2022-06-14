@@ -25,6 +25,7 @@ func Generate(w io.Writer) error {
 
 	for depCount := 0; depCount <= maxDependencies; depCount++ {
 		generateWithFunc(code, depCount)
+		generateWithNamedFunc(code, depCount)
 	}
 
 	for depCount := 1; depCount <= maxDependencies; depCount++ {
@@ -91,6 +92,11 @@ func declaringDeclVar(depCount int) *jen.Statement {
 	return jen.Id("t")
 }
 
+// namedType returns the type name to use for a named dependency.
+func namedType(depCount int) *jen.Statement {
+	return jen.Id("N")
+}
+
 // dependencyType returns the type name to use for the n'th dependency.
 func dependencyType(depCount, n int) *jen.Statement {
 	if depCount == 1 {
@@ -119,16 +125,7 @@ func dependencyDeclVar(depCount, n int) *jen.Statement {
 
 // types returns the type names to use for a function with the given number
 // of dependencies.
-func types(includeT bool, depCount int) []jen.Code {
-	var types []jen.Code
-
-	if includeT {
-		types = append(
-			types,
-			declaringType(depCount),
-		)
-	}
-
+func types(depCount int, types ...jen.Code) []jen.Code {
 	for n := 0; n < depCount; n++ {
 		types = append(
 			types,
