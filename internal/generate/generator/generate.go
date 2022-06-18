@@ -85,9 +85,14 @@ func imbueContextParam() *jen.Statement {
 	return contextVar().Add(imbueContextType())
 }
 
+// declaringTypeString returns the type name to use for the type being declared.
+func declaringTypeString(depCount int) string {
+	return "T"
+}
+
 // declaringType returns the type name to use for the type being declared.
 func declaringType(depCount int) *jen.Statement {
-	return jen.Id("T")
+	return jen.Id(declaringTypeString(depCount))
 }
 
 // declaringVar returns the name to use for the value of the type being declared.
@@ -101,9 +106,14 @@ func declaringDeclVar(depCount int) *jen.Statement {
 	return jen.Id("t")
 }
 
+// namedTypeString returns the type name to use for a named dependency.
+func namedTypeString(depCount int) string {
+	return "N"
+}
+
 // namedType returns the type name to use for a named dependency.
 func namedType(depCount int) *jen.Statement {
-	return jen.Id("N")
+	return jen.Id(namedTypeString(depCount))
 }
 
 // dependencyType returns the type name to use for the n'th dependency.

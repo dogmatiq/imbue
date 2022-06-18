@@ -13,29 +13,33 @@ func GenerateWithNamed(code *jen.File) {
 	}
 }
 
-// generateWithFunc generates the WithXNamed function for the given number of
-// dependencies.
+// generateWithNamedFunc generates the WithXNamed function for the given number
+// of dependencies.
 func generateWithNamedFunc(code *jen.File, depCount int) {
 	name := fmt.Sprintf("With%dNamed", depCount)
 
 	switch depCount {
 	case 0:
 		code.Commentf(
-			"%s describes how to construct values of type T.",
+			"%s describes how to construct named values of type T.",
 			name,
 		)
 	case 1:
 		code.Commentf(
-			"%s describes how to construct values of type T from a single dependency.",
+			"%s describes how to construct named values of type T from a single dependency.",
 			name,
 		)
 	default:
 		code.Commentf(
-			"%s describes how to construct values of type T from %d dependencies.",
+			"%s describes how to construct named values of type T from %d dependencies.",
 			name,
 			depCount,
 		)
 	}
+
+	code.Comment("")
+	code.Commentf("%s is the name given to the dependency.", namedTypeString(depCount))
+	code.Commentf("%s is the type of the dependency.", declaringTypeString(depCount))
 
 	code.
 		Func().
