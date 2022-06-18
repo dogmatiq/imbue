@@ -1,26 +1,33 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"os"
+	"path/filepath"
 
+	"github.com/dave/jennifer/jen"
 	"github.com/dogmatiq/imbue/internal/generate/generator"
 )
 
 func main() {
-	buf := &bytes.Buffer{}
-	if err := generator.Generate(buf); err != nil {
-		fmt.Fprintf(os.Stderr, "unable to generate code: %s\n", err)
+	if err := generator.Generate(
+		os.Args[2],
+		getGenerator(os.Args[2]),
+	); err != nil {
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+}
 
-	if err := os.WriteFile(
-		os.Args[2],
-		buf.Bytes(),
-		0644,
-	); err != nil {
-		fmt.Fprintf(os.Stderr, "unable to write to file: %s\n", err)
-		os.Exit(2)
+func getGenerator(filename string) func(*jen.File) {
+	switch filepath.Base(filename) {
+	case "invoke.gen.go":
+		return generator.GenerateInvoke
+	case "with.gen.go":
+		return generator.GenerateWith
+	case "withnamed.gen.go":
+		return generator.GenerateWithNamed
 	}
+
+	panic("could not determine generator for " + filename)
 }

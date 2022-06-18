@@ -6,6 +6,13 @@ import (
 	"github.com/dave/jennifer/jen"
 )
 
+// GenerateWith generates the WithX() functions.
+func GenerateWith(code *jen.File) {
+	for depCount := 0; depCount <= maxDependencies; depCount++ {
+		generateWithFunc(code, depCount)
+	}
+}
+
 // generateWithFunc generates the WithX function for the given number of
 // dependencies.
 func generateWithFunc(code *jen.File, depCount int) {

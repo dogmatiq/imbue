@@ -6,6 +6,13 @@ import (
 	"github.com/dave/jennifer/jen"
 )
 
+// GenerateInvoke generates the InvokeX() functions.
+func GenerateInvoke(code *jen.File) {
+	for depCount := 1; depCount <= maxDependencies; depCount++ {
+		generateInvokeFunc(code, depCount)
+	}
+}
+
 // generateInvokeFunc generates the InvokeX function for the given number of
 // dependencies.
 func generateInvokeFunc(code *jen.File, depCount int) {

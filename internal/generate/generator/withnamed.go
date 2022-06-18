@@ -6,6 +6,13 @@ import (
 	"github.com/dave/jennifer/jen"
 )
 
+// GenerateWithNamed generates the WithXNamed() functions.
+func GenerateWithNamed(code *jen.File) {
+	for depCount := 0; depCount <= maxDependencies; depCount++ {
+		generateWithNamedFunc(code, depCount)
+	}
+}
+
 // generateWithFunc generates the WithXNamed function for the given number of
 // dependencies.
 func generateWithNamedFunc(code *jen.File, depCount int) {
