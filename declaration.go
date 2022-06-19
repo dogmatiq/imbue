@@ -89,30 +89,52 @@ func (d *declarationOf[T]) Declare(
 // AddInitializer adds an initializer function that is called after T's
 // constructor.
 func (d *declarationOf[T]) AddInitializer(
-	init initializer[T],
-) {
+	decl func() (initializer[T], error),
+) error {
 	file, line := findLocation()
 
 	d.m.Lock()
-	defer d.m.Unlock()
+	if d.construct == nil {
+		d.file = file
+		d.line = line
+	}
+	d.m.Unlock()
 
-	d.initializers = append(
-		d.initializers,
-		initializerEntry[T]{
-			File: file,
-			Line: line,
-			Init: init,
-		},
-	)
+	i, err := decl()
+	if err != nil {
+		return err
+	}
+
+	e := initializerEntry[T]{
+		File: file,
+		Line: line,
+		Init: i,
+	}
+
+	d.m.Lock()
+	d.initializers = append(d.initializers, e)
+	d.m.Unlock()
+
+	return nil
 }
 
-// AddDependency marks t as a dependency of d.
-func (d *declarationOf[T]) AddDependency(t declaration) error {
+// AddDependency marks t as a dependency of d's constructor.
+func (d *declarationOf[T]) AddConstructorDependency(t declaration) error {
+	return d.addDependency(t, "constructor")
+}
+
+// AddDependency marks t as a dependency of one of d's initializers.
+func (d *declarationOf[T]) AddInitializerDependency(t declaration) error {
+	return d.addDependency(t, "initializer")
+}
+
+func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 	if t.GetType() == d.GetType() {
-		file, line := d.Location()
+		file, line := findLocation()
 
 		return fmt.Errorf(
-			"constructor for %s (%s:%d) depends on itself",
+			"%s for %s (%s:%d) depends on itself",
+			funcType,
 			d.GetType(),
 			filepath.Base(file),
 			line,
@@ -121,7 +143,8 @@ func (d *declarationOf[T]) AddDependency(t declaration) error {
 
 	if cycle, ok := t.dependsOn(d, nil); ok {
 		message := fmt.Sprintf(
-			"constructor for %s introduces a cyclic dependency:",
+			"%s for %s introduces a cyclic dependency:",
+			funcType,
 			d.GetType(),
 		)
 

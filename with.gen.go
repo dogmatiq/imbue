@@ -30,7 +30,7 @@ func With1[T, D any](
 	if err := t.Declare(
 		func() (constructor[T], error) {
 			d1 := get[D](con)
-			if err := t.AddDependency(d1); err != nil {
+			if err := t.AddConstructorDependency(d1); err != nil {
 				return nil, err
 			}
 
@@ -59,12 +59,12 @@ func With2[T, D1, D2 any](
 	if err := t.Declare(
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddDependency(d1); err != nil {
+			if err := t.AddConstructorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddDependency(d2); err != nil {
+			if err := t.AddConstructorDependency(d2); err != nil {
 				return nil, err
 			}
 
@@ -98,17 +98,17 @@ func With3[T, D1, D2, D3 any](
 	if err := t.Declare(
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddDependency(d1); err != nil {
+			if err := t.AddConstructorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddDependency(d2); err != nil {
+			if err := t.AddConstructorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddDependency(d3); err != nil {
+			if err := t.AddConstructorDependency(d3); err != nil {
 				return nil, err
 			}
 
@@ -147,22 +147,22 @@ func With4[T, D1, D2, D3, D4 any](
 	if err := t.Declare(
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddDependency(d1); err != nil {
+			if err := t.AddConstructorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddDependency(d2); err != nil {
+			if err := t.AddConstructorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddDependency(d3); err != nil {
+			if err := t.AddConstructorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddDependency(d4); err != nil {
+			if err := t.AddConstructorDependency(d4); err != nil {
 				return nil, err
 			}
 
@@ -206,27 +206,27 @@ func With5[T, D1, D2, D3, D4, D5 any](
 	if err := t.Declare(
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddDependency(d1); err != nil {
+			if err := t.AddConstructorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddDependency(d2); err != nil {
+			if err := t.AddConstructorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddDependency(d3); err != nil {
+			if err := t.AddConstructorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddDependency(d4); err != nil {
+			if err := t.AddConstructorDependency(d4); err != nil {
 				return nil, err
 			}
 
 			d5 := get[D5](con)
-			if err := t.AddDependency(d5); err != nil {
+			if err := t.AddConstructorDependency(d5); err != nil {
 				return nil, err
 			}
 
@@ -275,32 +275,32 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 	if err := t.Declare(
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddDependency(d1); err != nil {
+			if err := t.AddConstructorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddDependency(d2); err != nil {
+			if err := t.AddConstructorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddDependency(d3); err != nil {
+			if err := t.AddConstructorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddDependency(d4); err != nil {
+			if err := t.AddConstructorDependency(d4); err != nil {
 				return nil, err
 			}
 
 			d5 := get[D5](con)
-			if err := t.AddDependency(d5); err != nil {
+			if err := t.AddConstructorDependency(d5); err != nil {
 				return nil, err
 			}
 
 			d6 := get[D6](con)
-			if err := t.AddDependency(d6); err != nil {
+			if err := t.AddConstructorDependency(d6); err != nil {
 				return nil, err
 			}
 
@@ -354,37 +354,37 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	if err := t.Declare(
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddDependency(d1); err != nil {
+			if err := t.AddConstructorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddDependency(d2); err != nil {
+			if err := t.AddConstructorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddDependency(d3); err != nil {
+			if err := t.AddConstructorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddDependency(d4); err != nil {
+			if err := t.AddConstructorDependency(d4); err != nil {
 				return nil, err
 			}
 
 			d5 := get[D5](con)
-			if err := t.AddDependency(d5); err != nil {
+			if err := t.AddConstructorDependency(d5); err != nil {
 				return nil, err
 			}
 
 			d6 := get[D6](con)
-			if err := t.AddDependency(d6); err != nil {
+			if err := t.AddConstructorDependency(d6); err != nil {
 				return nil, err
 			}
 
 			d7 := get[D7](con)
-			if err := t.AddDependency(d7); err != nil {
+			if err := t.AddConstructorDependency(d7); err != nil {
 				return nil, err
 			}
 
@@ -443,42 +443,42 @@ func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	if err := t.Declare(
 		func() (constructor[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddDependency(d1); err != nil {
+			if err := t.AddConstructorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddDependency(d2); err != nil {
+			if err := t.AddConstructorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddDependency(d3); err != nil {
+			if err := t.AddConstructorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddDependency(d4); err != nil {
+			if err := t.AddConstructorDependency(d4); err != nil {
 				return nil, err
 			}
 
 			d5 := get[D5](con)
-			if err := t.AddDependency(d5); err != nil {
+			if err := t.AddConstructorDependency(d5); err != nil {
 				return nil, err
 			}
 
 			d6 := get[D6](con)
-			if err := t.AddDependency(d6); err != nil {
+			if err := t.AddConstructorDependency(d6); err != nil {
 				return nil, err
 			}
 
 			d7 := get[D7](con)
-			if err := t.AddDependency(d7); err != nil {
+			if err := t.AddConstructorDependency(d7); err != nil {
 				return nil, err
 			}
 
 			d8 := get[D8](con)
-			if err := t.AddDependency(d8); err != nil {
+			if err := t.AddConstructorDependency(d8); err != nil {
 				return nil, err
 			}
 

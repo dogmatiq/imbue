@@ -77,6 +77,39 @@ func generateInjectFuncBody(depCount int, code *jen.Group) {
 
 	code.Line()
 
+	code.
+		If(
+			jen.Err().
+				Op(":=").
+				Add(declaringDeclVar(depCount)).Dot("AddInitializer").
+				Call(
+					jen.Line().
+						Func().
+						Params().
+						Params(
+							jen.
+								Id("initializer").
+								Types(
+									declaringType(depCount),
+								),
+							jen.Error(),
+						).
+						BlockFunc(func(g *jen.Group) {
+							generateInitializerFactoryFuncBody(depCount, g)
+						}),
+					jen.Line(),
+				).
+				Op(";").
+				Err().Op("!=").Nil(),
+		).
+		Block(
+			jen.Panic(
+				jen.Err(),
+			),
+		)
+}
+
+func generateInitializerFactoryFuncBody(depCount int, code *jen.Group) {
 	for n := 0; n < depCount; n++ {
 		code.
 			Add(dependencyDeclVar(depCount, n)).
@@ -95,7 +128,7 @@ func generateInjectFuncBody(depCount int, code *jen.Group) {
 					Err().
 					Op(":=").
 					Add(declaringDeclVar(depCount)).
-					Dot("AddDependency").
+					Dot("AddInitializerDependency").
 					Call(
 						dependencyDeclVar(depCount, n),
 					).
@@ -103,7 +136,8 @@ func generateInjectFuncBody(depCount int, code *jen.Group) {
 					Err().Op("!=").Nil(),
 			).
 			Block(
-				jen.Panic(
+				jen.Return(
+					jen.Nil(),
 					jen.Err(),
 				),
 			)
@@ -111,12 +145,9 @@ func generateInjectFuncBody(depCount int, code *jen.Group) {
 		code.Line()
 	}
 
-	code.Line()
-
 	code.
-		Add(declaringDeclVar(depCount)).Dot("AddInitializer").
-		Call(
-			jen.Line().
+		Return(
+			jen.
 				Func().
 				Params(
 					imbueContextParam(),
@@ -126,13 +157,14 @@ func generateInjectFuncBody(depCount int, code *jen.Group) {
 					jen.Error(),
 				).
 				BlockFunc(func(g *jen.Group) {
-					generateInitFuncBody(depCount, g)
+					generateInitializerFuncBody(depCount, g)
 				}),
-			jen.Line(),
+			jen.
+				Nil(),
 		)
 }
 
-func generateInitFuncBody(depCount int, code *jen.Group) {
+func generateInitializerFuncBody(depCount int, code *jen.Group) {
 	for n := 0; n < depCount; n++ {
 		code.
 			List(

@@ -119,6 +119,49 @@ var _ = Describe("func InvokeX()", func() {
 		))
 	})
 
+	It("returns an error when an initializer returns an error", func() {
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete1, error) {
+				return "<concrete-1>", nil
+			},
+		)
+
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete2, error) {
+				return "<concrete-2>", nil
+			},
+		)
+
+		imbue.Inject1(
+			container,
+			func(
+				ctx *imbue.Context,
+				v Concrete1,
+				dep Concrete2,
+			) error {
+				return errors.New("<error>")
+			},
+		)
+
+		err := imbue.Invoke1(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+				dep Concrete1,
+			) error {
+				Fail("unexpected call")
+				return nil
+			},
+		)
+		Expect(err).Should(HaveOccurred())
+		Expect(err.Error()).To(MatchRegexp(
+			`initializer for imbue_test\.Concrete1 \(invoke_test\.go:\d+\) failed: <error>`,
+		))
+	})
+
 	It("panics when a requested dependency is not registered", func() {
 		Expect(func() {
 			imbue.Invoke1(

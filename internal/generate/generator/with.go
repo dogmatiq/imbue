@@ -92,7 +92,7 @@ func generateWithFuncBody(depCount int, code *jen.Group) {
 							jen.Error(),
 						).
 						BlockFunc(func(g *jen.Group) {
-							generateDeclareFuncBody(depCount, g)
+							generateConstructorFactoryFuncBody(depCount, g)
 						}),
 					jen.Line(),
 				).
@@ -104,7 +104,7 @@ func generateWithFuncBody(depCount int, code *jen.Group) {
 		)
 }
 
-func generateDeclareFuncBody(depCount int, code *jen.Group) {
+func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 	if depCount == 0 {
 		code.
 			Return(
@@ -133,7 +133,7 @@ func generateDeclareFuncBody(depCount int, code *jen.Group) {
 					Err().
 					Op(":=").
 					Add(declaringDeclVar(depCount)).
-					Dot("AddDependency").
+					Dot("AddConstructorDependency").
 					Call(
 						dependencyDeclVar(depCount, n),
 					).

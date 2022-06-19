@@ -11,21 +11,25 @@ func Inject1[T, D any](
 ) {
 	t := get[T](con)
 
-	d1 := get[D](con)
-	if err := t.AddDependency(d1); err != nil {
-		panic(err)
-	}
-
-	t.AddInitializer(
-		func(ctx *Context, v T) error {
-			v1, err := d1.Resolve(ctx)
-			if err != nil {
-				return err
+	if err := t.AddInitializer(
+		func() (initializer[T], error) {
+			d1 := get[D](con)
+			if err := t.AddInitializerDependency(d1); err != nil {
+				return nil, err
 			}
 
-			return fn(ctx, v, v1)
+			return func(ctx *Context, v T) error {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				return fn(ctx, v, v1)
+			}, nil
 		},
-	)
+	); err != nil {
+		panic(err)
+	}
 }
 
 // Inject2 describes how to initialize values of type T after construction using
@@ -37,31 +41,35 @@ func Inject2[T, D1, D2 any](
 ) {
 	t := get[T](con)
 
-	d1 := get[D1](con)
-	if err := t.AddDependency(d1); err != nil {
-		panic(err)
-	}
-
-	d2 := get[D2](con)
-	if err := t.AddDependency(d2); err != nil {
-		panic(err)
-	}
-
-	t.AddInitializer(
-		func(ctx *Context, v T) error {
-			v1, err := d1.Resolve(ctx)
-			if err != nil {
-				return err
+	if err := t.AddInitializer(
+		func() (initializer[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddInitializerDependency(d1); err != nil {
+				return nil, err
 			}
 
-			v2, err := d2.Resolve(ctx)
-			if err != nil {
-				return err
+			d2 := get[D2](con)
+			if err := t.AddInitializerDependency(d2); err != nil {
+				return nil, err
 			}
 
-			return fn(ctx, v, v1, v2)
+			return func(ctx *Context, v T) error {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				return fn(ctx, v, v1, v2)
+			}, nil
 		},
-	)
+	); err != nil {
+		panic(err)
+	}
 }
 
 // Inject3 describes how to initialize values of type T after construction using
@@ -73,41 +81,45 @@ func Inject3[T, D1, D2, D3 any](
 ) {
 	t := get[T](con)
 
-	d1 := get[D1](con)
-	if err := t.AddDependency(d1); err != nil {
-		panic(err)
-	}
-
-	d2 := get[D2](con)
-	if err := t.AddDependency(d2); err != nil {
-		panic(err)
-	}
-
-	d3 := get[D3](con)
-	if err := t.AddDependency(d3); err != nil {
-		panic(err)
-	}
-
-	t.AddInitializer(
-		func(ctx *Context, v T) error {
-			v1, err := d1.Resolve(ctx)
-			if err != nil {
-				return err
+	if err := t.AddInitializer(
+		func() (initializer[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddInitializerDependency(d1); err != nil {
+				return nil, err
 			}
 
-			v2, err := d2.Resolve(ctx)
-			if err != nil {
-				return err
+			d2 := get[D2](con)
+			if err := t.AddInitializerDependency(d2); err != nil {
+				return nil, err
 			}
 
-			v3, err := d3.Resolve(ctx)
-			if err != nil {
-				return err
+			d3 := get[D3](con)
+			if err := t.AddInitializerDependency(d3); err != nil {
+				return nil, err
 			}
 
-			return fn(ctx, v, v1, v2, v3)
+			return func(ctx *Context, v T) error {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				return fn(ctx, v, v1, v2, v3)
+			}, nil
 		},
-	)
+	); err != nil {
+		panic(err)
+	}
 }
 
 // Inject4 describes how to initialize values of type T after construction using
@@ -119,51 +131,55 @@ func Inject4[T, D1, D2, D3, D4 any](
 ) {
 	t := get[T](con)
 
-	d1 := get[D1](con)
-	if err := t.AddDependency(d1); err != nil {
-		panic(err)
-	}
-
-	d2 := get[D2](con)
-	if err := t.AddDependency(d2); err != nil {
-		panic(err)
-	}
-
-	d3 := get[D3](con)
-	if err := t.AddDependency(d3); err != nil {
-		panic(err)
-	}
-
-	d4 := get[D4](con)
-	if err := t.AddDependency(d4); err != nil {
-		panic(err)
-	}
-
-	t.AddInitializer(
-		func(ctx *Context, v T) error {
-			v1, err := d1.Resolve(ctx)
-			if err != nil {
-				return err
+	if err := t.AddInitializer(
+		func() (initializer[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddInitializerDependency(d1); err != nil {
+				return nil, err
 			}
 
-			v2, err := d2.Resolve(ctx)
-			if err != nil {
-				return err
+			d2 := get[D2](con)
+			if err := t.AddInitializerDependency(d2); err != nil {
+				return nil, err
 			}
 
-			v3, err := d3.Resolve(ctx)
-			if err != nil {
-				return err
+			d3 := get[D3](con)
+			if err := t.AddInitializerDependency(d3); err != nil {
+				return nil, err
 			}
 
-			v4, err := d4.Resolve(ctx)
-			if err != nil {
-				return err
+			d4 := get[D4](con)
+			if err := t.AddInitializerDependency(d4); err != nil {
+				return nil, err
 			}
 
-			return fn(ctx, v, v1, v2, v3, v4)
+			return func(ctx *Context, v T) error {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				return fn(ctx, v, v1, v2, v3, v4)
+			}, nil
 		},
-	)
+	); err != nil {
+		panic(err)
+	}
 }
 
 // Inject5 describes how to initialize values of type T after construction using
@@ -175,61 +191,65 @@ func Inject5[T, D1, D2, D3, D4, D5 any](
 ) {
 	t := get[T](con)
 
-	d1 := get[D1](con)
-	if err := t.AddDependency(d1); err != nil {
-		panic(err)
-	}
-
-	d2 := get[D2](con)
-	if err := t.AddDependency(d2); err != nil {
-		panic(err)
-	}
-
-	d3 := get[D3](con)
-	if err := t.AddDependency(d3); err != nil {
-		panic(err)
-	}
-
-	d4 := get[D4](con)
-	if err := t.AddDependency(d4); err != nil {
-		panic(err)
-	}
-
-	d5 := get[D5](con)
-	if err := t.AddDependency(d5); err != nil {
-		panic(err)
-	}
-
-	t.AddInitializer(
-		func(ctx *Context, v T) error {
-			v1, err := d1.Resolve(ctx)
-			if err != nil {
-				return err
+	if err := t.AddInitializer(
+		func() (initializer[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddInitializerDependency(d1); err != nil {
+				return nil, err
 			}
 
-			v2, err := d2.Resolve(ctx)
-			if err != nil {
-				return err
+			d2 := get[D2](con)
+			if err := t.AddInitializerDependency(d2); err != nil {
+				return nil, err
 			}
 
-			v3, err := d3.Resolve(ctx)
-			if err != nil {
-				return err
+			d3 := get[D3](con)
+			if err := t.AddInitializerDependency(d3); err != nil {
+				return nil, err
 			}
 
-			v4, err := d4.Resolve(ctx)
-			if err != nil {
-				return err
+			d4 := get[D4](con)
+			if err := t.AddInitializerDependency(d4); err != nil {
+				return nil, err
 			}
 
-			v5, err := d5.Resolve(ctx)
-			if err != nil {
-				return err
+			d5 := get[D5](con)
+			if err := t.AddInitializerDependency(d5); err != nil {
+				return nil, err
 			}
 
-			return fn(ctx, v, v1, v2, v3, v4, v5)
+			return func(ctx *Context, v T) error {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				return fn(ctx, v, v1, v2, v3, v4, v5)
+			}, nil
 		},
-	)
+	); err != nil {
+		panic(err)
+	}
 }
 
 // Inject6 describes how to initialize values of type T after construction using
@@ -241,71 +261,75 @@ func Inject6[T, D1, D2, D3, D4, D5, D6 any](
 ) {
 	t := get[T](con)
 
-	d1 := get[D1](con)
-	if err := t.AddDependency(d1); err != nil {
-		panic(err)
-	}
-
-	d2 := get[D2](con)
-	if err := t.AddDependency(d2); err != nil {
-		panic(err)
-	}
-
-	d3 := get[D3](con)
-	if err := t.AddDependency(d3); err != nil {
-		panic(err)
-	}
-
-	d4 := get[D4](con)
-	if err := t.AddDependency(d4); err != nil {
-		panic(err)
-	}
-
-	d5 := get[D5](con)
-	if err := t.AddDependency(d5); err != nil {
-		panic(err)
-	}
-
-	d6 := get[D6](con)
-	if err := t.AddDependency(d6); err != nil {
-		panic(err)
-	}
-
-	t.AddInitializer(
-		func(ctx *Context, v T) error {
-			v1, err := d1.Resolve(ctx)
-			if err != nil {
-				return err
+	if err := t.AddInitializer(
+		func() (initializer[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddInitializerDependency(d1); err != nil {
+				return nil, err
 			}
 
-			v2, err := d2.Resolve(ctx)
-			if err != nil {
-				return err
+			d2 := get[D2](con)
+			if err := t.AddInitializerDependency(d2); err != nil {
+				return nil, err
 			}
 
-			v3, err := d3.Resolve(ctx)
-			if err != nil {
-				return err
+			d3 := get[D3](con)
+			if err := t.AddInitializerDependency(d3); err != nil {
+				return nil, err
 			}
 
-			v4, err := d4.Resolve(ctx)
-			if err != nil {
-				return err
+			d4 := get[D4](con)
+			if err := t.AddInitializerDependency(d4); err != nil {
+				return nil, err
 			}
 
-			v5, err := d5.Resolve(ctx)
-			if err != nil {
-				return err
+			d5 := get[D5](con)
+			if err := t.AddInitializerDependency(d5); err != nil {
+				return nil, err
 			}
 
-			v6, err := d6.Resolve(ctx)
-			if err != nil {
-				return err
+			d6 := get[D6](con)
+			if err := t.AddInitializerDependency(d6); err != nil {
+				return nil, err
 			}
 
-			return fn(ctx, v, v1, v2, v3, v4, v5, v6)
+			return func(ctx *Context, v T) error {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				return fn(ctx, v, v1, v2, v3, v4, v5, v6)
+			}, nil
 		},
-	)
+	); err != nil {
+		panic(err)
+	}
 }
 
 // Inject7 describes how to initialize values of type T after construction using
@@ -317,81 +341,85 @@ func Inject7[T, D1, D2, D3, D4, D5, D6, D7 any](
 ) {
 	t := get[T](con)
 
-	d1 := get[D1](con)
-	if err := t.AddDependency(d1); err != nil {
-		panic(err)
-	}
-
-	d2 := get[D2](con)
-	if err := t.AddDependency(d2); err != nil {
-		panic(err)
-	}
-
-	d3 := get[D3](con)
-	if err := t.AddDependency(d3); err != nil {
-		panic(err)
-	}
-
-	d4 := get[D4](con)
-	if err := t.AddDependency(d4); err != nil {
-		panic(err)
-	}
-
-	d5 := get[D5](con)
-	if err := t.AddDependency(d5); err != nil {
-		panic(err)
-	}
-
-	d6 := get[D6](con)
-	if err := t.AddDependency(d6); err != nil {
-		panic(err)
-	}
-
-	d7 := get[D7](con)
-	if err := t.AddDependency(d7); err != nil {
-		panic(err)
-	}
-
-	t.AddInitializer(
-		func(ctx *Context, v T) error {
-			v1, err := d1.Resolve(ctx)
-			if err != nil {
-				return err
+	if err := t.AddInitializer(
+		func() (initializer[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddInitializerDependency(d1); err != nil {
+				return nil, err
 			}
 
-			v2, err := d2.Resolve(ctx)
-			if err != nil {
-				return err
+			d2 := get[D2](con)
+			if err := t.AddInitializerDependency(d2); err != nil {
+				return nil, err
 			}
 
-			v3, err := d3.Resolve(ctx)
-			if err != nil {
-				return err
+			d3 := get[D3](con)
+			if err := t.AddInitializerDependency(d3); err != nil {
+				return nil, err
 			}
 
-			v4, err := d4.Resolve(ctx)
-			if err != nil {
-				return err
+			d4 := get[D4](con)
+			if err := t.AddInitializerDependency(d4); err != nil {
+				return nil, err
 			}
 
-			v5, err := d5.Resolve(ctx)
-			if err != nil {
-				return err
+			d5 := get[D5](con)
+			if err := t.AddInitializerDependency(d5); err != nil {
+				return nil, err
 			}
 
-			v6, err := d6.Resolve(ctx)
-			if err != nil {
-				return err
+			d6 := get[D6](con)
+			if err := t.AddInitializerDependency(d6); err != nil {
+				return nil, err
 			}
 
-			v7, err := d7.Resolve(ctx)
-			if err != nil {
-				return err
+			d7 := get[D7](con)
+			if err := t.AddInitializerDependency(d7); err != nil {
+				return nil, err
 			}
 
-			return fn(ctx, v, v1, v2, v3, v4, v5, v6, v7)
+			return func(ctx *Context, v T) error {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				return fn(ctx, v, v1, v2, v3, v4, v5, v6, v7)
+			}, nil
 		},
-	)
+	); err != nil {
+		panic(err)
+	}
 }
 
 // Inject8 describes how to initialize values of type T after construction using
@@ -403,89 +431,93 @@ func Inject8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 ) {
 	t := get[T](con)
 
-	d1 := get[D1](con)
-	if err := t.AddDependency(d1); err != nil {
-		panic(err)
-	}
-
-	d2 := get[D2](con)
-	if err := t.AddDependency(d2); err != nil {
-		panic(err)
-	}
-
-	d3 := get[D3](con)
-	if err := t.AddDependency(d3); err != nil {
-		panic(err)
-	}
-
-	d4 := get[D4](con)
-	if err := t.AddDependency(d4); err != nil {
-		panic(err)
-	}
-
-	d5 := get[D5](con)
-	if err := t.AddDependency(d5); err != nil {
-		panic(err)
-	}
-
-	d6 := get[D6](con)
-	if err := t.AddDependency(d6); err != nil {
-		panic(err)
-	}
-
-	d7 := get[D7](con)
-	if err := t.AddDependency(d7); err != nil {
-		panic(err)
-	}
-
-	d8 := get[D8](con)
-	if err := t.AddDependency(d8); err != nil {
-		panic(err)
-	}
-
-	t.AddInitializer(
-		func(ctx *Context, v T) error {
-			v1, err := d1.Resolve(ctx)
-			if err != nil {
-				return err
+	if err := t.AddInitializer(
+		func() (initializer[T], error) {
+			d1 := get[D1](con)
+			if err := t.AddInitializerDependency(d1); err != nil {
+				return nil, err
 			}
 
-			v2, err := d2.Resolve(ctx)
-			if err != nil {
-				return err
+			d2 := get[D2](con)
+			if err := t.AddInitializerDependency(d2); err != nil {
+				return nil, err
 			}
 
-			v3, err := d3.Resolve(ctx)
-			if err != nil {
-				return err
+			d3 := get[D3](con)
+			if err := t.AddInitializerDependency(d3); err != nil {
+				return nil, err
 			}
 
-			v4, err := d4.Resolve(ctx)
-			if err != nil {
-				return err
+			d4 := get[D4](con)
+			if err := t.AddInitializerDependency(d4); err != nil {
+				return nil, err
 			}
 
-			v5, err := d5.Resolve(ctx)
-			if err != nil {
-				return err
+			d5 := get[D5](con)
+			if err := t.AddInitializerDependency(d5); err != nil {
+				return nil, err
 			}
 
-			v6, err := d6.Resolve(ctx)
-			if err != nil {
-				return err
+			d6 := get[D6](con)
+			if err := t.AddInitializerDependency(d6); err != nil {
+				return nil, err
 			}
 
-			v7, err := d7.Resolve(ctx)
-			if err != nil {
-				return err
+			d7 := get[D7](con)
+			if err := t.AddInitializerDependency(d7); err != nil {
+				return nil, err
 			}
 
-			v8, err := d8.Resolve(ctx)
-			if err != nil {
-				return err
+			d8 := get[D8](con)
+			if err := t.AddInitializerDependency(d8); err != nil {
+				return nil, err
 			}
 
-			return fn(ctx, v, v1, v2, v3, v4, v5, v6, v7, v8)
+			return func(ctx *Context, v T) error {
+				v1, err := d1.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v2, err := d2.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v3, err := d3.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v4, err := d4.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v5, err := d5.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v6, err := d6.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v7, err := d7.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				v8, err := d8.Resolve(ctx)
+				if err != nil {
+					return err
+				}
+
+				return fn(ctx, v, v1, v2, v3, v4, v5, v6, v7, v8)
+			}, nil
 		},
-	)
+	); err != nil {
+		panic(err)
+	}
 }
