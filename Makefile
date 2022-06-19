@@ -1,3 +1,4 @@
+IMBUE_GENERATED_FILES += inject.gen.go
 IMBUE_GENERATED_FILES += invoke.gen.go
 IMBUE_GENERATED_FILES += with.gen.go
 IMBUE_GENERATED_FILES += withgrouped.gen.go
