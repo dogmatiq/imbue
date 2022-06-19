@@ -1,6 +1,8 @@
 package imbue_test
 
 import (
+	"fmt"
+
 	"github.com/dogmatiq/imbue"
 )
 
@@ -18,6 +20,13 @@ func ExampleWith0() {
 			return &Dependency{}, nil
 		},
 	)
+
+	// Print the dependency tree.
+	fmt.Println(con)
+
+	// Output:
+	// <container>
+	// └── *imbue_test.Dependency
 }
 
 func ExampleWith1() {
@@ -41,6 +50,14 @@ func ExampleWith1() {
 			return &Dependency{up}, nil
 		},
 	)
+
+	// Print the dependency tree.
+	fmt.Println(con)
+
+	// Output:
+	// <container>
+	// └── *imbue_test.Dependency
+	//     └── *imbue_test.UpstreamDependency
 }
 
 func ExampleWith2() {
@@ -67,4 +84,13 @@ func ExampleWith2() {
 			return &Dependency{up1, up2}, nil
 		},
 	)
+
+	// Print the dependency tree.
+	fmt.Println(con)
+
+	// Output:
+	// <container>
+	// └── *imbue_test.Dependency
+	//     ├── *imbue_test.UpstreamDependency1
+	//     └── *imbue_test.UpstreamDependency2
 }

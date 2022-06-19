@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"reflect"
 	"sync"
+
+	"github.com/xlab/treeprint"
+	"golang.org/x/exp/slices"
 )
 
 // Container is a dependency injection container.
@@ -89,4 +92,53 @@ func get[T any](con *Container) *declarationOf[T] {
 	con.declarations[t] = d
 
 	return d
+}
+
+// String returns a string representation of the dependency tree.
+func (c *Container) String() string {
+	c.m.Lock()
+	declarations := sortDeclarations(c.declarations)
+	c.m.Unlock()
+
+	tree := treeprint.New()
+	tree.SetValue("<container>")
+
+	for _, d := range declarations {
+		if !d.IsDependency() {
+			buildTree(tree, d)
+		}
+	}
+
+	return tree.String()
+}
+
+// buildTree builds the tree of dependencies for the given declaration.
+func buildTree(t treeprint.Tree, d declaration) {
+	dependencies := d.Dependencies()
+
+	if len(dependencies) == 0 {
+		t.AddNode(d.GetType().String())
+		return
+	}
+
+	sub := t.AddBranch(d.GetType().String())
+
+	for _, dep := range dependencies {
+		buildTree(sub, dep)
+	}
+}
+
+// sortDeclarations returns the given declarations sorted by type.
+func sortDeclarations(declarations map[reflect.Type]declaration) []declaration {
+	sorted := make([]declaration, 0, len(declarations))
+
+	for _, d := range declarations {
+		sorted = append(sorted, d)
+	}
+
+	slices.SortFunc(sorted, func(a, b declaration) bool {
+		return a.GetType().String() < b.GetType().String()
+	})
+
+	return sorted
 }

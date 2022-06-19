@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- Add `Container.String()`, which returns a string representation of the dependency tree.
+
 ### Changed
 
 - **[BC]** Reduce number of supported dependencies to 8
