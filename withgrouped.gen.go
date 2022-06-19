@@ -20,7 +20,8 @@ func With0Grouped[G Group, T any](
 	)
 }
 
-// With1Grouped describes how to construct grouped values of type T from a single dependency.
+// With1Grouped describes how to construct grouped values of type T from a
+// single dependency.
 //
 // G is the group that contains the dependency.
 // T is the type of the dependency.
@@ -38,7 +39,8 @@ func With1Grouped[G Group, T, D any](
 	)
 }
 
-// With2Grouped describes how to construct grouped values of type T from 2 dependencies.
+// With2Grouped describes how to construct grouped values of type T from 2
+// dependencies.
 //
 // G is the group that contains the dependency.
 // T is the type of the dependency.
@@ -56,7 +58,8 @@ func With2Grouped[G Group, T, D1, D2 any](
 	)
 }
 
-// With3Grouped describes how to construct grouped values of type T from 3 dependencies.
+// With3Grouped describes how to construct grouped values of type T from 3
+// dependencies.
 //
 // G is the group that contains the dependency.
 // T is the type of the dependency.
@@ -74,7 +77,8 @@ func With3Grouped[G Group, T, D1, D2, D3 any](
 	)
 }
 
-// With4Grouped describes how to construct grouped values of type T from 4 dependencies.
+// With4Grouped describes how to construct grouped values of type T from 4
+// dependencies.
 //
 // G is the group that contains the dependency.
 // T is the type of the dependency.
@@ -92,7 +96,8 @@ func With4Grouped[G Group, T, D1, D2, D3, D4 any](
 	)
 }
 
-// With5Grouped describes how to construct grouped values of type T from 5 dependencies.
+// With5Grouped describes how to construct grouped values of type T from 5
+// dependencies.
 //
 // G is the group that contains the dependency.
 // T is the type of the dependency.
@@ -110,7 +115,8 @@ func With5Grouped[G Group, T, D1, D2, D3, D4, D5 any](
 	)
 }
 
-// With6Grouped describes how to construct grouped values of type T from 6 dependencies.
+// With6Grouped describes how to construct grouped values of type T from 6
+// dependencies.
 //
 // G is the group that contains the dependency.
 // T is the type of the dependency.
@@ -128,7 +134,8 @@ func With6Grouped[G Group, T, D1, D2, D3, D4, D5, D6 any](
 	)
 }
 
-// With7Grouped describes how to construct grouped values of type T from 7 dependencies.
+// With7Grouped describes how to construct grouped values of type T from 7
+// dependencies.
 //
 // G is the group that contains the dependency.
 // T is the type of the dependency.
@@ -146,7 +153,8 @@ func With7Grouped[G Group, T, D1, D2, D3, D4, D5, D6, D7 any](
 	)
 }
 
-// With8Grouped describes how to construct grouped values of type T from 8 dependencies.
+// With8Grouped describes how to construct grouped values of type T from 8
+// dependencies.
 //
 // G is the group that contains the dependency.
 // T is the type of the dependency.

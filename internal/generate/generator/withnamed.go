@@ -20,21 +20,13 @@ func generateWithNamedFunc(code *jen.File, depCount int) {
 
 	switch depCount {
 	case 0:
-		code.Commentf(
-			"%s describes how to construct named values of type T.",
-			name,
-		)
+		code.Commentf("%s describes how to construct named values of type T.", name)
 	case 1:
-		code.Commentf(
-			"%s describes how to construct named values of type T from a single dependency.",
-			name,
-		)
+		code.Commentf("%s describes how to construct named values of type T from a single", name)
+		code.Commentf("dependency.")
 	default:
-		code.Commentf(
-			"%s describes how to construct named values of type T from %d dependencies.",
-			name,
-			depCount,
-		)
+		code.Commentf("%s describes how to construct named values of type T from %d", name, depCount)
+		code.Commentf("dependencies.")
 	}
 
 	code.Comment("")

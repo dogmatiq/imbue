@@ -20,7 +20,8 @@ func With0Named[N Name[T], T any](
 	)
 }
 
-// With1Named describes how to construct named values of type T from a single dependency.
+// With1Named describes how to construct named values of type T from a single
+// dependency.
 //
 // N is the name given to the dependency.
 // T is the type of the dependency.
@@ -38,7 +39,8 @@ func With1Named[N Name[T], T, D any](
 	)
 }
 
-// With2Named describes how to construct named values of type T from 2 dependencies.
+// With2Named describes how to construct named values of type T from 2
+// dependencies.
 //
 // N is the name given to the dependency.
 // T is the type of the dependency.
@@ -56,7 +58,8 @@ func With2Named[N Name[T], T, D1, D2 any](
 	)
 }
 
-// With3Named describes how to construct named values of type T from 3 dependencies.
+// With3Named describes how to construct named values of type T from 3
+// dependencies.
 //
 // N is the name given to the dependency.
 // T is the type of the dependency.
@@ -74,7 +77,8 @@ func With3Named[N Name[T], T, D1, D2, D3 any](
 	)
 }
 
-// With4Named describes how to construct named values of type T from 4 dependencies.
+// With4Named describes how to construct named values of type T from 4
+// dependencies.
 //
 // N is the name given to the dependency.
 // T is the type of the dependency.
@@ -92,7 +96,8 @@ func With4Named[N Name[T], T, D1, D2, D3, D4 any](
 	)
 }
 
-// With5Named describes how to construct named values of type T from 5 dependencies.
+// With5Named describes how to construct named values of type T from 5
+// dependencies.
 //
 // N is the name given to the dependency.
 // T is the type of the dependency.
@@ -110,7 +115,8 @@ func With5Named[N Name[T], T, D1, D2, D3, D4, D5 any](
 	)
 }
 
-// With6Named describes how to construct named values of type T from 6 dependencies.
+// With6Named describes how to construct named values of type T from 6
+// dependencies.
 //
 // N is the name given to the dependency.
 // T is the type of the dependency.
@@ -128,7 +134,8 @@ func With6Named[N Name[T], T, D1, D2, D3, D4, D5, D6 any](
 	)
 }
 
-// With7Named describes how to construct named values of type T from 7 dependencies.
+// With7Named describes how to construct named values of type T from 7
+// dependencies.
 //
 // N is the name given to the dependency.
 // T is the type of the dependency.
@@ -146,7 +153,8 @@ func With7Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7 any](
 	)
 }
 
-// With8Named describes how to construct named values of type T from 8 dependencies.
+// With8Named describes how to construct named values of type T from 8
+// dependencies.
 //
 // N is the name given to the dependency.
 // T is the type of the dependency.

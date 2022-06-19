@@ -20,16 +20,9 @@ func generateInvokeFunc(code *jen.File, depCount int) {
 
 	switch depCount {
 	case 1:
-		code.Commentf(
-			"%s calls a function with a single dependency.",
-			name,
-		)
+		code.Commentf("%s calls a function with a single dependency.", name)
 	default:
-		code.Commentf(
-			"%s calls a function with %d dependencies.",
-			name,
-			depCount,
-		)
+		code.Commentf("%s calls a function with %d dependencies.", name, depCount)
 	}
 
 	code.
