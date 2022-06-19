@@ -37,6 +37,17 @@ type declaration interface {
 // constructor is a function that constructs values of type T.
 type constructor[T any] func(*Context) (T, error)
 
+// initializer is a function that is called after T's constructor.
+type initializer[T any] func(*Context, T) error
+
+// initializerEntry encapsulates an initializer and information about where it
+// was declared.
+type initializerEntry[T any] struct {
+	File string
+	Line int
+	Init initializer[T]
+}
+
 // declarationOf describes how to build values of type T.
 type declarationOf[T any] struct {
 	m sync.Mutex
@@ -48,6 +59,7 @@ type declarationOf[T any] struct {
 	deps          map[reflect.Type]declaration
 	isDep         bool
 	construct     constructor[T]
+	initializers  []initializerEntry[T]
 	value         T
 }
 
@@ -72,6 +84,26 @@ func (d *declarationOf[T]) Declare(
 	d.m.Unlock()
 
 	return nil
+}
+
+// AddInitializer adds an initializer function that is called after T's
+// constructor.
+func (d *declarationOf[T]) AddInitializer(
+	init initializer[T],
+) {
+	file, line := findLocation()
+
+	d.m.Lock()
+	defer d.m.Unlock()
+
+	d.initializers = append(
+		d.initializers,
+		initializerEntry[T]{
+			File: file,
+			Line: line,
+			Init: init,
+		},
+	)
 }
 
 // AddDependency marks t as a dependency of d.
@@ -151,8 +183,21 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 		)
 	}
 
+	for _, e := range d.initializers {
+		if err := e.Init(ctx, v); err != nil {
+			return d.value, fmt.Errorf(
+				"initializer for %s (%s:%d) failed: %w",
+				d.GetType(),
+				filepath.Base(e.File),
+				e.Line,
+				err,
+			)
+		}
+	}
+
 	d.isConstructed = true
 	d.construct = nil
+	d.initializers = nil
 	d.value = v
 
 	return v, nil

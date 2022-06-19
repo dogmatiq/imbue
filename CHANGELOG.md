@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog], and this project adheres to
 ### Added
 
 - Add `Container.String()`, which returns a string representation of the dependency tree.
+- Add `InjectX()` functions for injecting dependencies into values after they are constructed.
 
 ### Changed
 
