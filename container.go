@@ -13,7 +13,7 @@ import (
 type Container struct {
 	m            sync.Mutex
 	declarations map[reflect.Type]declaration
-	closers      []func() error
+	deferred     []func() error
 }
 
 // closeError is returned when there are one or more errors closing the
@@ -26,8 +26,8 @@ func (e closeError) Error() string {
 		len(e),
 	)
 
-	for _, err := range e {
-		message += fmt.Sprintf("\n\t%s", err)
+	for i, err := range e {
+		message += fmt.Sprintf("\n\t%d) %s", i+1, err)
 	}
 
 	return message
@@ -39,13 +39,13 @@ func (c *Container) Close() error {
 	c.m.Lock()
 	defer c.m.Unlock()
 
-	closers := c.closers
-	c.closers = nil
+	deferred := c.deferred
+	c.deferred = nil
 
 	var errors closeError
 
-	for i := len(closers) - 1; i >= 0; i-- {
-		if err := closers[i](); err != nil {
+	for i := len(deferred) - 1; i >= 0; i-- {
+		if err := deferred[i](); err != nil {
 			errors = append(errors, err)
 		}
 	}
@@ -62,7 +62,7 @@ func (c *Container) addDefer(fn func() error) {
 	c.m.Lock()
 	defer c.m.Unlock()
 
-	c.closers = append(c.closers, fn)
+	c.deferred = append(c.deferred, fn)
 }
 
 // New returns a new, empty container.

@@ -1,11 +1,14 @@
 package imbue_test
 
 import (
+	"context"
+	"errors"
 	"strings"
 
 	"github.com/dogmatiq/imbue"
 	"github.com/google/go-cmp/cmp"
 	. "github.com/onsi/ginkgo/v2"
+	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("type Container", func() {
@@ -17,6 +20,105 @@ var _ = Describe("type Container", func() {
 
 	AfterEach(func() {
 		container.Close()
+	})
+
+	Describe("func Defer()", func() {
+		It("calls deferred functions in reverse order", func() {
+			var order []string
+
+			imbue.With0(
+				container,
+				func(
+					ctx *imbue.Context,
+				) (Concrete1, error) {
+					ctx.Defer(func() error {
+						order = append(order, "<defer-1>")
+						return nil
+					})
+					return "<concrete-1>", nil
+				},
+			)
+
+			imbue.With1(
+				container,
+				func(
+					ctx *imbue.Context,
+					_ Concrete1,
+				) (Concrete2, error) {
+					ctx.Defer(func() error {
+						order = append(order, "<defer-2>")
+						return nil
+					})
+					return "<concrete-2>", nil
+				},
+			)
+
+			imbue.Invoke1(
+				context.Background(),
+				container,
+				func(
+					ctx context.Context,
+					_ Concrete2,
+				) error {
+					return nil
+				},
+			)
+
+			err := container.Close()
+			Expect(err).ShouldNot(HaveOccurred())
+			Expect(order).To(Equal([]string{
+				"<defer-2>",
+				"<defer-1>",
+			}))
+		})
+
+		It("returns all errors returned by deferred functions", func() {
+			imbue.With0(
+				container,
+				func(
+					ctx *imbue.Context,
+				) (Concrete1, error) {
+					ctx.Defer(func() error {
+						return errors.New("<error-1>")
+					})
+					return "<concrete-1>", nil
+				},
+			)
+
+			imbue.With1(
+				container,
+				func(
+					ctx *imbue.Context,
+					_ Concrete1,
+				) (Concrete2, error) {
+					ctx.Defer(func() error {
+						return errors.New("<error-2>")
+					})
+					return "<concrete-2>", nil
+				},
+			)
+
+			imbue.Invoke1(
+				context.Background(),
+				container,
+				func(
+					ctx context.Context,
+					_ Concrete2,
+				) error {
+					return nil
+				},
+			)
+
+			err := container.Close()
+			Expect(err).To(
+				MatchError(
+					"2 error(s) occurred while closing the container:"+
+						"\n\t1) <error-2>"+
+						"\n\t2) <error-1>",
+				),
+				err.Error(),
+			)
+		})
 	})
 
 	Describe("func String()", func() {
