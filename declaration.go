@@ -144,7 +144,7 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 	if err != nil {
 		return d.value, fmt.Errorf(
 			"constructor for %s (%s:%d) failed: %w",
-			typeOf[T](),
+			d.GetType(),
 			filepath.Base(d.file),
 			d.line,
 			err,
