@@ -59,6 +59,10 @@ func generateWithFunc(code *jen.File, depCount int) {
 					declaringType(depCount),
 					jen.Error(),
 				),
+			jen.Line().
+				Id("options").
+				Op("...").
+				Qual(pkgPath, "WithOption"),
 			jen.Line(),
 		).
 		BlockFunc(func(g *jen.Group) {

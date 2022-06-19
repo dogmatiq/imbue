@@ -9,6 +9,7 @@ func Invoke1[D any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D) error,
+	options ...InvokeOption,
 ) error {
 	rctx := rootContext(ctx, con)
 
@@ -25,6 +26,7 @@ func Invoke2[D1, D2 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2) error,
+	options ...InvokeOption,
 ) error {
 	rctx := rootContext(ctx, con)
 
@@ -46,6 +48,7 @@ func Invoke3[D1, D2, D3 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3) error,
+	options ...InvokeOption,
 ) error {
 	rctx := rootContext(ctx, con)
 
@@ -72,6 +75,7 @@ func Invoke4[D1, D2, D3, D4 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4) error,
+	options ...InvokeOption,
 ) error {
 	rctx := rootContext(ctx, con)
 
@@ -103,6 +107,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5) error,
+	options ...InvokeOption,
 ) error {
 	rctx := rootContext(ctx, con)
 
@@ -139,6 +144,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
+	options ...InvokeOption,
 ) error {
 	rctx := rootContext(ctx, con)
 
@@ -180,6 +186,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
+	options ...InvokeOption,
 ) error {
 	rctx := rootContext(ctx, con)
 
@@ -226,6 +233,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
+	options ...InvokeOption,
 ) error {
 	rctx := rootContext(ctx, con)
 

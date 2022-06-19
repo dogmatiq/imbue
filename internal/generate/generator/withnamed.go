@@ -67,6 +67,10 @@ func generateWithNamedFunc(code *jen.File, depCount int) {
 					declaringType(depCount),
 					jen.Error(),
 				),
+			jen.Line().
+				Id("options").
+				Op("...").
+				Qual(pkgPath, "WithNamedOption"),
 			jen.Line(),
 		).
 		BlockFunc(func(g *jen.Group) {

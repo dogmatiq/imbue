@@ -6,6 +6,7 @@ package imbue
 func With0[T any](
 	con *Container,
 	fn func(*Context) (T, error),
+	options ...WithOption,
 ) {
 	t := get[T](con)
 
@@ -22,6 +23,7 @@ func With0[T any](
 func With1[T, D any](
 	con *Container,
 	fn func(*Context, D) (T, error),
+	options ...WithOption,
 ) {
 	t := get[T](con)
 
@@ -50,6 +52,7 @@ func With1[T, D any](
 func With2[T, D1, D2 any](
 	con *Container,
 	fn func(*Context, D1, D2) (T, error),
+	options ...WithOption,
 ) {
 	t := get[T](con)
 
@@ -88,6 +91,7 @@ func With2[T, D1, D2 any](
 func With3[T, D1, D2, D3 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3) (T, error),
+	options ...WithOption,
 ) {
 	t := get[T](con)
 
@@ -136,6 +140,7 @@ func With3[T, D1, D2, D3 any](
 func With4[T, D1, D2, D3, D4 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4) (T, error),
+	options ...WithOption,
 ) {
 	t := get[T](con)
 
@@ -194,6 +199,7 @@ func With4[T, D1, D2, D3, D4 any](
 func With5[T, D1, D2, D3, D4, D5 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5) (T, error),
+	options ...WithOption,
 ) {
 	t := get[T](con)
 
@@ -262,6 +268,7 @@ func With5[T, D1, D2, D3, D4, D5 any](
 func With6[T, D1, D2, D3, D4, D5, D6 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6) (T, error),
+	options ...WithOption,
 ) {
 	t := get[T](con)
 
@@ -340,6 +347,7 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7) (T, error),
+	options ...WithOption,
 ) {
 	t := get[T](con)
 
@@ -428,6 +436,7 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
+	options ...WithOption,
 ) {
 	t := get[T](con)
 

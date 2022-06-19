@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog], and this project adheres to
 ### Changed
 
 - **[BC]** Reduce number of supported dependencies to 8
+- Add option parameters to `WithX()`, `WithXNamed()` and `InvokeX()`
 
 ## [0.2.0] - 2022-06-14
 

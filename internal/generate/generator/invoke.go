@@ -52,6 +52,10 @@ func generateInvokeFunc(code *jen.File, depCount int) {
 				Params(
 					jen.Error(),
 				),
+			jen.Line().
+				Id("options").
+				Op("...").
+				Qual(pkgPath, "InvokeOption"),
 			jen.Line(),
 		).
 		Params(

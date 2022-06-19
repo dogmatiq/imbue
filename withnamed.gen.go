@@ -9,6 +9,7 @@ package imbue
 func With0Named[N Name[T], T any](
 	con *Container,
 	fn func(*Context) (T, error),
+	options ...WithNamedOption,
 ) {
 	With0(
 		con,
@@ -26,6 +27,7 @@ func With0Named[N Name[T], T any](
 func With1Named[N Name[T], T, D any](
 	con *Container,
 	fn func(*Context, D) (T, error),
+	options ...WithNamedOption,
 ) {
 	With1(
 		con,
@@ -43,6 +45,7 @@ func With1Named[N Name[T], T, D any](
 func With2Named[N Name[T], T, D1, D2 any](
 	con *Container,
 	fn func(*Context, D1, D2) (T, error),
+	options ...WithNamedOption,
 ) {
 	With2(
 		con,
@@ -60,6 +63,7 @@ func With2Named[N Name[T], T, D1, D2 any](
 func With3Named[N Name[T], T, D1, D2, D3 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3) (T, error),
+	options ...WithNamedOption,
 ) {
 	With3(
 		con,
@@ -77,6 +81,7 @@ func With3Named[N Name[T], T, D1, D2, D3 any](
 func With4Named[N Name[T], T, D1, D2, D3, D4 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4) (T, error),
+	options ...WithNamedOption,
 ) {
 	With4(
 		con,
@@ -94,6 +99,7 @@ func With4Named[N Name[T], T, D1, D2, D3, D4 any](
 func With5Named[N Name[T], T, D1, D2, D3, D4, D5 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5) (T, error),
+	options ...WithNamedOption,
 ) {
 	With5(
 		con,
@@ -111,6 +117,7 @@ func With5Named[N Name[T], T, D1, D2, D3, D4, D5 any](
 func With6Named[N Name[T], T, D1, D2, D3, D4, D5, D6 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6) (T, error),
+	options ...WithNamedOption,
 ) {
 	With6(
 		con,
@@ -128,6 +135,7 @@ func With6Named[N Name[T], T, D1, D2, D3, D4, D5, D6 any](
 func With7Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7) (T, error),
+	options ...WithNamedOption,
 ) {
 	With7(
 		con,
@@ -145,6 +153,7 @@ func With7Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7 any](
 func With8Named[N Name[T], T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
 	fn func(*Context, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
+	options ...WithNamedOption,
 ) {
 	With8(
 		con,
