@@ -1,5 +1,6 @@
 IMBUE_GENERATED_FILES += invoke.gen.go
 IMBUE_GENERATED_FILES += with.gen.go
+IMBUE_GENERATED_FILES += withgrouped.gen.go
 IMBUE_GENERATED_FILES += withnamed.gen.go
 
 GENERATED_FILES += $(IMBUE_GENERATED_FILES)

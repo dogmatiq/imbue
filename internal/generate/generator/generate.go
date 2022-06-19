@@ -116,6 +116,16 @@ func namedType(depCount int) *jen.Statement {
 	return jen.Id(namedTypeString(depCount))
 }
 
+// groupedTypeString returns the type name to use for a grouped dependency.
+func groupedTypeString(depCount int) string {
+	return "G"
+}
+
+// groupedType returns the type name to use for a grouped dependency.
+func groupedType(depCount int) *jen.Statement {
+	return jen.Id(groupedTypeString(depCount))
+}
+
 // dependencyType returns the type name to use for the n'th dependency.
 func dependencyType(depCount, n int) *jen.Statement {
 	if depCount == 1 {
