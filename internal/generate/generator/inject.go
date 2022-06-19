@@ -20,11 +20,11 @@ func generateInjectFunc(code *jen.File, depCount int) {
 
 	switch depCount {
 	case 1:
-		code.Commentf("%s describes how to initialize values of type T after it is constructed", name)
-		code.Commentf("using a single additional dependency.")
+		code.Commentf("%s describes how to initialize values of type T after construction using", name)
+		code.Commentf("a single additional dependency.")
 	default:
-		code.Commentf("%s describes how to initialize values of type T after it is constructed", name)
-		code.Commentf("using additional %d dependencies.", depCount)
+		code.Commentf("%s describes how to initialize values of type T after construction using", name)
+		code.Commentf("%d additional dependencies.", depCount)
 	}
 
 	code.

@@ -2,8 +2,8 @@
 
 package imbue
 
-// Inject1 describes how to initialize values of type T after it is constructed
-// using a single additional dependency.
+// Inject1 describes how to initialize values of type T after construction using
+// a single additional dependency.
 func Inject1[T, D any](
 	con *Container,
 	fn func(*Context, T, D) error,
@@ -28,8 +28,8 @@ func Inject1[T, D any](
 	)
 }
 
-// Inject2 describes how to initialize values of type T after it is constructed
-// using additional 2 dependencies.
+// Inject2 describes how to initialize values of type T after construction using
+// 2 additional dependencies.
 func Inject2[T, D1, D2 any](
 	con *Container,
 	fn func(*Context, T, D1, D2) error,
@@ -64,8 +64,8 @@ func Inject2[T, D1, D2 any](
 	)
 }
 
-// Inject3 describes how to initialize values of type T after it is constructed
-// using additional 3 dependencies.
+// Inject3 describes how to initialize values of type T after construction using
+// 3 additional dependencies.
 func Inject3[T, D1, D2, D3 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3) error,
@@ -110,8 +110,8 @@ func Inject3[T, D1, D2, D3 any](
 	)
 }
 
-// Inject4 describes how to initialize values of type T after it is constructed
-// using additional 4 dependencies.
+// Inject4 describes how to initialize values of type T after construction using
+// 4 additional dependencies.
 func Inject4[T, D1, D2, D3, D4 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4) error,
@@ -166,8 +166,8 @@ func Inject4[T, D1, D2, D3, D4 any](
 	)
 }
 
-// Inject5 describes how to initialize values of type T after it is constructed
-// using additional 5 dependencies.
+// Inject5 describes how to initialize values of type T after construction using
+// 5 additional dependencies.
 func Inject5[T, D1, D2, D3, D4, D5 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4, D5) error,
@@ -232,8 +232,8 @@ func Inject5[T, D1, D2, D3, D4, D5 any](
 	)
 }
 
-// Inject6 describes how to initialize values of type T after it is constructed
-// using additional 6 dependencies.
+// Inject6 describes how to initialize values of type T after construction using
+// 6 additional dependencies.
 func Inject6[T, D1, D2, D3, D4, D5, D6 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4, D5, D6) error,
@@ -308,8 +308,8 @@ func Inject6[T, D1, D2, D3, D4, D5, D6 any](
 	)
 }
 
-// Inject7 describes how to initialize values of type T after it is constructed
-// using additional 7 dependencies.
+// Inject7 describes how to initialize values of type T after construction using
+// 7 additional dependencies.
 func Inject7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4, D5, D6, D7) error,
@@ -394,8 +394,8 @@ func Inject7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	)
 }
 
-// Inject8 describes how to initialize values of type T after it is constructed
-// using additional 8 dependencies.
+// Inject8 describes how to initialize values of type T after construction using
+// 8 additional dependencies.
 func Inject8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4, D5, D6, D7, D8) error,
