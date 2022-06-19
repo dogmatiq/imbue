@@ -43,7 +43,7 @@ func generateWithFunc(code *jen.File, depCount int) {
 				Id("fn").
 				Func().
 				Params(
-					inputTypes(imbueContextType(), depCount)...,
+					inputTypes(depCount, imbueContextType())...,
 				).
 				Params(
 					declaringType(depCount),
@@ -202,7 +202,7 @@ func generateConstructorFuncBody(depCount int, code *jen.Group) {
 			jen.
 				Id("fn").
 				Call(
-					inputVars(depCount)...,
+					inputVars(depCount, contextVar())...,
 				),
 		)
 }

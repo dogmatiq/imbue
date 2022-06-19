@@ -168,12 +168,8 @@ func types(depCount int, types ...jen.Code) []jen.Code {
 }
 
 // inputVars returns the names of the input parameters to a function with the
-// given number of dependencies, including the "ctx" parameter.
-func inputVars(depCount int) []jen.Code {
-	params := []jen.Code{
-		contextVar(),
-	}
-
+// given number of dependencies.
+func inputVars(depCount int, params ...jen.Code) []jen.Code {
 	for n := 0; n < depCount; n++ {
 		params = append(
 			params,
@@ -184,12 +180,8 @@ func inputVars(depCount int) []jen.Code {
 }
 
 // inputTypes returns the types of the input parameters to a function with
-// the given number of dependencies, including the "ctx" parameter.
-func inputTypes(ctxType *jen.Statement, depCount int) []jen.Code {
-	types := []jen.Code{
-		ctxType,
-	}
-
+// the given number of dependencies.
+func inputTypes(depCount int, types ...jen.Code) []jen.Code {
 	for n := 0; n < depCount; n++ {
 		types = append(
 			types,

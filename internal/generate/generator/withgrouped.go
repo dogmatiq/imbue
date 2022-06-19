@@ -50,7 +50,7 @@ func generateWithGroupedFunc(code *jen.File, depCount int) {
 				Id("fn").
 				Func().
 				Params(
-					inputTypes(imbueContextType(), depCount)...,
+					inputTypes(depCount, imbueContextType())...,
 				).
 				Params(
 					declaringType(depCount),
@@ -95,7 +95,7 @@ func generateWithGroupedFuncBody(depCount int, code *jen.Group) {
 						Op(":=").
 						Id("fn").
 						Call(
-							inputVars(depCount)...,
+							inputVars(depCount, contextVar())...,
 						),
 					jen.
 						Return(
