@@ -8,4 +8,5 @@
 
 Imbue is a type-safe dependency injection container for Go.
 
-It supports named dependencies, dependency groups, and deferring closure of dependencies until the container itself is closed.
+It supports named dependencies, dependency groups, and deferring closure of
+dependencies until the container itself is closed.
