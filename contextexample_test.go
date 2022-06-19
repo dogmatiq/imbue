@@ -15,7 +15,7 @@ func (c Closable) Close() error {
 	return nil
 }
 
-func Example_defer() {
+func ExampleContext_Defer() {
 	con := imbue.New()
 	defer con.Close()
 
