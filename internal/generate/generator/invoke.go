@@ -37,7 +37,7 @@ func generateInvokeFunc(code *jen.File, depCount int) {
 			jen.Line().
 				Add(containerParam()),
 			jen.Line().
-				Id("fn").
+				Add(invokeFuncVar()).
 				Func().
 				Params(
 					inputTypes(depCount, stdContextType())...,
@@ -103,7 +103,7 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 
 	code.Return(
 		jen.
-			Id("fn").
+			Add(invokeFuncVar()).
 			Call(
 				inputVars(depCount, contextVar())...,
 			),

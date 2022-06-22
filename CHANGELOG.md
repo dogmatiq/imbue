@@ -12,9 +12,13 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- Add `Decorate0()`
+
 ### Changed
 
-- **[BC]** Rename `InjectX()` to `DecorateX()`
+- **[BC]** Rename `InjectX()` to `DecorateX()` and add return value
 
 ## [0.3.1] - 2022-06-19
 

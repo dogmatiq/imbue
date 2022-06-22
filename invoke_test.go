@@ -140,8 +140,8 @@ var _ = Describe("func InvokeX()", func() {
 				ctx *imbue.Context,
 				v Concrete1,
 				dep Concrete2,
-			) error {
-				return errors.New("<error>")
+			) (Concrete1, error) {
+				return "", errors.New("<error>")
 			},
 		)
 

@@ -2,11 +2,38 @@
 
 package imbue
 
+// Decorate0 describes how to decorate values of type T after construction.
+//
+// The dependency being decorated is passed to dec and replaced with
+// the decorator's return value.
+//
+// The decorated dependency may be manipulated in-place.
+func Decorate0[T any](
+	con *Container,
+	dec func(*Context, T) (T, error),
+	options ...DecorateOption,
+) {
+	t := get[T](con)
+
+	if err := t.AddDecorator(
+		func() (decorator[T], error) {
+			return dec, nil
+		},
+	); err != nil {
+		panic(err)
+	}
+}
+
 // Decorate1 describes how to decorate values of type T after construction using
 // a single additional dependency.
+//
+// The dependency being decorated is passed to dec and replaced with
+// the decorator's return value.
+//
+// The decorated dependency may be manipulated in-place.
 func Decorate1[T, D any](
 	con *Container,
-	fn func(*Context, T, D) error,
+	dec func(*Context, T, D) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -18,13 +45,13 @@ func Decorate1[T, D any](
 				return nil, err
 			}
 
-			return func(ctx *Context, v T) error {
+			return func(ctx *Context, v T) (T, error) {
 				v1, err := d1.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
-				return fn(ctx, v, v1)
+				return dec(ctx, v, v1)
 			}, nil
 		},
 	); err != nil {
@@ -34,9 +61,14 @@ func Decorate1[T, D any](
 
 // Decorate2 describes how to decorate values of type T after construction using
 // 2 additional dependencies.
+//
+// The dependency being decorated is passed to dec and replaced with
+// the decorator's return value.
+//
+// The decorated dependency may be manipulated in-place.
 func Decorate2[T, D1, D2 any](
 	con *Container,
-	fn func(*Context, T, D1, D2) error,
+	dec func(*Context, T, D1, D2) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -53,18 +85,18 @@ func Decorate2[T, D1, D2 any](
 				return nil, err
 			}
 
-			return func(ctx *Context, v T) error {
+			return func(ctx *Context, v T) (T, error) {
 				v1, err := d1.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v2, err := d2.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
-				return fn(ctx, v, v1, v2)
+				return dec(ctx, v, v1, v2)
 			}, nil
 		},
 	); err != nil {
@@ -74,9 +106,14 @@ func Decorate2[T, D1, D2 any](
 
 // Decorate3 describes how to decorate values of type T after construction using
 // 3 additional dependencies.
+//
+// The dependency being decorated is passed to dec and replaced with
+// the decorator's return value.
+//
+// The decorated dependency may be manipulated in-place.
 func Decorate3[T, D1, D2, D3 any](
 	con *Container,
-	fn func(*Context, T, D1, D2, D3) error,
+	dec func(*Context, T, D1, D2, D3) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -98,23 +135,23 @@ func Decorate3[T, D1, D2, D3 any](
 				return nil, err
 			}
 
-			return func(ctx *Context, v T) error {
+			return func(ctx *Context, v T) (T, error) {
 				v1, err := d1.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v2, err := d2.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v3, err := d3.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
-				return fn(ctx, v, v1, v2, v3)
+				return dec(ctx, v, v1, v2, v3)
 			}, nil
 		},
 	); err != nil {
@@ -124,9 +161,14 @@ func Decorate3[T, D1, D2, D3 any](
 
 // Decorate4 describes how to decorate values of type T after construction using
 // 4 additional dependencies.
+//
+// The dependency being decorated is passed to dec and replaced with
+// the decorator's return value.
+//
+// The decorated dependency may be manipulated in-place.
 func Decorate4[T, D1, D2, D3, D4 any](
 	con *Container,
-	fn func(*Context, T, D1, D2, D3, D4) error,
+	dec func(*Context, T, D1, D2, D3, D4) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -153,28 +195,28 @@ func Decorate4[T, D1, D2, D3, D4 any](
 				return nil, err
 			}
 
-			return func(ctx *Context, v T) error {
+			return func(ctx *Context, v T) (T, error) {
 				v1, err := d1.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v2, err := d2.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v3, err := d3.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v4, err := d4.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
-				return fn(ctx, v, v1, v2, v3, v4)
+				return dec(ctx, v, v1, v2, v3, v4)
 			}, nil
 		},
 	); err != nil {
@@ -184,9 +226,14 @@ func Decorate4[T, D1, D2, D3, D4 any](
 
 // Decorate5 describes how to decorate values of type T after construction using
 // 5 additional dependencies.
+//
+// The dependency being decorated is passed to dec and replaced with
+// the decorator's return value.
+//
+// The decorated dependency may be manipulated in-place.
 func Decorate5[T, D1, D2, D3, D4, D5 any](
 	con *Container,
-	fn func(*Context, T, D1, D2, D3, D4, D5) error,
+	dec func(*Context, T, D1, D2, D3, D4, D5) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -218,33 +265,33 @@ func Decorate5[T, D1, D2, D3, D4, D5 any](
 				return nil, err
 			}
 
-			return func(ctx *Context, v T) error {
+			return func(ctx *Context, v T) (T, error) {
 				v1, err := d1.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v2, err := d2.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v3, err := d3.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v4, err := d4.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v5, err := d5.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
-				return fn(ctx, v, v1, v2, v3, v4, v5)
+				return dec(ctx, v, v1, v2, v3, v4, v5)
 			}, nil
 		},
 	); err != nil {
@@ -254,9 +301,14 @@ func Decorate5[T, D1, D2, D3, D4, D5 any](
 
 // Decorate6 describes how to decorate values of type T after construction using
 // 6 additional dependencies.
+//
+// The dependency being decorated is passed to dec and replaced with
+// the decorator's return value.
+//
+// The decorated dependency may be manipulated in-place.
 func Decorate6[T, D1, D2, D3, D4, D5, D6 any](
 	con *Container,
-	fn func(*Context, T, D1, D2, D3, D4, D5, D6) error,
+	dec func(*Context, T, D1, D2, D3, D4, D5, D6) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -293,38 +345,38 @@ func Decorate6[T, D1, D2, D3, D4, D5, D6 any](
 				return nil, err
 			}
 
-			return func(ctx *Context, v T) error {
+			return func(ctx *Context, v T) (T, error) {
 				v1, err := d1.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v2, err := d2.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v3, err := d3.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v4, err := d4.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v5, err := d5.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v6, err := d6.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
-				return fn(ctx, v, v1, v2, v3, v4, v5, v6)
+				return dec(ctx, v, v1, v2, v3, v4, v5, v6)
 			}, nil
 		},
 	); err != nil {
@@ -334,9 +386,14 @@ func Decorate6[T, D1, D2, D3, D4, D5, D6 any](
 
 // Decorate7 describes how to decorate values of type T after construction using
 // 7 additional dependencies.
+//
+// The dependency being decorated is passed to dec and replaced with
+// the decorator's return value.
+//
+// The decorated dependency may be manipulated in-place.
 func Decorate7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
-	fn func(*Context, T, D1, D2, D3, D4, D5, D6, D7) error,
+	dec func(*Context, T, D1, D2, D3, D4, D5, D6, D7) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -378,43 +435,43 @@ func Decorate7[T, D1, D2, D3, D4, D5, D6, D7 any](
 				return nil, err
 			}
 
-			return func(ctx *Context, v T) error {
+			return func(ctx *Context, v T) (T, error) {
 				v1, err := d1.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v2, err := d2.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v3, err := d3.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v4, err := d4.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v5, err := d5.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v6, err := d6.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v7, err := d7.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
-				return fn(ctx, v, v1, v2, v3, v4, v5, v6, v7)
+				return dec(ctx, v, v1, v2, v3, v4, v5, v6, v7)
 			}, nil
 		},
 	); err != nil {
@@ -424,9 +481,14 @@ func Decorate7[T, D1, D2, D3, D4, D5, D6, D7 any](
 
 // Decorate8 describes how to decorate values of type T after construction using
 // 8 additional dependencies.
+//
+// The dependency being decorated is passed to dec and replaced with
+// the decorator's return value.
+//
+// The decorated dependency may be manipulated in-place.
 func Decorate8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
-	fn func(*Context, T, D1, D2, D3, D4, D5, D6, D7, D8) error,
+	dec func(*Context, T, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -473,48 +535,48 @@ func Decorate8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 				return nil, err
 			}
 
-			return func(ctx *Context, v T) error {
+			return func(ctx *Context, v T) (T, error) {
 				v1, err := d1.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v2, err := d2.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v3, err := d3.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v4, err := d4.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v5, err := d5.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v6, err := d6.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v7, err := d7.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
 				v8, err := d8.Resolve(ctx)
 				if err != nil {
-					return err
+					return v, err
 				}
 
-				return fn(ctx, v, v1, v2, v3, v4, v5, v6, v7, v8)
+				return dec(ctx, v, v1, v2, v3, v4, v5, v6, v7, v8)
 			}, nil
 		},
 	); err != nil {

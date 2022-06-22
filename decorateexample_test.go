@@ -6,13 +6,43 @@ import (
 	"github.com/dogmatiq/imbue"
 )
 
+func ExampleDecorate0() {
+	con := imbue.New()
+	defer con.Close()
+
+	// Declare some types to use as dependencies within the example.
+	type DecoratedDependency struct {
+		Value string
+	}
+
+	// Declare a decorator for the Dependency type. It depends on the upstream
+	// dependency type (which is assumed to be declared elsewhere).
+	imbue.Decorate0(
+		con,
+		func(
+			ctx *imbue.Context,
+			d *DecoratedDependency,
+		) (*DecoratedDependency, error) {
+			d.Value = "<decorated value>"
+			return d, nil
+		},
+	)
+
+	// Print the dependency tree.
+	fmt.Println(con)
+
+	// Output:
+	// <container>
+	// └── *imbue_test.DecoratedDependency
+}
+
 func ExampleDecorate1() {
 	con := imbue.New()
 	defer con.Close()
 
 	// Declare some types to use as dependencies within the example.
 	type UpstreamDependency struct{}
-	type Dependency struct {
+	type DecoratedDependency struct {
 		Up *UpstreamDependency
 	}
 
@@ -22,11 +52,11 @@ func ExampleDecorate1() {
 		con,
 		func(
 			ctx *imbue.Context,
-			d *Dependency,
+			d *DecoratedDependency,
 			up *UpstreamDependency,
-		) error {
+		) (*DecoratedDependency, error) {
 			d.Up = up
-			return nil
+			return d, nil
 		},
 	)
 
@@ -35,7 +65,7 @@ func ExampleDecorate1() {
 
 	// Output:
 	// <container>
-	// └── *imbue_test.Dependency
+	// └── *imbue_test.DecoratedDependency
 	//     └── *imbue_test.UpstreamDependency
 }
 
@@ -46,7 +76,7 @@ func ExampleDecorate2() {
 	// Declare some types to use as dependencies within the example.
 	type UpstreamDependency1 struct{}
 	type UpstreamDependency2 struct{}
-	type Dependency struct {
+	type DecoratedDependency struct {
 		Up1 *UpstreamDependency1
 		Up2 *UpstreamDependency2
 	}
@@ -57,13 +87,13 @@ func ExampleDecorate2() {
 		con,
 		func(
 			ctx *imbue.Context,
-			d *Dependency,
+			d *DecoratedDependency,
 			up1 *UpstreamDependency1,
 			up2 *UpstreamDependency2,
-		) error {
+		) (*DecoratedDependency, error) {
 			d.Up1 = up1
 			d.Up2 = up2
-			return nil
+			return d, nil
 		},
 	)
 
@@ -72,7 +102,7 @@ func ExampleDecorate2() {
 
 	// Output:
 	// <container>
-	// └── *imbue_test.Dependency
+	// └── *imbue_test.DecoratedDependency
 	//     ├── *imbue_test.UpstreamDependency1
 	//     └── *imbue_test.UpstreamDependency2
 }

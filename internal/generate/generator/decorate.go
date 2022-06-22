@@ -8,7 +8,7 @@ import (
 
 // GenerateDecorate generates the DecorateX() functions.
 func GenerateDecorate(code *jen.File) {
-	for depCount := 1; depCount <= maxDependencies; depCount++ {
+	for depCount := 0; depCount <= maxDependencies; depCount++ {
 		generateDecorateFunc(code, depCount)
 	}
 }
@@ -19,6 +19,8 @@ func generateDecorateFunc(code *jen.File, depCount int) {
 	name := fmt.Sprintf("Decorate%d", depCount)
 
 	switch depCount {
+	case 0:
+		code.Commentf("%s describes how to decorate values of type T after construction.", name)
 	case 1:
 		code.Commentf("%s describes how to decorate values of type T after construction using", name)
 		code.Commentf("a single additional dependency.")
@@ -26,6 +28,12 @@ func generateDecorateFunc(code *jen.File, depCount int) {
 		code.Commentf("%s describes how to decorate values of type T after construction using", name)
 		code.Commentf("%d additional dependencies.", depCount)
 	}
+
+	code.Commentf("")
+	code.Commentf("The dependency being decorated is passed to %s and replaced with", decoratorFuncName)
+	code.Commentf("the decorator's return value.")
+	code.Commentf("")
+	code.Commentf("The decorated dependency may be manipulated in-place.")
 
 	code.
 		Func().
@@ -40,7 +48,7 @@ func generateDecorateFunc(code *jen.File, depCount int) {
 			jen.Line().
 				Add(containerParam()),
 			jen.Line().
-				Id("fn").
+				Add(decoratorVar()).
 				Func().
 				Params(
 					inputTypes(
@@ -50,6 +58,7 @@ func generateDecorateFunc(code *jen.File, depCount int) {
 					)...,
 				).
 				Params(
+					declaringType(depCount),
 					jen.Error(),
 				),
 			jen.Line().
@@ -110,6 +119,16 @@ func generateDecorateFuncBody(depCount int, code *jen.Group) {
 }
 
 func generateDecoratorFactoryFuncBody(depCount int, code *jen.Group) {
+	if depCount == 0 {
+		code.
+			Return(
+				jen.Add(decoratorVar()),
+				jen.Nil(),
+			)
+
+		return
+	}
+
 	for n := 0; n < depCount; n++ {
 		code.
 			Add(dependencyDeclVar(depCount, n)).
@@ -154,6 +173,7 @@ func generateDecoratorFactoryFuncBody(depCount int, code *jen.Group) {
 					declaringVar(depCount).Add(declaringType(depCount)),
 				).
 				Params(
+					declaringType(depCount),
 					jen.Error(),
 				).
 				BlockFunc(func(g *jen.Group) {
@@ -184,6 +204,7 @@ func generateDecoratorFuncBody(depCount int, code *jen.Group) {
 			Block(
 				jen.
 					Return(
+						declaringVar(depCount),
 						jen.Err(),
 					),
 			)
@@ -194,7 +215,7 @@ func generateDecoratorFuncBody(depCount int, code *jen.Group) {
 	code.
 		Return(
 			jen.
-				Id("fn").
+				Add(decoratorVar()).
 				Call(
 					inputVars(
 						depCount,

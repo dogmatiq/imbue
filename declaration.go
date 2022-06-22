@@ -38,7 +38,7 @@ type declaration interface {
 type constructor[T any] func(*Context) (T, error)
 
 // decorator is a function that is called after T's constructor.
-type decorator[T any] func(*Context, T) error
+type decorator[T any] func(*Context, T) (T, error)
 
 // decoratorEntry encapsulates a decorator and information about where it was
 // declared.
@@ -207,7 +207,8 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 	}
 
 	for _, e := range d.decorators {
-		if err := e.Decorator(ctx, v); err != nil {
+		v, err = e.Decorator(ctx, v)
+		if err != nil {
 			return d.value, fmt.Errorf(
 				"decorator for %s (%s:%d) failed: %w",
 				d.GetType(),

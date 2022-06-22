@@ -50,7 +50,7 @@ func generateWithNamedFunc(code *jen.File, depCount int) {
 			jen.Line().
 				Add(containerParam()),
 			jen.Line().
-				Id("fn").
+				Add(constructorVar()).
 				Func().
 				Params(
 					inputTypes(depCount, imbueContextType())...,
@@ -96,7 +96,7 @@ func generateWithNamedFuncBody(depCount int, code *jen.Group) {
 							jen.Err(),
 						).
 						Op(":=").
-						Id("fn").
+						Add(constructorVar()).
 						Call(
 							inputVars(depCount, contextVar())...,
 						),

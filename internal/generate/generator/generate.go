@@ -16,6 +16,10 @@ const (
 	// maxDependencies is the maximum number of dependencies that can be
 	// provided in one invocation.
 	maxDependencies = 8
+
+	decoratorFuncName   = "dec"
+	constructorFuncName = "ctor"
+	invokeFuncName      = "fn"
 )
 
 // Generate generates a file.
@@ -52,6 +56,21 @@ func containerVar() *jen.Statement {
 // contextVar returns the name to use for the context parameter.
 func contextVar() *jen.Statement {
 	return jen.Id("ctx")
+}
+
+// constructorVar returns the name to use for the constructor function.
+func constructorVar() *jen.Statement {
+	return jen.Id(constructorFuncName)
+}
+
+// decoratorVar returns the name to use for the decorator function.
+func decoratorVar() *jen.Statement {
+	return jen.Id(decoratorFuncName)
+}
+
+// invokeFuncVar returns the name to use for the function that is invoked.
+func invokeFuncVar() *jen.Statement {
+	return jen.Id(invokeFuncName)
 }
 
 // containerType returns the type to use for the container parameter.

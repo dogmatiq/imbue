@@ -41,11 +41,11 @@ var _ = Describe("func DecorateX()", func() {
 				ctx *imbue.Context,
 				v Concrete2,
 				dep Concrete1,
-			) error {
+			) (Concrete2, error) {
 				called = true
 				Expect(v).To(Equal(Concrete2("<concrete-2>")))
 				Expect(dep).To(Equal(Concrete1("<concrete-1>")))
-				return nil
+				return v, nil
 			},
 		)
 
@@ -94,12 +94,12 @@ var _ = Describe("func DecorateX()", func() {
 				v Concrete3,
 				dep1 Concrete1,
 				dep2 Concrete2,
-			) error {
+			) (Concrete3, error) {
 				called = true
 				Expect(v).To(Equal(Concrete3("<concrete-3>")))
 				Expect(dep1).To(Equal(Concrete1("<concrete-1>")))
 				Expect(dep2).To(Equal(Concrete2("<concrete-2>")))
-				return nil
+				return v, nil
 			},
 		)
 
@@ -150,11 +150,11 @@ var _ = Describe("func DecorateX()", func() {
 				ctx *imbue.Context,
 				v Concrete3,
 				dep Concrete2,
-			) error {
+			) (Concrete3, error) {
 				called = true
 				Expect(v).To(Equal(Concrete3("<concrete-3>")))
 				Expect(dep).To(Equal(Concrete2("<concrete-2>")))
-				return nil
+				return v, nil
 			},
 		)
 
@@ -194,10 +194,10 @@ var _ = Describe("func DecorateX()", func() {
 				ctx *imbue.Context,
 				v Concrete1,
 				dep Concrete2,
-			) error {
+			) (Concrete1, error) {
 				Expect(called).To(BeFalse(), "constructor called multiple times")
 				called = true
-				return nil
+				return v, nil
 			},
 		)
 
@@ -226,6 +226,37 @@ var _ = Describe("func DecorateX()", func() {
 		)
 	})
 
+	It("replaces the input value with the result of the decorator", func() {
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete1, error) {
+				return "<concrete-1>", nil
+			},
+		)
+
+		imbue.Decorate0(
+			container,
+			func(
+				ctx *imbue.Context,
+				v Concrete1,
+			) (Concrete1, error) {
+				return v + "+<decorated>", nil
+			},
+		)
+
+		imbue.Invoke1(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+				dep Concrete1,
+			) error {
+				Expect(dep).To(Equal(Concrete1("<concrete-1>+<decorated>")))
+				return nil
+			},
+		)
+	})
+
 	It("panics when a cyclic dependency is introduced within a single declaration", func() {
 		Expect(func() {
 			imbue.Decorate1(
@@ -234,7 +265,7 @@ var _ = Describe("func DecorateX()", func() {
 					ctx *imbue.Context,
 					v Concrete1,
 					dep Concrete1,
-				) error {
+				) (Concrete1, error) {
 					panic("unexpected call")
 				},
 			)
@@ -277,7 +308,7 @@ var _ = Describe("func DecorateX()", func() {
 					ctx *imbue.Context,
 					v Concrete3,
 					dep Concrete2,
-				) error {
+				) (Concrete3, error) {
 					panic("unexpected call")
 				},
 			)

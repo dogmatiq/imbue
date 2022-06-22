@@ -40,7 +40,7 @@ func generateWithFunc(code *jen.File, depCount int) {
 			jen.Line().
 				Add(containerParam()),
 			jen.Line().
-				Id("fn").
+				Add(constructorVar()).
 				Func().
 				Params(
 					inputTypes(depCount, imbueContextType())...,
@@ -108,7 +108,7 @@ func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 	if depCount == 0 {
 		code.
 			Return(
-				jen.Id("fn"),
+				jen.Add(constructorVar()),
 				jen.Nil(),
 			)
 
@@ -200,7 +200,7 @@ func generateConstructorFuncBody(depCount int, code *jen.Group) {
 	code.
 		Return(
 			jen.
-				Id("fn").
+				Add(constructorVar()).
 				Call(
 					inputVars(depCount, contextVar())...,
 				),
