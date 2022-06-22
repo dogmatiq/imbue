@@ -119,7 +119,7 @@ var _ = Describe("func InvokeX()", func() {
 		))
 	})
 
-	It("returns an error when an initializer returns an error", func() {
+	It("returns an error when an decorator returns an error", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
@@ -134,7 +134,7 @@ var _ = Describe("func InvokeX()", func() {
 			},
 		)
 
-		imbue.Inject1(
+		imbue.Decorate1(
 			container,
 			func(
 				ctx *imbue.Context,
@@ -158,7 +158,7 @@ var _ = Describe("func InvokeX()", func() {
 		)
 		Expect(err).Should(HaveOccurred())
 		Expect(err.Error()).To(MatchRegexp(
-			`initializer for imbue_test\.Concrete1 \(invoke_test\.go:\d+\) failed: <error>`,
+			`decorator for imbue_test\.Concrete1 \(invoke_test\.go:\d+\) failed: <error>`,
 		))
 	})
 

@@ -37,15 +37,15 @@ type declaration interface {
 // constructor is a function that constructs values of type T.
 type constructor[T any] func(*Context) (T, error)
 
-// initializer is a function that is called after T's constructor.
-type initializer[T any] func(*Context, T) error
+// decorator is a function that is called after T's constructor.
+type decorator[T any] func(*Context, T) error
 
-// initializerEntry encapsulates an initializer and information about where it
-// was declared.
-type initializerEntry[T any] struct {
-	File string
-	Line int
-	Init initializer[T]
+// decoratorEntry encapsulates a decorator and information about where it was
+// declared.
+type decoratorEntry[T any] struct {
+	File      string
+	Line      int
+	Decorator decorator[T]
 }
 
 // declarationOf describes how to build values of type T.
@@ -59,7 +59,7 @@ type declarationOf[T any] struct {
 	deps          map[reflect.Type]declaration
 	isDep         bool
 	construct     constructor[T]
-	initializers  []initializerEntry[T]
+	decorators    []decoratorEntry[T]
 	value         T
 }
 
@@ -86,10 +86,10 @@ func (d *declarationOf[T]) Declare(
 	return nil
 }
 
-// AddInitializer adds an initializer function that is called after T's
+// AddDecorator adds a decorator function that is called after T's
 // constructor.
-func (d *declarationOf[T]) AddInitializer(
-	decl func() (initializer[T], error),
+func (d *declarationOf[T]) AddDecorator(
+	decl func() (decorator[T], error),
 ) error {
 	file, line := findLocation()
 
@@ -105,27 +105,27 @@ func (d *declarationOf[T]) AddInitializer(
 		return err
 	}
 
-	e := initializerEntry[T]{
-		File: file,
-		Line: line,
-		Init: i,
+	e := decoratorEntry[T]{
+		File:      file,
+		Line:      line,
+		Decorator: i,
 	}
 
 	d.m.Lock()
-	d.initializers = append(d.initializers, e)
+	d.decorators = append(d.decorators, e)
 	d.m.Unlock()
 
 	return nil
 }
 
-// AddDependency marks t as a dependency of d's constructor.
+// AddConstructorDependency marks t as a dependency of d's constructor.
 func (d *declarationOf[T]) AddConstructorDependency(t declaration) error {
 	return d.addDependency(t, "constructor")
 }
 
-// AddDependency marks t as a dependency of one of d's initializers.
-func (d *declarationOf[T]) AddInitializerDependency(t declaration) error {
-	return d.addDependency(t, "initializer")
+// AddDecoratorDependency marks t as a dependency of one of d's decorators.
+func (d *declarationOf[T]) AddDecoratorDependency(t declaration) error {
+	return d.addDependency(t, "decorator")
 }
 
 func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
@@ -206,10 +206,10 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 		)
 	}
 
-	for _, e := range d.initializers {
-		if err := e.Init(ctx, v); err != nil {
+	for _, e := range d.decorators {
+		if err := e.Decorator(ctx, v); err != nil {
 			return d.value, fmt.Errorf(
-				"initializer for %s (%s:%d) failed: %w",
+				"decorator for %s (%s:%d) failed: %w",
 				d.GetType(),
 				filepath.Base(e.File),
 				e.Line,
@@ -220,7 +220,7 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 
 	d.isConstructed = true
 	d.construct = nil
-	d.initializers = nil
+	d.decorators = nil
 	d.value = v
 
 	return v, nil

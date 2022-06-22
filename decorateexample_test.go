@@ -6,7 +6,7 @@ import (
 	"github.com/dogmatiq/imbue"
 )
 
-func ExampleInject1() {
+func ExampleDecorate1() {
 	con := imbue.New()
 	defer con.Close()
 
@@ -16,9 +16,9 @@ func ExampleInject1() {
 		Up *UpstreamDependency
 	}
 
-	// Declare an initializer for the Dependency type. It depends on the
-	// upstream dependency type (which is assumed to be declared elsewhere).
-	imbue.Inject1(
+	// Declare a decorator for the Dependency type. It depends on the upstream
+	// dependency type (which is assumed to be declared elsewhere).
+	imbue.Decorate1(
 		con,
 		func(
 			ctx *imbue.Context,
@@ -39,7 +39,7 @@ func ExampleInject1() {
 	//     └── *imbue_test.UpstreamDependency
 }
 
-func ExampleInject2() {
+func ExampleDecorate2() {
 	con := imbue.New()
 	defer con.Close()
 
@@ -51,9 +51,9 @@ func ExampleInject2() {
 		Up2 *UpstreamDependency2
 	}
 
-	// Declare an initializer for the Dependency type. It depends on the two
+	// Declare a decorator for the Dependency type. It depends on the two
 	// upstream dependency types (which are assumed to be declared elsewhere).
-	imbue.Inject2(
+	imbue.Decorate2(
 		con,
 		func(
 			ctx *imbue.Context,

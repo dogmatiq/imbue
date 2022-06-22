@@ -2,19 +2,19 @@
 
 package imbue
 
-// Inject1 describes how to initialize values of type T after construction using
+// Decorate1 describes how to decorate values of type T after construction using
 // a single additional dependency.
-func Inject1[T, D any](
+func Decorate1[T, D any](
 	con *Container,
 	fn func(*Context, T, D) error,
-	options ...InjectOption,
+	options ...DecorateOption,
 ) {
 	t := get[T](con)
 
-	if err := t.AddInitializer(
-		func() (initializer[T], error) {
+	if err := t.AddDecorator(
+		func() (decorator[T], error) {
 			d1 := get[D](con)
-			if err := t.AddInitializerDependency(d1); err != nil {
+			if err := t.AddDecoratorDependency(d1); err != nil {
 				return nil, err
 			}
 
@@ -32,24 +32,24 @@ func Inject1[T, D any](
 	}
 }
 
-// Inject2 describes how to initialize values of type T after construction using
+// Decorate2 describes how to decorate values of type T after construction using
 // 2 additional dependencies.
-func Inject2[T, D1, D2 any](
+func Decorate2[T, D1, D2 any](
 	con *Container,
 	fn func(*Context, T, D1, D2) error,
-	options ...InjectOption,
+	options ...DecorateOption,
 ) {
 	t := get[T](con)
 
-	if err := t.AddInitializer(
-		func() (initializer[T], error) {
+	if err := t.AddDecorator(
+		func() (decorator[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddInitializerDependency(d1); err != nil {
+			if err := t.AddDecoratorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddInitializerDependency(d2); err != nil {
+			if err := t.AddDecoratorDependency(d2); err != nil {
 				return nil, err
 			}
 
@@ -72,29 +72,29 @@ func Inject2[T, D1, D2 any](
 	}
 }
 
-// Inject3 describes how to initialize values of type T after construction using
+// Decorate3 describes how to decorate values of type T after construction using
 // 3 additional dependencies.
-func Inject3[T, D1, D2, D3 any](
+func Decorate3[T, D1, D2, D3 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3) error,
-	options ...InjectOption,
+	options ...DecorateOption,
 ) {
 	t := get[T](con)
 
-	if err := t.AddInitializer(
-		func() (initializer[T], error) {
+	if err := t.AddDecorator(
+		func() (decorator[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddInitializerDependency(d1); err != nil {
+			if err := t.AddDecoratorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddInitializerDependency(d2); err != nil {
+			if err := t.AddDecoratorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddInitializerDependency(d3); err != nil {
+			if err := t.AddDecoratorDependency(d3); err != nil {
 				return nil, err
 			}
 
@@ -122,34 +122,34 @@ func Inject3[T, D1, D2, D3 any](
 	}
 }
 
-// Inject4 describes how to initialize values of type T after construction using
+// Decorate4 describes how to decorate values of type T after construction using
 // 4 additional dependencies.
-func Inject4[T, D1, D2, D3, D4 any](
+func Decorate4[T, D1, D2, D3, D4 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4) error,
-	options ...InjectOption,
+	options ...DecorateOption,
 ) {
 	t := get[T](con)
 
-	if err := t.AddInitializer(
-		func() (initializer[T], error) {
+	if err := t.AddDecorator(
+		func() (decorator[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddInitializerDependency(d1); err != nil {
+			if err := t.AddDecoratorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddInitializerDependency(d2); err != nil {
+			if err := t.AddDecoratorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddInitializerDependency(d3); err != nil {
+			if err := t.AddDecoratorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddInitializerDependency(d4); err != nil {
+			if err := t.AddDecoratorDependency(d4); err != nil {
 				return nil, err
 			}
 
@@ -182,39 +182,39 @@ func Inject4[T, D1, D2, D3, D4 any](
 	}
 }
 
-// Inject5 describes how to initialize values of type T after construction using
+// Decorate5 describes how to decorate values of type T after construction using
 // 5 additional dependencies.
-func Inject5[T, D1, D2, D3, D4, D5 any](
+func Decorate5[T, D1, D2, D3, D4, D5 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4, D5) error,
-	options ...InjectOption,
+	options ...DecorateOption,
 ) {
 	t := get[T](con)
 
-	if err := t.AddInitializer(
-		func() (initializer[T], error) {
+	if err := t.AddDecorator(
+		func() (decorator[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddInitializerDependency(d1); err != nil {
+			if err := t.AddDecoratorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddInitializerDependency(d2); err != nil {
+			if err := t.AddDecoratorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddInitializerDependency(d3); err != nil {
+			if err := t.AddDecoratorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddInitializerDependency(d4); err != nil {
+			if err := t.AddDecoratorDependency(d4); err != nil {
 				return nil, err
 			}
 
 			d5 := get[D5](con)
-			if err := t.AddInitializerDependency(d5); err != nil {
+			if err := t.AddDecoratorDependency(d5); err != nil {
 				return nil, err
 			}
 
@@ -252,44 +252,44 @@ func Inject5[T, D1, D2, D3, D4, D5 any](
 	}
 }
 
-// Inject6 describes how to initialize values of type T after construction using
+// Decorate6 describes how to decorate values of type T after construction using
 // 6 additional dependencies.
-func Inject6[T, D1, D2, D3, D4, D5, D6 any](
+func Decorate6[T, D1, D2, D3, D4, D5, D6 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4, D5, D6) error,
-	options ...InjectOption,
+	options ...DecorateOption,
 ) {
 	t := get[T](con)
 
-	if err := t.AddInitializer(
-		func() (initializer[T], error) {
+	if err := t.AddDecorator(
+		func() (decorator[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddInitializerDependency(d1); err != nil {
+			if err := t.AddDecoratorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddInitializerDependency(d2); err != nil {
+			if err := t.AddDecoratorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddInitializerDependency(d3); err != nil {
+			if err := t.AddDecoratorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddInitializerDependency(d4); err != nil {
+			if err := t.AddDecoratorDependency(d4); err != nil {
 				return nil, err
 			}
 
 			d5 := get[D5](con)
-			if err := t.AddInitializerDependency(d5); err != nil {
+			if err := t.AddDecoratorDependency(d5); err != nil {
 				return nil, err
 			}
 
 			d6 := get[D6](con)
-			if err := t.AddInitializerDependency(d6); err != nil {
+			if err := t.AddDecoratorDependency(d6); err != nil {
 				return nil, err
 			}
 
@@ -332,49 +332,49 @@ func Inject6[T, D1, D2, D3, D4, D5, D6 any](
 	}
 }
 
-// Inject7 describes how to initialize values of type T after construction using
+// Decorate7 describes how to decorate values of type T after construction using
 // 7 additional dependencies.
-func Inject7[T, D1, D2, D3, D4, D5, D6, D7 any](
+func Decorate7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4, D5, D6, D7) error,
-	options ...InjectOption,
+	options ...DecorateOption,
 ) {
 	t := get[T](con)
 
-	if err := t.AddInitializer(
-		func() (initializer[T], error) {
+	if err := t.AddDecorator(
+		func() (decorator[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddInitializerDependency(d1); err != nil {
+			if err := t.AddDecoratorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddInitializerDependency(d2); err != nil {
+			if err := t.AddDecoratorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddInitializerDependency(d3); err != nil {
+			if err := t.AddDecoratorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddInitializerDependency(d4); err != nil {
+			if err := t.AddDecoratorDependency(d4); err != nil {
 				return nil, err
 			}
 
 			d5 := get[D5](con)
-			if err := t.AddInitializerDependency(d5); err != nil {
+			if err := t.AddDecoratorDependency(d5); err != nil {
 				return nil, err
 			}
 
 			d6 := get[D6](con)
-			if err := t.AddInitializerDependency(d6); err != nil {
+			if err := t.AddDecoratorDependency(d6); err != nil {
 				return nil, err
 			}
 
 			d7 := get[D7](con)
-			if err := t.AddInitializerDependency(d7); err != nil {
+			if err := t.AddDecoratorDependency(d7); err != nil {
 				return nil, err
 			}
 
@@ -422,54 +422,54 @@ func Inject7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	}
 }
 
-// Inject8 describes how to initialize values of type T after construction using
+// Decorate8 describes how to decorate values of type T after construction using
 // 8 additional dependencies.
-func Inject8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
+func Decorate8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
 	fn func(*Context, T, D1, D2, D3, D4, D5, D6, D7, D8) error,
-	options ...InjectOption,
+	options ...DecorateOption,
 ) {
 	t := get[T](con)
 
-	if err := t.AddInitializer(
-		func() (initializer[T], error) {
+	if err := t.AddDecorator(
+		func() (decorator[T], error) {
 			d1 := get[D1](con)
-			if err := t.AddInitializerDependency(d1); err != nil {
+			if err := t.AddDecoratorDependency(d1); err != nil {
 				return nil, err
 			}
 
 			d2 := get[D2](con)
-			if err := t.AddInitializerDependency(d2); err != nil {
+			if err := t.AddDecoratorDependency(d2); err != nil {
 				return nil, err
 			}
 
 			d3 := get[D3](con)
-			if err := t.AddInitializerDependency(d3); err != nil {
+			if err := t.AddDecoratorDependency(d3); err != nil {
 				return nil, err
 			}
 
 			d4 := get[D4](con)
-			if err := t.AddInitializerDependency(d4); err != nil {
+			if err := t.AddDecoratorDependency(d4); err != nil {
 				return nil, err
 			}
 
 			d5 := get[D5](con)
-			if err := t.AddInitializerDependency(d5); err != nil {
+			if err := t.AddDecoratorDependency(d5); err != nil {
 				return nil, err
 			}
 
 			d6 := get[D6](con)
-			if err := t.AddInitializerDependency(d6); err != nil {
+			if err := t.AddDecoratorDependency(d6); err != nil {
 				return nil, err
 			}
 
 			d7 := get[D7](con)
-			if err := t.AddInitializerDependency(d7); err != nil {
+			if err := t.AddDecoratorDependency(d7); err != nil {
 				return nil, err
 			}
 
 			d8 := get[D8](con)
-			if err := t.AddInitializerDependency(d8); err != nil {
+			if err := t.AddDecoratorDependency(d8); err != nil {
 				return nil, err
 			}
 

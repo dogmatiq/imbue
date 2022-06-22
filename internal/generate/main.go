@@ -21,8 +21,8 @@ func main() {
 
 func getGenerator(filename string) func(*jen.File) {
 	switch filepath.Base(filename) {
-	case "inject.gen.go":
-		return generator.GenerateInject
+	case "decorate.gen.go":
+		return generator.GenerateDecorate
 	case "invoke.gen.go":
 		return generator.GenerateInvoke
 	case "with.gen.go":

@@ -4,7 +4,7 @@ import (
 	"context"
 )
 
-// Context is the context used during initialization of dependencies within a
+// Context is the context used during construction of dependencies within a
 // container.
 type Context struct {
 	context.Context

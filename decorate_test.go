@@ -8,7 +8,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("func InjectX()", func() {
+var _ = Describe("func DecorateX()", func() {
 	var container *imbue.Container
 
 	BeforeEach(func() {
@@ -19,7 +19,7 @@ var _ = Describe("func InjectX()", func() {
 		container.Close()
 	})
 
-	It("can request a single dependency via the initializer's input parameters", func() {
+	It("can request a single dependency via the decorators's input parameters", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
@@ -35,7 +35,7 @@ var _ = Describe("func InjectX()", func() {
 		)
 
 		called := false
-		imbue.Inject1(
+		imbue.Decorate1(
 			container,
 			func(
 				ctx *imbue.Context,
@@ -64,7 +64,7 @@ var _ = Describe("func InjectX()", func() {
 
 	})
 
-	It("can request multiple dependencies via the initializer's input parameters", func() {
+	It("can request multiple dependencies via the decorator's input parameters", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
@@ -87,7 +87,7 @@ var _ = Describe("func InjectX()", func() {
 		)
 
 		called := false
-		imbue.Inject2(
+		imbue.Decorate2(
 			container,
 			func(
 				ctx *imbue.Context,
@@ -144,7 +144,7 @@ var _ = Describe("func InjectX()", func() {
 		)
 
 		called := false
-		imbue.Inject1(
+		imbue.Decorate1(
 			container,
 			func(
 				ctx *imbue.Context,
@@ -172,7 +172,7 @@ var _ = Describe("func InjectX()", func() {
 		)
 	})
 
-	It("only invokes the initializer once even if the value is requested multiple times", func() {
+	It("only invokes the decorator once even if the value is requested multiple times", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
@@ -188,7 +188,7 @@ var _ = Describe("func InjectX()", func() {
 		)
 
 		called := false
-		imbue.Inject1(
+		imbue.Decorate1(
 			container,
 			func(
 				ctx *imbue.Context,
@@ -228,7 +228,7 @@ var _ = Describe("func InjectX()", func() {
 
 	It("panics when a cyclic dependency is introduced within a single declaration", func() {
 		Expect(func() {
-			imbue.Inject1(
+			imbue.Decorate1(
 				container,
 				func(
 					ctx *imbue.Context,
@@ -242,7 +242,7 @@ var _ = Describe("func InjectX()", func() {
 			PanicWith(
 				MatchError(
 					MatchRegexp(
-						`initializer for imbue_test\.Concrete1 \(inject_test\.go:\d+\) depends on itself`,
+						`decorator for imbue_test\.Concrete1 \(decorate_test\.go:\d+\) depends on itself`,
 					),
 				),
 			),
@@ -271,7 +271,7 @@ var _ = Describe("func InjectX()", func() {
 		)
 
 		Expect(func() {
-			imbue.Inject1(
+			imbue.Decorate1(
 				container,
 				func(
 					ctx *imbue.Context,
@@ -285,10 +285,10 @@ var _ = Describe("func InjectX()", func() {
 			PanicWith(
 				MatchError(
 					MatchRegexp(
-						`(?m)initializer for imbue_test\.Concrete3 introduces a cyclic dependency:` +
-							`\n\t-> imbue_test\.Concrete2 \(inject_test\.go:\d+\)` +
-							`\n\t-> imbue_test\.Concrete1 \(inject_test\.go:\d+\)` +
-							`\n\t-> imbue_test\.Concrete3 \(inject_test\.go:\d+\)`,
+						`(?m)decorator for imbue_test\.Concrete3 introduces a cyclic dependency:` +
+							`\n\t-> imbue_test\.Concrete2 \(decorate_test\.go:\d+\)` +
+							`\n\t-> imbue_test\.Concrete1 \(decorate_test\.go:\d+\)` +
+							`\n\t-> imbue_test\.Concrete3 \(decorate_test\.go:\d+\)`,
 					),
 				),
 			),
