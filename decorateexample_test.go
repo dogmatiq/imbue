@@ -15,8 +15,7 @@ func ExampleDecorate0() {
 		Value string
 	}
 
-	// Declare a decorator for the Dependency type. It depends on the upstream
-	// dependency type (which is assumed to be declared elsewhere).
+	// Declare a decorator for the DecoratedDependency type.
 	imbue.Decorate0(
 		con,
 		func(
@@ -46,8 +45,8 @@ func ExampleDecorate1() {
 		Up *UpstreamDependency
 	}
 
-	// Declare a decorator for the Dependency type. It depends on the upstream
-	// dependency type (which is assumed to be declared elsewhere).
+	// Declare a decorator for the DecoratedDependency type. It depends on the
+	// upstream dependency type (which is assumed to be declared elsewhere).
 	imbue.Decorate1(
 		con,
 		func(
@@ -81,8 +80,9 @@ func ExampleDecorate2() {
 		Up2 *UpstreamDependency2
 	}
 
-	// Declare a decorator for the Dependency type. It depends on the two
-	// upstream dependency types (which are assumed to be declared elsewhere).
+	// Declare a decorator for the DecoratedDependency type. It depends on the
+	// two upstream dependency types (which are assumed to be declared
+	// elsewhere).
 	imbue.Decorate2(
 		con,
 		func(
