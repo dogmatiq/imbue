@@ -58,7 +58,7 @@ type declarationOf[T any] struct {
 	isConstructed bool
 	deps          map[reflect.Type]declaration
 	isDep         bool
-	construct     constructor[T]
+	constructor   constructor[T]
 	decorators    []decoratorEntry[T]
 	value         T
 }
@@ -80,7 +80,7 @@ func (d *declarationOf[T]) Declare(
 	}
 
 	d.m.Lock()
-	d.construct = c
+	d.constructor = c
 	d.m.Unlock()
 
 	return nil
@@ -94,7 +94,7 @@ func (d *declarationOf[T]) AddDecorator(
 	file, line := findLocation()
 
 	d.m.Lock()
-	if d.construct == nil {
+	if d.constructor == nil {
 		d.file = file
 		d.line = line
 	}
@@ -188,28 +188,52 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 		return d.value, nil
 	}
 
-	if d.construct == nil {
-		panic(fmt.Sprintf(
-			"no constructor is declared for %s",
-			d.GetType(),
-		))
+	if err := d.construct(ctx); err != nil {
+		return d.value, err
 	}
 
-	v, err := d.construct(ctx)
-	if err != nil {
-		return d.value, fmt.Errorf(
-			"constructor for %s (%s:%d) failed: %w",
-			d.GetType(),
-			filepath.Base(d.file),
-			d.line,
-			err,
-		)
+	if err := d.decorate(ctx); err != nil {
+		return d.value, err
 	}
 
-	for _, e := range d.decorators {
-		v, err = e.Decorator(ctx, v)
+	d.isConstructed = true
+	d.constructor = nil
+	d.decorators = nil
+
+	return d.value, nil
+}
+
+// construct initializes d.value.
+func (d *declarationOf[T]) construct(ctx *Context) error {
+	if d.constructor != nil {
+		var err error
+		d.value, err = d.constructor(ctx)
 		if err != nil {
-			return d.value, fmt.Errorf(
+			return fmt.Errorf(
+				"constructor for %s (%s:%d) failed: %w",
+				d.GetType(),
+				filepath.Base(d.file),
+				d.line,
+				err,
+			)
+		}
+
+		return nil
+	}
+
+	panic(fmt.Sprintf(
+		"no constructor is declared for %s",
+		d.GetType(),
+	))
+}
+
+// decorate applies the decorators to d.value.
+func (d *declarationOf[T]) decorate(ctx *Context) error {
+	for _, e := range d.decorators {
+		var err error
+		d.value, err = e.Decorator(ctx, d.value)
+		if err != nil {
+			return fmt.Errorf(
 				"decorator for %s (%s:%d) failed: %w",
 				d.GetType(),
 				filepath.Base(e.File),
@@ -219,12 +243,7 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 		}
 	}
 
-	d.isConstructed = true
-	d.construct = nil
-	d.decorators = nil
-	d.value = v
-
-	return v, nil
+	return nil
 }
 
 // GetType returns the type of the value constructed by this declaration.
