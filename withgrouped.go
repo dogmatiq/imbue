@@ -13,8 +13,9 @@ type Group interface {
 
 // FromGroup declares a dependency on a type within a specific group.
 //
-// It is used as a parameter type to user-defined functions passed to WithX(),
-// DecorateX(), and InvokeX() to request of type T that is within the group G.
+// It is used as a parameter type within user-defined functions passed to
+// WithX(), DecorateX(), and InvokeX() to request of type T that is within the
+// group G.
 type FromGroup[G Group, T any] struct {
 	value T
 }

@@ -12,8 +12,9 @@ type Name[T any] interface {
 
 // ByName requests a dependency on a type with a specific name.
 //
-// It is used as a parameter type to user-defined functions passed to WithX(),
-// DecorateX() and InvokeX() to request a dependency of type T that is named N.
+// It is used as a parameter type within user-defined functions passed to
+// WithX(), DecorateX() and InvokeX() to request a dependency of type T that is
+// named N.
 type ByName[N Name[T], T any] struct {
 	value T
 }
