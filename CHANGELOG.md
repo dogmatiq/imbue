@@ -10,6 +10,18 @@ The format is based on [Keep a Changelog], and this project adheres to
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## [Unreleased]
+
+### Added
+
+- Add `ByName.Name()` method, which returns the dependency name as a string
+- Add `FromGroup.Group()` method, which returns the group name as a string
+
+### Changed
+
+- **[BC]** Changed `ByName.Value` from a field to a method
+- **[BC]** Changed `FromGroup.Value` from a field to a method
+
 ## [0.4.0] - 2022-06-22
 
 ### Added

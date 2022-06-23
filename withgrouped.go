@@ -16,14 +16,23 @@ type Group interface {
 // It is used as a parameter type to user-defined functions passed to WithX()
 // and InvokeX() to request of type T that is within the group G.
 type FromGroup[G Group, T any] struct {
-	// Value is the dependency itself.
-	Value T
+	value T
+}
+
+// Group returns the name given to the group.
+func (v FromGroup[G, T]) Group() string {
+	return typeOf[G]().Name()
+}
+
+// Value returns the dependency value.
+func (v FromGroup[G, T]) Value() T {
+	return v.value
 }
 
 // inGroup wraps a value of type T to present it as a FromGroup[G, T].
 func inGroup[G Group, T any](v T) FromGroup[G, T] {
 	return FromGroup[G, T]{
-		Value: v,
+		value: v,
 	}
 }
 

@@ -15,14 +15,23 @@ type Name[T any] interface {
 // It is used as a parameter type to user-defined functions passed to WithX()
 // and InvokeX() to request a dependency of type T that is named N.
 type ByName[N Name[T], T any] struct {
-	// Value is the dependency itself.
-	Value T
+	value T
+}
+
+// Name returns the name given to the dependency.
+func (v ByName[N, T]) Name() string {
+	return typeOf[N]().Name()
+}
+
+// Value returns the dependency value.
+func (v ByName[N, T]) Value() T {
+	return v.value
 }
 
 // withName wraps a value of type T to present it as a ByName[N, T].
 func withName[N Name[T], T any](v T) ByName[N, T] {
 	return ByName[N, T]{
-		Value: v,
+		value: v,
 	}
 }
 

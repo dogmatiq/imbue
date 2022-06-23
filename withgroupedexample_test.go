@@ -44,7 +44,7 @@ func Example_groupedDependencies() {
 			ctx *imbue.Context,
 			conn imbue.FromGroup[ServiceA, Connection],
 		) (Client, error) {
-			return Client{conn.Value}, nil
+			return Client{conn.Value()}, nil
 		},
 	)
 
@@ -65,7 +65,7 @@ func Example_groupedDependencies() {
 			ctx *imbue.Context,
 			conn imbue.FromGroup[ServiceB, Connection],
 		) (Client, error) {
-			return Client{conn.Value}, nil
+			return Client{conn.Value()}, nil
 		},
 	)
 
@@ -79,10 +79,11 @@ func Example_groupedDependencies() {
 			clientA imbue.FromGroup[ServiceA, Client],
 			clientB imbue.FromGroup[ServiceB, Client],
 		) error {
-			// Grouped dependencies have a Value field which in this case is the
-			// Client value.
-			fmt.Println("service A:", clientA.Value)
-			fmt.Println("service B:", clientB.Value)
+			// Grouped dependencies have a Group() method, which returns the
+			// name of the group, and a Value() method which returns the actual
+			// dependency value.
+			fmt.Println(clientA.Group(), "=", clientA.Value())
+			fmt.Println(clientB.Group(), "=", clientB.Value())
 			return nil
 		},
 	)
@@ -91,6 +92,6 @@ func Example_groupedDependencies() {
 	}
 
 	// Output:
-	// service A: {<connection-a>}
-	// service B: {<connection-b>}
+	// ServiceA = {<connection-a>}
+	// ServiceB = {<connection-b>}
 }

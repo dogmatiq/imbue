@@ -52,10 +52,10 @@ func Example_namedDependencies() {
 			fg imbue.ByName[Foreground, Color],
 			bg imbue.ByName[Background, Color],
 		) error {
-			// Named dependencies have a Value field which in this case is the
-			// Color value.
-			fmt.Println("foreground:", fg.Value)
-			fmt.Println("background:", bg.Value)
+			// Named dependencies have a Name() and Value() methods which return
+			// the name and value of the dependency.
+			fmt.Println(fg.Name(), "=", fg.Value())
+			fmt.Println(bg.Name(), "=", bg.Value())
 			return nil
 		},
 	)
@@ -64,6 +64,6 @@ func Example_namedDependencies() {
 	}
 
 	// Output:
-	// foreground: <black>
-	// background: <white>
+	// Foreground = <black>
+	// Background = <white>
 }
