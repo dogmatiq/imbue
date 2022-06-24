@@ -14,8 +14,12 @@ import (
 // variable.
 //
 // Environment variables are declared by declaring a type that uses
-// imbue.Name[T] as its underlying type, where T is the type of the dependency
-// being named.
+// imbue.EnvironmentVariable[T] as its underlying type.
+//
+// The name of the declared type is used as the name of the environment
+// variable.
+//
+// T is the type that is produced by parsing the environment variable's value.
 type EnvironmentVariable[T Parseable] interface {
 	variableOfType(T)
 }
