@@ -36,28 +36,28 @@ type Parseable interface {
 //
 // It is used as a parameter type within user-defined functions passed to
 // WithX(), DecorateX(), and InvokeX() to request a dependency of type T that is
-// named N.
-type FromEnvironment[N EnvironmentVariable[T], T Parseable] struct {
+// parsed from the environment variable V.
+type FromEnvironment[V EnvironmentVariable[T], T Parseable] struct {
 	value T
 }
 
 // Name returns the name of the environment variable.
-func (v FromEnvironment[N, T]) Name() string {
-	return typeOf[N]().Name()
+func (v FromEnvironment[V, T]) Name() string {
+	return typeOf[V]().Name()
 }
 
 // Value returns the parsed value of the environment variable.
-func (v FromEnvironment[N, T]) Value() T {
+func (v FromEnvironment[V, T]) Value() T {
 	return v.value
 }
 
 // String returns the original string value of the environment variable.
-func (v FromEnvironment[N, T]) String() string {
+func (v FromEnvironment[V, T]) String() string {
 	return os.Getenv(v.Name())
 }
 
 // constructSelf constructs the environment variable in-place.
-func (v *FromEnvironment[N, T]) constructSelf(ctx *Context) error {
+func (v *FromEnvironment[V, T]) constructSelf(ctx *Context) error {
 	name := v.Name()
 	value, ok := os.LookupEnv(name)
 	if !ok {
