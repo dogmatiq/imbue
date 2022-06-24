@@ -21,6 +21,9 @@ type (
 	IMBUE_UINT16 imbue.EnvironmentVariable[uint16]
 	IMBUE_UINT32 imbue.EnvironmentVariable[uint32]
 	IMBUE_UINT64 imbue.EnvironmentVariable[uint64]
+
+	IMBUE_FLOAT32 imbue.EnvironmentVariable[float32]
+	IMBUE_FLOAT64 imbue.EnvironmentVariable[float64]
 )
 
 var _ = Describe("func FromEnvironment()", func() {
@@ -46,6 +49,9 @@ var _ = Describe("func FromEnvironment()", func() {
 		expectEnv[IMBUE_UINT16](container, "IMBUE_UINT16", "123", uint16(123))
 		expectEnv[IMBUE_UINT32](container, "IMBUE_UINT32", "123", uint32(123))
 		expectEnv[IMBUE_UINT64](container, "IMBUE_UINT64", "123", uint64(123))
+
+		expectEnv[IMBUE_FLOAT32](container, "IMBUE_FLOAT32", "-123.45", float32(-123.45))
+		expectEnv[IMBUE_FLOAT64](container, "IMBUE_FLOAT64", "-123.45", float64(-123.45))
 	})
 
 	It("returns an error when an int cannot be parsed", func() {
@@ -117,6 +123,24 @@ var _ = Describe("func FromEnvironment()", func() {
 			"IMBUE_UINT64",
 			"<not-numeric>",
 			`the IMBUE_UINT64 environment variable cannot be parsed: "<not-numeric>" is not a valid uint64`,
+		)
+	})
+
+	It("returns an error when a float32 cannot be parsed", func() {
+		expectEnvError[IMBUE_FLOAT32, float32](
+			container,
+			"IMBUE_FLOAT32",
+			"<not-numeric>",
+			`the IMBUE_FLOAT32 environment variable cannot be parsed: "<not-numeric>" is not a valid float32`,
+		)
+	})
+
+	It("returns an error when a float64 cannot be parsed", func() {
+		expectEnvError[IMBUE_FLOAT64, float64](
+			container,
+			"IMBUE_FLOAT64",
+			"<not-numeric>",
+			`the IMBUE_FLOAT64 environment variable cannot be parsed: "<not-numeric>" is not a valid float64`,
 		)
 	})
 

@@ -29,7 +29,8 @@ type EnvironmentVariable[T Parseable] interface {
 type Parseable interface {
 	string |
 		int | int16 | int32 | int64 |
-		uint | uint16 | uint32 | uint64
+		uint | uint16 | uint32 | uint64 |
+		float32 | float64
 }
 
 // FromEnvironment requests a dependency from the environment.
@@ -109,6 +110,11 @@ func parseInto(value string, out any) error {
 	case *uint64:
 		return parseUint(value, 64, out)
 
+	case *float32:
+		return parseFloat(value, 32, out)
+	case *float64:
+		return parseFloat(value, 64, out)
+
 	default:
 		panic(fmt.Sprintf(
 			"%s implements the Parseable constraint, but is not handled by the parser",
@@ -137,6 +143,21 @@ func parseInt[T constraints.Signed](value string, size int, out *T) error {
 // parseUint parses an unsigned integer and assigns it to *out.
 func parseUint[T constraints.Unsigned](value string, size int, out *T) error {
 	n, err := strconv.ParseUint(value, 10, size)
+	if err != nil {
+		return fmt.Errorf(
+			"%#v is not a valid %s",
+			value,
+			typeOf[T](),
+		)
+	}
+
+	*out = T(n)
+	return nil
+}
+
+// parseFloat parses a float and assigns it to *out.
+func parseFloat[T constraints.Float](value string, size int, out *T) error {
+	n, err := strconv.ParseFloat(value, size)
 	if err != nil {
 		return fmt.Errorf(
 			"%#v is not a valid %s",
