@@ -28,8 +28,8 @@ type EnvironmentVariable[T Parseable] interface {
 // from their string representation, such as in an environment variable.
 type Parseable interface {
 	string |
-		int | int16 |
-		uint | uint16 // TODO: add other built-in types
+		int | int16 | int32 | int64 |
+		uint | uint16 | uint32 | uint64
 }
 
 // FromEnvironment requests a dependency from the environment.
@@ -95,11 +95,19 @@ func parseInto(value string, out any) error {
 		return parseInt(value, bits.UintSize, out)
 	case *int16:
 		return parseInt(value, 16, out)
+	case *int32:
+		return parseInt(value, 32, out)
+	case *int64:
+		return parseInt(value, 64, out)
 
 	case *uint:
 		return parseUint(value, bits.UintSize, out)
 	case *uint16:
 		return parseUint(value, 16, out)
+	case *uint32:
+		return parseUint(value, 32, out)
+	case *uint64:
+		return parseUint(value, 64, out)
 
 	default:
 		panic(fmt.Sprintf(

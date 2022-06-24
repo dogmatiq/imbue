@@ -14,9 +14,13 @@ type (
 
 	IMBUE_INT   imbue.EnvironmentVariable[int]
 	IMBUE_INT16 imbue.EnvironmentVariable[int16]
+	IMBUE_INT32 imbue.EnvironmentVariable[int32]
+	IMBUE_INT64 imbue.EnvironmentVariable[int64]
 
 	IMBUE_UINT   imbue.EnvironmentVariable[uint]
 	IMBUE_UINT16 imbue.EnvironmentVariable[uint16]
+	IMBUE_UINT32 imbue.EnvironmentVariable[uint32]
+	IMBUE_UINT64 imbue.EnvironmentVariable[uint64]
 )
 
 var _ = Describe("func FromEnvironment()", func() {
@@ -35,9 +39,13 @@ var _ = Describe("func FromEnvironment()", func() {
 
 		expectEnv[IMBUE_INT](container, "IMBUE_INT", "-123", int(-123))
 		expectEnv[IMBUE_INT16](container, "IMBUE_INT16", "-123", int16(-123))
+		expectEnv[IMBUE_INT32](container, "IMBUE_INT32", "-123", int32(-123))
+		expectEnv[IMBUE_INT64](container, "IMBUE_INT64", "-123", int64(-123))
 
 		expectEnv[IMBUE_UINT](container, "IMBUE_UINT", "123", uint(123))
 		expectEnv[IMBUE_UINT16](container, "IMBUE_UINT16", "123", uint16(123))
+		expectEnv[IMBUE_UINT32](container, "IMBUE_UINT32", "123", uint32(123))
+		expectEnv[IMBUE_UINT64](container, "IMBUE_UINT64", "123", uint64(123))
 	})
 
 	It("returns an error when an int cannot be parsed", func() {
@@ -58,6 +66,24 @@ var _ = Describe("func FromEnvironment()", func() {
 		)
 	})
 
+	It("returns an error when an int32 cannot be parsed", func() {
+		expectEnvError[IMBUE_INT32, int32](
+			container,
+			"IMBUE_INT32",
+			"<not-numeric>",
+			`the IMBUE_INT32 environment variable cannot be parsed: "<not-numeric>" is not a valid int32`,
+		)
+	})
+
+	It("returns an error when an int64 cannot be parsed", func() {
+		expectEnvError[IMBUE_INT64, int64](
+			container,
+			"IMBUE_INT64",
+			"<not-numeric>",
+			`the IMBUE_INT64 environment variable cannot be parsed: "<not-numeric>" is not a valid int64`,
+		)
+	})
+
 	It("returns an error when a uint cannot be parsed", func() {
 		expectEnvError[IMBUE_UINT, uint](
 			container,
@@ -73,6 +99,24 @@ var _ = Describe("func FromEnvironment()", func() {
 			"IMBUE_UINT16",
 			"<not-numeric>",
 			`the IMBUE_UINT16 environment variable cannot be parsed: "<not-numeric>" is not a valid uint16`,
+		)
+	})
+
+	It("returns an error when a uint32 cannot be parsed", func() {
+		expectEnvError[IMBUE_UINT32, uint32](
+			container,
+			"IMBUE_UINT32",
+			"<not-numeric>",
+			`the IMBUE_UINT32 environment variable cannot be parsed: "<not-numeric>" is not a valid uint32`,
+		)
+	})
+
+	It("returns an error when a uint64 cannot be parsed", func() {
+		expectEnvError[IMBUE_UINT64, uint64](
+			container,
+			"IMBUE_UINT64",
+			"<not-numeric>",
+			`the IMBUE_UINT64 environment variable cannot be parsed: "<not-numeric>" is not a valid uint64`,
 		)
 	})
 
