@@ -5,7 +5,7 @@ package imbue
 // Groups are used to group multiple dependencies of different types that are
 // related in some way.
 //
-// Groups are declared by declaring a named type that uses imbue.Group as its
+// Groups are defined by declaring a named type that uses imbue.Group as its
 // underlying type.
 type Group interface {
 	group()
