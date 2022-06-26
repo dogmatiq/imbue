@@ -33,7 +33,8 @@ type EnvironmentVariable[T Parseable] interface {
 // Parseable is a constraint that identifies the set of types that can be parsed
 // from their string representation, such as in an environment variable.
 type Parseable interface {
-	string |
+	// Strings and byte-slices are direct representations of the parsed value.
+	string | []byte |
 
 		// Booleans are required to be explicitly set to one of "true", "false",
 		// "yes", "no", "on" or "off". The value is case-insensitive.
@@ -119,7 +120,8 @@ func parseInto(value string, out any) error {
 	switch out := out.(type) {
 	case *string:
 		*out = value
-
+	case *[]byte:
+		*out = []byte(value)
 	case *bool:
 		return parseBool(value, out)
 

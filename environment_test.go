@@ -13,8 +13,8 @@ import (
 
 type (
 	envTestString imbue.EnvironmentVariable[string]
-
-	envTestBool imbue.EnvironmentVariable[bool]
+	envTestBytes  imbue.EnvironmentVariable[[]byte]
+	envTestBool   imbue.EnvironmentVariable[bool]
 
 	envTestInt   imbue.EnvironmentVariable[int]
 	envTestInt16 imbue.EnvironmentVariable[int16]
@@ -33,6 +33,8 @@ type (
 var _ = Describe("func FromEnvironment()", func() {
 	It("can parse environment variables", func() {
 		expectEnv[envTestString]("ENV_TEST_STRING", "<value>", "<value>")
+
+		expectEnv[envTestBytes]("ENV_TEST_BYTES", "<value>", []byte("<value>"))
 
 		expectEnv[envTestBool]("ENV_TEST_BOOL", "TrUe", true)
 		expectEnv[envTestBool]("ENV_TEST_BOOL", "fAlSe", false)
