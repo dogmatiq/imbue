@@ -8,6 +8,7 @@ import (
 	"os"
 	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/dogmatiq/imbue/internal/identifier"
 	"golang.org/x/exp/constraints"
@@ -33,6 +34,10 @@ type EnvironmentVariable[T Parseable] interface {
 // from their string representation, such as in an environment variable.
 type Parseable interface {
 	string |
+
+		// Booleans are required to be explicitly set to one of "true", "false",
+		// "yes", "no", "on" or "off". The value is case-insensitive.
+		bool |
 
 		// Signed integers are parsed using strconv.ParseInt() with "base
 		// detection", meaning that values are assumed to be in base-10 unless
@@ -115,6 +120,9 @@ func parseInto(value string, out any) error {
 	case *string:
 		*out = value
 
+	case *bool:
+		return parseBool(value, out)
+
 	case *int:
 		return parseInt(value, out, bits.UintSize, math.MinInt, math.MaxInt)
 	case *int16:
@@ -143,6 +151,20 @@ func parseInto(value string, out any) error {
 			"%s implements the Parseable constraint, but is not handled by the parser",
 			reflect.TypeOf(out).Elem(),
 		))
+	}
+
+	return nil
+}
+
+// parseBool parses a boolean and assigns it to *out.
+func parseBool(value string, out *bool) error {
+	switch strings.ToLower(value) {
+	case "true", "yes", "on":
+		*out = true
+	case "false", "no", "off":
+		*out = false
+	default:
+		return errors.New(`expected one of "true", "false", "yes", "no", "on" or "off"`)
 	}
 
 	return nil

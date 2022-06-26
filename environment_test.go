@@ -14,6 +14,8 @@ import (
 type (
 	envTestString imbue.EnvironmentVariable[string]
 
+	envTestBool imbue.EnvironmentVariable[bool]
+
 	envTestInt   imbue.EnvironmentVariable[int]
 	envTestInt16 imbue.EnvironmentVariable[int16]
 	envTestInt32 imbue.EnvironmentVariable[int32]
@@ -32,6 +34,13 @@ var _ = Describe("func FromEnvironment()", func() {
 	It("can parse environment variables", func() {
 		expectEnv[envTestString]("ENV_TEST_STRING", "<value>", "<value>")
 
+		expectEnv[envTestBool]("ENV_TEST_BOOL", "TrUe", true)
+		expectEnv[envTestBool]("ENV_TEST_BOOL", "fAlSe", false)
+		expectEnv[envTestBool]("ENV_TEST_BOOL", "YeS", true)
+		expectEnv[envTestBool]("ENV_TEST_BOOL", "nO", false)
+		expectEnv[envTestBool]("ENV_TEST_BOOL", "On", true)
+		expectEnv[envTestBool]("ENV_TEST_BOOL", "oFf", false)
+
 		expectEnv[envTestInt]("ENV_TEST_INT", "-123", int(-123))
 		expectEnv[envTestInt16]("ENV_TEST_INT16", "-123", int16(-123))
 		expectEnv[envTestInt32]("ENV_TEST_INT32", "-123", int32(-123))
@@ -44,6 +53,14 @@ var _ = Describe("func FromEnvironment()", func() {
 
 		expectEnv[envTestFloat32]("ENV_TEST_FLOAT32", "-123.45", float32(-123.45))
 		expectEnv[envTestFloat64]("ENV_TEST_FLOAT64", "-123.45", float64(-123.45))
+	})
+
+	It("returns an error when a bool cannot be parsed", func() {
+		expectEnvError[envTestBool, bool](
+			"ENV_TEST_BOOL",
+			"<not-bool>",
+			`the ENV_TEST_BOOL environment variable ("<not-bool>") is invalid: expected one of "true", "false", "yes", "no", "on" or "off"`,
+		)
 	})
 
 	It("returns an error when an int cannot be parsed", func() {
