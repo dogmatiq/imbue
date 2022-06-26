@@ -9,6 +9,7 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/dogmatiq/imbue/internal/identifier"
 	"golang.org/x/exp/constraints"
@@ -35,6 +36,13 @@ type EnvironmentVariable[T Parseable] interface {
 type Parseable interface {
 	// Strings and byte-slices are direct representations of the parsed value.
 	string | []byte |
+
+		// Durations are parsed using time.ParseDuration().
+		//
+		// A duration is a sequence of (possibly signed) numbers followed by one
+		// of the following units: "ns", "us" (or "µs"), "ms", "s", "m", "h".
+		// For example: "300ms", "-1.5h" or "2h45m"
+		time.Duration |
 
 		// Booleans are required to be explicitly set to one of "true", "false",
 		// "yes", "no", "on" or "off". The value is case-insensitive.
@@ -124,6 +132,8 @@ func parseInto(value string, out any) error {
 		*out = []byte(value)
 	case *bool:
 		return parseBool(value, out)
+	case *time.Duration:
+		return parseDuration(value, out)
 
 	case *int:
 		return parseInt(value, out, bits.UintSize, math.MinInt, math.MaxInt)
@@ -169,6 +179,17 @@ func parseBool(value string, out *bool) error {
 		return errors.New(`expected one of "true", "false", "yes", "no", "on" or "off"`)
 	}
 
+	return nil
+}
+
+// parseDuration parses a duration and assigns it to *out.
+func parseDuration(value string, out *time.Duration) error {
+	d, err := time.ParseDuration(value)
+	if err != nil {
+		return errors.New(`expected duration (e.g. "300ms", "-1.5h" or "2h45m")`)
+	}
+
+	*out = d
 	return nil
 }
 

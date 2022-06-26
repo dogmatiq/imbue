@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"time"
 
 	"github.com/dogmatiq/imbue"
 	. "github.com/onsi/ginkgo/v2"
@@ -12,9 +13,10 @@ import (
 )
 
 type (
-	envTestString imbue.EnvironmentVariable[string]
-	envTestBytes  imbue.EnvironmentVariable[[]byte]
-	envTestBool   imbue.EnvironmentVariable[bool]
+	envTestString   imbue.EnvironmentVariable[string]
+	envTestBytes    imbue.EnvironmentVariable[[]byte]
+	envTestBool     imbue.EnvironmentVariable[bool]
+	envTestDuration imbue.EnvironmentVariable[time.Duration]
 
 	envTestInt   imbue.EnvironmentVariable[int]
 	envTestInt16 imbue.EnvironmentVariable[int16]
@@ -33,8 +35,8 @@ type (
 var _ = Describe("func FromEnvironment()", func() {
 	It("can parse environment variables", func() {
 		expectEnv[envTestString]("ENV_TEST_STRING", "<value>", "<value>")
-
 		expectEnv[envTestBytes]("ENV_TEST_BYTES", "<value>", []byte("<value>"))
+		expectEnv[envTestDuration]("ENV_TEST_DURATION", "1.5s", 1500*time.Millisecond)
 
 		expectEnv[envTestBool]("ENV_TEST_BOOL", "TrUe", true)
 		expectEnv[envTestBool]("ENV_TEST_BOOL", "fAlSe", false)
@@ -62,6 +64,14 @@ var _ = Describe("func FromEnvironment()", func() {
 			"ENV_TEST_BOOL",
 			"<not-bool>",
 			`the ENV_TEST_BOOL environment variable ("<not-bool>") is invalid: expected one of "true", "false", "yes", "no", "on" or "off"`,
+		)
+	})
+
+	It("returns an error when a duration cannot be parsed", func() {
+		expectEnvError[envTestDuration, time.Duration](
+			"ENV_TEST_DURATION",
+			"<not-duration>",
+			`the ENV_TEST_DURATION environment variable ("<not-duration>") is invalid: expected duration (e.g. "300ms", "-1.5h" or "2h45m")`,
 		)
 	})
 
