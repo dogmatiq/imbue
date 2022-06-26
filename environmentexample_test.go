@@ -9,11 +9,11 @@ import (
 )
 
 type (
-	// API_HOST_NAME declares the API_HOST_NAME environment variable as a string.
-	API_HOST_NAME imbue.EnvironmentVariable[string]
+	// APIHostName declares the API_HOST_NAME environment variable as a string.
+	APIHostName imbue.EnvironmentVariable[string]
 
-	// API_PORT declares the API_PORT environment variable as a uint16.
-	API_PORT imbue.EnvironmentVariable[uint16]
+	// APIPort declares the API_PORT environment variable as a uint16.
+	APIPort imbue.EnvironmentVariable[uint16]
 )
 
 func Example_environmentVariables() {
@@ -31,8 +31,8 @@ func Example_environmentVariables() {
 		con,
 		func(
 			ctx context.Context,
-			h imbue.FromEnvironment[API_HOST_NAME, string],
-			p imbue.FromEnvironment[API_PORT, uint16],
+			h imbue.FromEnvironment[APIHostName, string],
+			p imbue.FromEnvironment[APIPort, uint16],
 		) error {
 			fmt.Println(h.Name(), "=", h.Value())
 			fmt.Println(p.Name(), "=", p.Value())

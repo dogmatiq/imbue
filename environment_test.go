@@ -2,6 +2,8 @@ package imbue_test
 
 import (
 	"context"
+	"fmt"
+	"math"
 	"os"
 
 	"github.com/dogmatiq/imbue"
@@ -10,171 +12,161 @@ import (
 )
 
 type (
-	IMBUE_STRING imbue.EnvironmentVariable[string]
+	envTestString imbue.EnvironmentVariable[string]
 
-	IMBUE_INT   imbue.EnvironmentVariable[int]
-	IMBUE_INT16 imbue.EnvironmentVariable[int16]
-	IMBUE_INT32 imbue.EnvironmentVariable[int32]
-	IMBUE_INT64 imbue.EnvironmentVariable[int64]
+	envTestInt   imbue.EnvironmentVariable[int]
+	envTestInt16 imbue.EnvironmentVariable[int16]
+	envTestInt32 imbue.EnvironmentVariable[int32]
+	envTestInt64 imbue.EnvironmentVariable[int64]
 
-	IMBUE_UINT   imbue.EnvironmentVariable[uint]
-	IMBUE_UINT16 imbue.EnvironmentVariable[uint16]
-	IMBUE_UINT32 imbue.EnvironmentVariable[uint32]
-	IMBUE_UINT64 imbue.EnvironmentVariable[uint64]
+	envTestUint   imbue.EnvironmentVariable[uint]
+	envTestUint16 imbue.EnvironmentVariable[uint16]
+	envTestUint32 imbue.EnvironmentVariable[uint32]
+	envTestUint64 imbue.EnvironmentVariable[uint64]
 
-	IMBUE_FLOAT32 imbue.EnvironmentVariable[float32]
-	IMBUE_FLOAT64 imbue.EnvironmentVariable[float64]
+	envTestFloat32 imbue.EnvironmentVariable[float32]
+	envTestFloat64 imbue.EnvironmentVariable[float64]
 )
 
 var _ = Describe("func FromEnvironment()", func() {
-	var container *imbue.Container
-
-	BeforeEach(func() {
-		container = imbue.New()
-	})
-
-	AfterEach(func() {
-		container.Close()
-	})
-
 	It("can parse environment variables", func() {
-		expectEnv[IMBUE_STRING](container, "IMBUE_STRING", "<value>", "<value>")
+		expectEnv[envTestString]("ENV_TEST_STRING", "<value>", "<value>")
 
-		expectEnv[IMBUE_INT](container, "IMBUE_INT", "-123", int(-123))
-		expectEnv[IMBUE_INT16](container, "IMBUE_INT16", "-123", int16(-123))
-		expectEnv[IMBUE_INT32](container, "IMBUE_INT32", "-123", int32(-123))
-		expectEnv[IMBUE_INT64](container, "IMBUE_INT64", "-123", int64(-123))
+		expectEnv[envTestInt]("ENV_TEST_INT", "-123", int(-123))
+		expectEnv[envTestInt16]("ENV_TEST_INT16", "-123", int16(-123))
+		expectEnv[envTestInt32]("ENV_TEST_INT32", "-123", int32(-123))
+		expectEnv[envTestInt64]("ENV_TEST_INT64", "-123", int64(-123))
 
-		expectEnv[IMBUE_UINT](container, "IMBUE_UINT", "123", uint(123))
-		expectEnv[IMBUE_UINT16](container, "IMBUE_UINT16", "123", uint16(123))
-		expectEnv[IMBUE_UINT32](container, "IMBUE_UINT32", "123", uint32(123))
-		expectEnv[IMBUE_UINT64](container, "IMBUE_UINT64", "123", uint64(123))
+		expectEnv[envTestUint]("ENV_TEST_UINT", "123", uint(123))
+		expectEnv[envTestUint16]("ENV_TEST_UINT16", "123", uint16(123))
+		expectEnv[envTestUint32]("ENV_TEST_UINT32", "123", uint32(123))
+		expectEnv[envTestUint64]("ENV_TEST_UINT64", "123", uint64(123))
 
-		expectEnv[IMBUE_FLOAT32](container, "IMBUE_FLOAT32", "-123.45", float32(-123.45))
-		expectEnv[IMBUE_FLOAT64](container, "IMBUE_FLOAT64", "-123.45", float64(-123.45))
+		expectEnv[envTestFloat32]("ENV_TEST_FLOAT32", "-123.45", float32(-123.45))
+		expectEnv[envTestFloat64]("ENV_TEST_FLOAT64", "-123.45", float64(-123.45))
 	})
 
 	It("returns an error when an int cannot be parsed", func() {
-		expectEnvError[IMBUE_INT, int](
-			container,
-			"IMBUE_INT",
+		expectEnvError[envTestInt, int](
+			"ENV_TEST_INT",
 			"<not-numeric>",
-			`the IMBUE_INT environment variable cannot be parsed: "<not-numeric>" is not a valid int`,
+			fmt.Sprintf(
+				`the ENV_TEST_INT environment variable ("<not-numeric>") is invalid: expected integer between %d and %d`,
+				math.MinInt,
+				math.MaxInt,
+			),
 		)
 	})
 
 	It("returns an error when an int16 cannot be parsed", func() {
-		expectEnvError[IMBUE_INT16, int16](
-			container,
-			"IMBUE_INT16",
+		expectEnvError[envTestInt16, int16](
+			"ENV_TEST_INT16",
 			"<not-numeric>",
-			`the IMBUE_INT16 environment variable cannot be parsed: "<not-numeric>" is not a valid int16`,
+			`the ENV_TEST_INT16 environment variable ("<not-numeric>") is invalid: expected integer between -32768 and 32767`,
 		)
 	})
 
 	It("returns an error when an int32 cannot be parsed", func() {
-		expectEnvError[IMBUE_INT32, int32](
-			container,
-			"IMBUE_INT32",
+		expectEnvError[envTestInt32, int32](
+			"ENV_TEST_INT32",
 			"<not-numeric>",
-			`the IMBUE_INT32 environment variable cannot be parsed: "<not-numeric>" is not a valid int32`,
+			`the ENV_TEST_INT32 environment variable ("<not-numeric>") is invalid: expected integer between -2147483648 and 2147483647`,
 		)
 	})
 
 	It("returns an error when an int64 cannot be parsed", func() {
-		expectEnvError[IMBUE_INT64, int64](
-			container,
-			"IMBUE_INT64",
+		expectEnvError[envTestInt64, int64](
+			"ENV_TEST_INT64",
 			"<not-numeric>",
-			`the IMBUE_INT64 environment variable cannot be parsed: "<not-numeric>" is not a valid int64`,
+			`the ENV_TEST_INT64 environment variable ("<not-numeric>") is invalid: expected integer between -9223372036854775808 and 9223372036854775807`,
 		)
 	})
 
 	It("returns an error when a uint cannot be parsed", func() {
-		expectEnvError[IMBUE_UINT, uint](
-			container,
-			"IMBUE_UINT",
+		expectEnvError[envTestUint, uint](
+			"ENV_TEST_UINT",
 			"<not-numeric>",
-			`the IMBUE_UINT environment variable cannot be parsed: "<not-numeric>" is not a valid uint`,
+			`the ENV_TEST_UINT environment variable ("<not-numeric>") is invalid: expected integer between 0 and 18446744073709551615`,
 		)
 	})
 
 	It("returns an error when a uint16 cannot be parsed", func() {
-		expectEnvError[IMBUE_UINT16, uint16](
-			container,
-			"IMBUE_UINT16",
+		expectEnvError[envTestUint16, uint16](
+			"ENV_TEST_UINT16",
 			"<not-numeric>",
-			`the IMBUE_UINT16 environment variable cannot be parsed: "<not-numeric>" is not a valid uint16`,
+			`the ENV_TEST_UINT16 environment variable ("<not-numeric>") is invalid: expected integer between 0 and 65535`,
 		)
 	})
 
 	It("returns an error when a uint32 cannot be parsed", func() {
-		expectEnvError[IMBUE_UINT32, uint32](
-			container,
-			"IMBUE_UINT32",
+		expectEnvError[envTestUint32, uint32](
+			"ENV_TEST_UINT32",
 			"<not-numeric>",
-			`the IMBUE_UINT32 environment variable cannot be parsed: "<not-numeric>" is not a valid uint32`,
+			`the ENV_TEST_UINT32 environment variable ("<not-numeric>") is invalid: expected integer between 0 and 4294967295`,
 		)
 	})
 
 	It("returns an error when a uint64 cannot be parsed", func() {
-		expectEnvError[IMBUE_UINT64, uint64](
-			container,
-			"IMBUE_UINT64",
+		expectEnvError[envTestUint64, uint64](
+			"ENV_TEST_UINT64",
 			"<not-numeric>",
-			`the IMBUE_UINT64 environment variable cannot be parsed: "<not-numeric>" is not a valid uint64`,
+			`the ENV_TEST_UINT64 environment variable ("<not-numeric>") is invalid: expected integer between 0 and 18446744073709551615`,
 		)
 	})
 
 	It("returns an error when a float32 cannot be parsed", func() {
-		expectEnvError[IMBUE_FLOAT32, float32](
-			container,
-			"IMBUE_FLOAT32",
+		expectEnvError[envTestFloat32, float32](
+			"ENV_TEST_FLOAT32",
 			"<not-numeric>",
-			`the IMBUE_FLOAT32 environment variable cannot be parsed: "<not-numeric>" is not a valid float32`,
+			`the ENV_TEST_FLOAT32 environment variable ("<not-numeric>") is invalid: expected floating-point number`,
 		)
 	})
 
 	It("returns an error when a float64 cannot be parsed", func() {
-		expectEnvError[IMBUE_FLOAT64, float64](
-			container,
-			"IMBUE_FLOAT64",
+		expectEnvError[envTestFloat64, float64](
+			"ENV_TEST_FLOAT64",
 			"<not-numeric>",
-			`the IMBUE_FLOAT64 environment variable cannot be parsed: "<not-numeric>" is not a valid float64`,
+			`the ENV_TEST_FLOAT64 environment variable ("<not-numeric>") is invalid: expected floating-point number`,
 		)
 	})
 
 	It("returns an error when the environment variable is undefined", func() {
+		con := imbue.New()
+		defer con.Close()
+
 		err := imbue.Invoke1(
 			context.Background(),
-			container,
+			con,
 			func(
 				ctx context.Context,
-				v imbue.FromEnvironment[IMBUE_STRING, string],
+				v imbue.FromEnvironment[envTestString, string],
 			) error {
 				Fail("unexpected call")
 				return nil
 			},
 		)
-		Expect(err).To(MatchError("the IMBUE_STRING environment variable is not defined"))
+		Expect(err).To(MatchError("the ENV_TEST_STRING environment variable is not defined"))
 	})
 
 	It("returns an error when the environment variable is empty", func() {
-		os.Setenv("IMBUE_STRING", "")
-		defer os.Unsetenv("IMBUE_STRING")
+		os.Setenv("ENV_TEST_STRING", "")
+		defer os.Unsetenv("ENV_TEST_STRING")
+
+		con := imbue.New()
+		defer con.Close()
 
 		err := imbue.Invoke1(
 			context.Background(),
-			container,
+			con,
 			func(
 				ctx context.Context,
-				v imbue.FromEnvironment[IMBUE_STRING, string],
+				v imbue.FromEnvironment[envTestString, string],
 			) error {
 				Fail("unexpected call")
 				return nil
 			},
 		)
-		Expect(err).To(MatchError("the IMBUE_STRING environment variable is defined, but it is empty"))
+		Expect(err).To(MatchError("the ENV_TEST_STRING environment variable is defined, but it is empty"))
 	})
 })
 
@@ -182,13 +174,15 @@ func expectEnv[
 	V imbue.EnvironmentVariable[T],
 	T imbue.Parseable,
 ](
-	con *imbue.Container,
 	name string,
-	stringValue string,
-	parsedValue T,
+	raw string,
+	value T,
 ) {
-	os.Setenv(name, stringValue)
+	os.Setenv(name, raw)
 	defer os.Unsetenv(name)
+
+	con := imbue.New()
+	defer con.Close()
 
 	err := imbue.Invoke1(
 		context.Background(),
@@ -198,8 +192,8 @@ func expectEnv[
 			v imbue.FromEnvironment[V, T],
 		) error {
 			Expect(v.Name()).To(Equal(name))
-			Expect(v.Value()).To(Equal(parsedValue))
-			Expect(v.String()).To(Equal(stringValue))
+			Expect(v.Value()).To(Equal(value))
+			Expect(v.String()).To(Equal(raw))
 			return nil
 		},
 	)
@@ -209,13 +203,12 @@ func expectEnv[
 func expectEnvError[
 	V imbue.EnvironmentVariable[T],
 	T imbue.Parseable,
-](
-	con *imbue.Container,
-	name string,
-	stringValue string,
-	errorMessage string,
-) {
-	os.Setenv(name, stringValue)
+](name, raw, message string) {
+	os.Setenv(name, raw)
+	defer os.Unsetenv(name)
+
+	con := imbue.New()
+	defer con.Close()
 
 	err := imbue.Invoke1(
 		context.Background(),
@@ -228,5 +221,5 @@ func expectEnvError[
 			return nil
 		},
 	)
-	Expect(err).To(MatchError(errorMessage))
+	Expect(err).To(MatchError(message))
 }

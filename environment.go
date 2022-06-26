@@ -1,25 +1,30 @@
 package imbue
 
 import (
+	"errors"
 	"fmt"
+	"math"
 	"math/bits"
 	"os"
 	"reflect"
 	"strconv"
 
+	"github.com/dogmatiq/imbue/internal/identifier"
 	"golang.org/x/exp/constraints"
 )
 
 // EnvironmentVariable is a constraint for a type that identifies an environment
 // variable.
 //
-// Environment variables are declared by declaring a type that uses
+// Environment variables are read by declaring a type that uses
 // imbue.EnvironmentVariable[T] as its underlying type.
 //
-// The name of the declared type is used as the name of the environment
-// variable.
+// The environment variable name is obtained by converting the name of the type
+// to "screaming snake case". For example, a Go type named "fooBar" would map
+// to the environment variable "FOO_BAR".
 //
 // T is the type that is produced by parsing the environment variable's value.
+// See the Parseable constraint for information on how each type is parsed.
 type EnvironmentVariable[T Parseable] interface {
 	variableOfType(T)
 }
@@ -28,8 +33,17 @@ type EnvironmentVariable[T Parseable] interface {
 // from their string representation, such as in an environment variable.
 type Parseable interface {
 	string |
+
+		// Signed integers are parsed using strconv.ParseInt() with "base
+		// detection", meaning that values are assumed to be in base-10 unless
+		// prefixed with '0b', '0', '0o' or '0x'.
 		int | int16 | int32 | int64 |
+
+		// Unsigned integers are parsed using strconv.ParseUint() using the same
+		// base-detection rules as signed integers.
 		uint | uint16 | uint32 | uint64 |
+
+		// Floating point numbers are parsed using strconv.ParseFloat().
 		float32 | float64
 }
 
@@ -39,12 +53,14 @@ type Parseable interface {
 // WithX(), DecorateX(), and InvokeX() to request a dependency of type T that is
 // parsed from the environment variable V.
 type FromEnvironment[V EnvironmentVariable[T], T Parseable] struct {
+	name  string
+	raw   string
 	value T
 }
 
 // Name returns the name of the environment variable.
 func (v FromEnvironment[V, T]) Name() string {
-	return typeOf[V]().Name()
+	return v.name
 }
 
 // Value returns the parsed value of the environment variable.
@@ -52,15 +68,18 @@ func (v FromEnvironment[V, T]) Value() T {
 	return v.value
 }
 
-// String returns the original string value of the environment variable.
+// String returns the raw string value of the environment variable.
 func (v FromEnvironment[V, T]) String() string {
-	return os.Getenv(v.Name())
+	return v.raw
 }
 
 // constructSelf constructs the environment variable in-place.
 func (v *FromEnvironment[V, T]) constructSelf(ctx *Context) error {
-	name := v.Name()
-	value, ok := os.LookupEnv(name)
+	name := identifier.ToScreamingSnakeCase(
+		typeOf[V]().Name(),
+	)
+
+	raw, ok := os.LookupEnv(name)
 	if !ok {
 		return fmt.Errorf(
 			"the %s environment variable is not defined",
@@ -68,20 +87,24 @@ func (v *FromEnvironment[V, T]) constructSelf(ctx *Context) error {
 		)
 	}
 
-	if value == "" {
+	if raw == "" {
 		return fmt.Errorf(
 			"the %s environment variable is defined, but it is empty",
 			name,
 		)
 	}
 
-	if err := parseInto(value, &v.value); err != nil {
+	if err := parseInto(raw, &v.value); err != nil {
 		return fmt.Errorf(
-			"the %s environment variable cannot be parsed: %w",
+			"the %s environment variable (%#v) is invalid: %w",
 			name,
+			raw,
 			err,
 		)
 	}
+
+	v.name = name
+	v.raw = raw
 
 	return nil
 }
@@ -93,27 +116,27 @@ func parseInto(value string, out any) error {
 		*out = value
 
 	case *int:
-		return parseInt(value, bits.UintSize, out)
+		return parseInt(value, out, bits.UintSize, math.MinInt, math.MaxInt)
 	case *int16:
-		return parseInt(value, 16, out)
+		return parseInt(value, out, 16, math.MinInt16, math.MaxInt16)
 	case *int32:
-		return parseInt(value, 32, out)
+		return parseInt(value, out, 32, math.MinInt32, math.MaxInt32)
 	case *int64:
-		return parseInt(value, 64, out)
+		return parseInt(value, out, 64, math.MinInt64, math.MaxInt64)
 
 	case *uint:
-		return parseUint(value, bits.UintSize, out)
+		return parseUint(value, out, bits.UintSize, math.MaxUint)
 	case *uint16:
-		return parseUint(value, 16, out)
+		return parseUint(value, out, 16, math.MaxUint16)
 	case *uint32:
-		return parseUint(value, 32, out)
+		return parseUint(value, out, 32, math.MaxUint32)
 	case *uint64:
-		return parseUint(value, 64, out)
+		return parseUint(value, out, 64, math.MaxUint64)
 
 	case *float32:
-		return parseFloat(value, 32, out)
+		return parseFloat(value, out, 32)
 	case *float64:
-		return parseFloat(value, 64, out)
+		return parseFloat(value, out, 64)
 
 	default:
 		panic(fmt.Sprintf(
@@ -126,14 +149,10 @@ func parseInto(value string, out any) error {
 }
 
 // parseInt parses a signed integer and assigns it to *out.
-func parseInt[T constraints.Signed](value string, size int, out *T) error {
-	n, err := strconv.ParseInt(value, 10, size)
+func parseInt[T constraints.Signed](value string, out *T, size int, min, max T) error {
+	n, err := strconv.ParseInt(value, 0, size)
 	if err != nil {
-		return fmt.Errorf(
-			"%#v is not a valid %s",
-			value,
-			typeOf[T](),
-		)
+		return fmt.Errorf("expected integer between %d and %d", min, max)
 	}
 
 	*out = T(n)
@@ -141,14 +160,10 @@ func parseInt[T constraints.Signed](value string, size int, out *T) error {
 }
 
 // parseUint parses an unsigned integer and assigns it to *out.
-func parseUint[T constraints.Unsigned](value string, size int, out *T) error {
-	n, err := strconv.ParseUint(value, 10, size)
+func parseUint[T constraints.Unsigned](value string, out *T, size int, max T) error {
+	n, err := strconv.ParseUint(value, 0, size)
 	if err != nil {
-		return fmt.Errorf(
-			"%#v is not a valid %s",
-			value,
-			typeOf[T](),
-		)
+		return fmt.Errorf("expected integer between 0 and %d", max)
 	}
 
 	*out = T(n)
@@ -156,14 +171,10 @@ func parseUint[T constraints.Unsigned](value string, size int, out *T) error {
 }
 
 // parseFloat parses a float and assigns it to *out.
-func parseFloat[T constraints.Float](value string, size int, out *T) error {
+func parseFloat[T constraints.Float](value string, out *T, size int) error {
 	n, err := strconv.ParseFloat(value, size)
 	if err != nil {
-		return fmt.Errorf(
-			"%#v is not a valid %s",
-			value,
-			typeOf[T](),
-		)
+		return errors.New("expected floating-point number")
 	}
 
 	*out = T(n)
