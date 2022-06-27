@@ -48,6 +48,12 @@ type decoratorEntry[T any] struct {
 	Decorator decorator[T]
 }
 
+// selfConstructor is an interface for types that construct themselves without a
+// user-defined constructor function.
+type selfConstructor interface {
+	constructSelf(*Context) error
+}
+
 // declarationOf describes how to build values of type T.
 type declarationOf[T any] struct {
 	m sync.Mutex
@@ -219,6 +225,10 @@ func (d *declarationOf[T]) construct(ctx *Context) error {
 		}
 
 		return nil
+	}
+
+	if sc, ok := any(&d.value).(selfConstructor); ok {
+		return sc.constructSelf(ctx)
 	}
 
 	panic(fmt.Sprintf(

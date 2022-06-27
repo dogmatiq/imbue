@@ -4,7 +4,7 @@ package imbue
 //
 // Names are used to distinguish between multiple dependencies of the same type.
 //
-// Names are declared by declaring a type that uses imbue.Name[T] as its
+// Names are defined by declaring a type that uses imbue.Name[T] as its
 // underlying type, where T is the type of the dependency being named.
 type Name[T any] interface {
 	nameOf(T)
