@@ -87,29 +87,29 @@ func (v FromEnvironment[V, T]) String() string {
 	return v.raw
 }
 
-// constructSelf constructs the environment variable in-place.
-func (v *FromEnvironment[V, T]) constructSelf(ctx *Context) error {
+// construct constructs the environment variable.
+func (v FromEnvironment[V, T]) construct(ctx *Context) (FromEnvironment[V, T], error) {
 	name := identifier.ToScreamingSnakeCase(
 		typeOf[V]().Name(),
 	)
 
 	raw, ok := os.LookupEnv(name)
 	if !ok {
-		return fmt.Errorf(
+		return v, fmt.Errorf(
 			"the %s environment variable is not defined",
 			name,
 		)
 	}
 
 	if raw == "" {
-		return fmt.Errorf(
+		return v, fmt.Errorf(
 			"the %s environment variable is defined, but it is empty",
 			name,
 		)
 	}
 
 	if err := parseInto(raw, &v.value); err != nil {
-		return fmt.Errorf(
+		return v, fmt.Errorf(
 			"the %s environment variable (%#v) is invalid: %w",
 			name,
 			raw,
@@ -120,7 +120,7 @@ func (v *FromEnvironment[V, T]) constructSelf(ctx *Context) error {
 	v.name = name
 	v.raw = raw
 
-	return nil
+	return v, nil
 }
 
 // parseInto parses value into *out.

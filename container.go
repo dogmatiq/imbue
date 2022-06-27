@@ -77,6 +77,12 @@ func typeOf[T any]() reflect.Type {
 	return reflect.TypeOf([0]T{}).Elem()
 }
 
+// selfConstructible is an interface for types that construct themselves without
+// a user-defined constructor function.
+type selfConstructible[T any] interface {
+	construct(*Context) (T, error)
+}
+
 // get returns the declaration for type T.
 func get[T any](con *Container) *declarationOf[T] {
 	t := typeOf[T]()
@@ -89,6 +95,11 @@ func get[T any](con *Container) *declarationOf[T] {
 	}
 
 	d := &declarationOf[T]{}
+
+	if sc, ok := any(d.value).(selfConstructible[T]); ok {
+		d.constructor = sc.construct
+	}
+
 	con.declarations[t] = d
 
 	return d
