@@ -62,7 +62,10 @@ func generateWithFunc(code *jen.File, depCount int) {
 
 func generateWithFuncBody(depCount int, code *jen.Group) {
 	code.
-		Add(declaringDeclVar(depCount)).
+		List(
+			declaringDeclVar(depCount),
+			jen.Err(),
+		).
 		Op(":=").
 		Qual(pkgPath, "get").
 		Types(
@@ -70,6 +73,16 @@ func generateWithFuncBody(depCount int, code *jen.Group) {
 		).
 		Call(
 			containerVar(),
+		)
+
+	code.
+		If(
+			jen.Err().Op("!=").Nil(),
+		).
+		Block(
+			jen.Panic(
+				jen.Err(),
+			),
 		)
 
 	code.Line()
@@ -117,7 +130,10 @@ func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 
 	for n := 0; n < depCount; n++ {
 		code.
-			Add(dependencyDeclVar(depCount, n)).
+			List(
+				dependencyDeclVar(depCount, n),
+				jen.Err(),
+			).
 			Op(":=").
 			Qual(pkgPath, "get").
 			Types(
@@ -126,6 +142,18 @@ func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 			Call(
 				containerVar(),
 			)
+
+		code.
+			If(
+				jen.Err().Op("!=").Nil(),
+			).
+			Block(
+				jen.Panic(
+					jen.Err(),
+				),
+			)
+
+		code.Line()
 
 		code.
 			If(

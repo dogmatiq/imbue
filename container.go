@@ -84,14 +84,14 @@ type selfConstructible[T any] interface {
 }
 
 // get returns the declaration for type T.
-func get[T any](con *Container) *declarationOf[T] {
+func get[T any](con *Container) (*declarationOf[T], error) {
 	t := typeOf[T]()
 
 	con.m.Lock()
 	defer con.m.Unlock()
 
 	if d, ok := con.declarations[t]; ok {
-		return d.(*declarationOf[T])
+		return d.(*declarationOf[T]), nil
 	}
 
 	d := &declarationOf[T]{}
@@ -102,7 +102,7 @@ func get[T any](con *Container) *declarationOf[T] {
 
 	con.declarations[t] = d
 
-	return d
+	return d, nil
 }
 
 // String returns a string representation of the dependency tree.

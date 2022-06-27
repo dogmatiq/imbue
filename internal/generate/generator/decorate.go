@@ -74,7 +74,10 @@ func generateDecorateFunc(code *jen.File, depCount int) {
 
 func generateDecorateFuncBody(depCount int, code *jen.Group) {
 	code.
-		Add(declaringDeclVar(depCount)).
+		List(
+			declaringDeclVar(depCount),
+			jen.Err(),
+		).
 		Op(":=").
 		Qual(pkgPath, "get").
 		Types(
@@ -82,6 +85,16 @@ func generateDecorateFuncBody(depCount int, code *jen.Group) {
 		).
 		Call(
 			containerVar(),
+		)
+
+	code.
+		If(
+			jen.Err().Op("!=").Nil(),
+		).
+		Block(
+			jen.Panic(
+				jen.Err(),
+			),
 		)
 
 	code.Line()
@@ -131,7 +144,10 @@ func generateDecoratorFactoryFuncBody(depCount int, code *jen.Group) {
 
 	for n := 0; n < depCount; n++ {
 		code.
-			Add(dependencyDeclVar(depCount, n)).
+			List(
+				dependencyDeclVar(depCount, n),
+				jen.Err(),
+			).
 			Op(":=").
 			Qual(pkgPath, "get").
 			Types(
@@ -140,6 +156,19 @@ func generateDecoratorFactoryFuncBody(depCount int, code *jen.Group) {
 			Call(
 				containerVar(),
 			)
+
+		code.
+			If(
+				jen.Err().Op("!=").Nil(),
+			).
+			Block(
+				jen.Return(
+					jen.Nil(),
+					jen.Err(),
+				),
+			)
+
+		code.Line()
 
 		code.
 			If(

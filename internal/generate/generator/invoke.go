@@ -74,7 +74,7 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 	for n := 0; n < depCount; n++ {
 		code.
 			List(
-				dependencyVar(depCount, n),
+				dependencyDeclVar(depCount, n),
 				jen.Err(),
 			).
 			Op(":=").
@@ -84,19 +84,41 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 			).
 			Call(
 				containerVar(),
+			)
+
+		code.
+			If(
+				jen.Err().Op("!=").Nil(),
 			).
+			Block(
+				jen.Return(
+					jen.Err(),
+				),
+			)
+
+		code.Line()
+
+		code.
+			List(
+				dependencyVar(depCount, n),
+				jen.Err(),
+			).
+			Op(":=").
+			Add(dependencyDeclVar(depCount, n)).
 			Dot("Resolve").
 			Call(
 				jen.Id("rctx"),
 			)
 
-		code.If(
-			jen.Err().Op("!=").Nil(),
-		).Block(
-			jen.Return(
-				jen.Err(),
-			),
-		)
+		code.
+			If(
+				jen.Err().Op("!=").Nil(),
+			).
+			Block(
+				jen.Return(
+					jen.Err(),
+				),
+			)
 
 		code.Line()
 	}
