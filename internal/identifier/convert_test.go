@@ -12,6 +12,10 @@ var _ = Describe("func ToScreamingSnakeCase()", func() {
 		func(camel, expect string) {
 			Expect(ToScreamingSnakeCase(camel)).To(Equal(expect))
 		},
+		Entry("1-word identity", "FOO", "FOO"),
+		Entry("1-word camel case", "foo", "FOO"),
+		Entry("1-word pascal case", "Foo", "FOO"),
+
 		Entry("2-word identity", "FOO_BAR", "FOO_BAR"),
 		Entry("2-word camel case", "fooBar", "FOO_BAR"),
 		Entry("2-word pascal case", "FooBar", "FOO_BAR"),
