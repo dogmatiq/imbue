@@ -55,12 +55,34 @@ type declarationOf[T any] struct {
 	file string
 	line int
 
-	isConstructed bool
-	deps          map[reflect.Type]declaration
-	isDep         bool
-	constructor   constructor[T]
-	decorators    []decoratorEntry[T]
-	value         T
+	isSelfDeclaring bool
+	isConstructed   bool
+	deps            map[reflect.Type]declaration
+	isDep           bool
+	constructor     constructor[T]
+	decorators      []decoratorEntry[T]
+	value           T
+}
+
+// selfDeclaring is an interface for types that construct themselves without a
+// user-defined constructor function.
+type selfDeclaring[T any] interface {
+	declare(con *Container, decl *declarationOf[T]) error
+}
+
+// Init initializes the declaration.
+func (d *declarationOf[T]) Init(con *Container) error {
+	if sc, ok := any(d.value).(selfDeclaring[T]); ok {
+		d.m.Lock()
+		d.isSelfDeclaring = true
+		d.m.Unlock()
+
+		if err := sc.declare(con, d); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // Declare declares a constructor for values of type T.
@@ -205,29 +227,33 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 
 // construct initializes d.value.
 func (d *declarationOf[T]) construct(ctx *Context) error {
-	if d.constructor != nil {
-		var err error
-		d.value, err = d.constructor(ctx)
-
-		// If there's an error and we know where the constructor was declared,
-		// include that information in the error.
-		if err != nil && d.file != "" && d.line != 0 {
-			return fmt.Errorf(
-				"constructor for %s (%s:%d) failed: %w",
-				d.GetType(),
-				filepath.Base(d.file),
-				d.line,
-				err,
-			)
-		}
-
-		return err
+	if d.constructor == nil {
+		panic(fmt.Sprintf(
+			"no constructor is declared for %s",
+			d.GetType(),
+		))
 	}
 
-	panic(fmt.Sprintf(
-		"no constructor is declared for %s",
-		d.GetType(),
-	))
+	v, err := d.constructor(ctx)
+	if err != nil {
+		// If the type is self-declaring let it specify the exact error.
+		if d.isSelfDeclaring {
+			return err
+		}
+
+		// Otherwise, wrap the error with file/line information.
+		return fmt.Errorf(
+			"constructor for %s (%s:%d) failed: %w",
+			d.GetType(),
+			filepath.Base(d.file),
+			d.line,
+			err,
+		)
+	}
+
+	d.value = v
+
+	return nil
 }
 
 // decorate applies the decorators to d.value.
