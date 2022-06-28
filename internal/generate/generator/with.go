@@ -148,7 +148,8 @@ func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 				jen.Err().Op("!=").Nil(),
 			).
 			Block(
-				jen.Panic(
+				jen.Return(
+					jen.Nil(),
 					jen.Err(),
 				),
 			)
