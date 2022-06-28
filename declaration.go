@@ -228,10 +228,7 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 // construct initializes d.value.
 func (d *declarationOf[T]) construct(ctx *Context) error {
 	if d.constructor == nil {
-		panic(fmt.Sprintf(
-			"no constructor is declared for %s",
-			d.GetType(),
-		))
+		return undeclaredConstructor{d}
 	}
 
 	v, err := d.constructor(ctx)
@@ -350,5 +347,26 @@ func findLocation() (string, int) {
 				return fr.File, fr.Line
 			}
 		}
+	}
+}
+
+// undeclaredConstructor is an error returned by declarationOf[T].Resolve() when
+// no constructor has been declared for T.
+type undeclaredConstructor struct {
+	Declaration declaration
+}
+
+func (e undeclaredConstructor) Error() string {
+	return fmt.Sprintf(
+		"no constructor is declared for %s",
+		e.Declaration.GetType(),
+	)
+}
+
+// panicOnUndeclaredConstructor panics if err is an undeclaredConstructor error.
+func panicOnUndeclaredConstructor(err error) {
+	var u undeclaredConstructor
+	if errors.As(err, &u) {
+		panic(u)
 	}
 }

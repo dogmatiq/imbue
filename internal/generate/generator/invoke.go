@@ -115,6 +115,11 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 				jen.Err().Op("!=").Nil(),
 			).
 			Block(
+				jen.
+					Id("panicOnUndeclaredConstructor").
+					Call(
+						jen.Err(),
+					),
 				jen.Return(
 					jen.Err(),
 				),

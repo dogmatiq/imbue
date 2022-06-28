@@ -20,6 +20,7 @@ func Invoke1[D any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -42,6 +43,7 @@ func Invoke2[D1, D2 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -52,6 +54,7 @@ func Invoke2[D1, D2 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -74,6 +77,7 @@ func Invoke3[D1, D2, D3 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -84,6 +88,7 @@ func Invoke3[D1, D2, D3 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -94,6 +99,7 @@ func Invoke3[D1, D2, D3 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -116,6 +122,7 @@ func Invoke4[D1, D2, D3, D4 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -126,6 +133,7 @@ func Invoke4[D1, D2, D3, D4 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -136,6 +144,7 @@ func Invoke4[D1, D2, D3, D4 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -146,6 +155,7 @@ func Invoke4[D1, D2, D3, D4 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -168,6 +178,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -178,6 +189,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -188,6 +200,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -198,6 +211,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -208,6 +222,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v5, err := d5.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -230,6 +245,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -240,6 +256,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -250,6 +267,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -260,6 +278,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -270,6 +289,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v5, err := d5.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -280,6 +300,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v6, err := d6.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -302,6 +323,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -312,6 +334,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -322,6 +345,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -332,6 +356,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -342,6 +367,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v5, err := d5.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -352,6 +378,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v6, err := d6.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -362,6 +389,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v7, err := d7.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -384,6 +412,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -394,6 +423,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -404,6 +434,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -414,6 +445,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -424,6 +456,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v5, err := d5.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -434,6 +467,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v6, err := d6.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -444,6 +478,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v7, err := d7.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 
@@ -454,6 +489,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v8, err := d8.Resolve(rctx)
 	if err != nil {
+		panicOnUndeclaredConstructor(err)
 		return err
 	}
 

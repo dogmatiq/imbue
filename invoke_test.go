@@ -175,8 +175,36 @@ var _ = Describe("func InvokeX()", func() {
 					return nil
 				},
 			)
-		}).To(PanicWith(MatchRegexp(
+		}).To(PanicWith(MatchError(
 			`no constructor is declared for imbue_test.Concrete1`,
+		)))
+	})
+
+	It("panics when an upstream dependency is not registered", func() {
+		imbue.With1(
+			container,
+			func(
+				ctx *imbue.Context,
+				dep Concrete2,
+			) (Concrete1, error) {
+				return "<concrete-1>", nil
+			},
+		)
+
+		Expect(func() {
+			imbue.Invoke1(
+				context.Background(),
+				container,
+				func(
+					ctx context.Context,
+					dep Concrete1,
+				) error {
+					Fail("unexpected call")
+					return nil
+				},
+			)
+		}).To(PanicWith(MatchError(
+			`no constructor is declared for imbue_test.Concrete2`,
 		)))
 	})
 })
