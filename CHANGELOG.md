@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog], and this project adheres to
 - Add `ByName.Name()` method, which returns the dependency name as a string
 - Add `FromGroup.Group()` method, which returns the group name as a string
 - Add support for depending on environment variables
+- Add `Optional[T]` for representing optional dependencies
 
 ### Changed
 

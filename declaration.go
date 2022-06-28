@@ -151,19 +151,19 @@ func (d *declarationOf[T]) AddDecoratorDependency(t declaration) error {
 }
 
 func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
-	if t.GetType() == d.GetType() {
-		file, line := findLocation()
-
-		return fmt.Errorf(
-			"%s for %s (%s:%d) depends on itself",
-			funcType,
-			d.GetType(),
-			filepath.Base(file),
-			line,
-		)
-	}
-
 	if cycle, ok := t.dependsOn(d, nil); ok {
+		if len(cycle) == 1 {
+			file, line := findLocation()
+
+			return fmt.Errorf(
+				"%s for %s (%s:%d) depends on itself",
+				funcType,
+				d.GetType(),
+				filepath.Base(file),
+				line,
+			)
+		}
+
 		message := fmt.Sprintf(
 			"%s for %s introduces a cyclic dependency:",
 			funcType,
@@ -313,6 +313,10 @@ func (d *declarationOf[T]) dependsOn(t declaration, cycle []declaration) ([]decl
 
 	for _, dep := range d.deps {
 		if cycle, ok := dep.dependsOn(t, cycle); ok {
+			if d.isSelfDeclaring {
+				return cycle, true
+			}
+
 			return append(cycle, d), true
 		}
 	}
