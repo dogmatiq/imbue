@@ -197,6 +197,30 @@ var _ = Describe("func FromEnvironment()", func() {
 		)
 		Expect(err).To(MatchError("the ENV_TEST_STRING environment variable is defined, but it is empty"))
 	})
+
+	It("panics if a constructor is declared for an optional type", func() {
+		Expect(func() {
+			con := imbue.New()
+			defer con.Close()
+
+			imbue.With0(
+				con,
+				func(
+					ctx *imbue.Context,
+				) (imbue.FromEnvironment[envTestString, string], error) {
+					panic("unexpected call")
+				},
+			)
+		}).To(
+			PanicWith(
+				MatchError(
+					MatchRegexp(
+						`explicit declaration of constructor for imbue\.FromEnvironment\[imbue.envTestString,string\] \(environment_test\.go:\d+\) is disallowed`,
+					),
+				),
+			),
+		)
+	})
 })
 
 func expectEnv[

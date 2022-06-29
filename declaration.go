@@ -92,8 +92,33 @@ func (d *declarationOf[T]) Declare(
 	file, line := findLocation()
 
 	d.m.Lock()
+
+	if d.constructor != nil {
+		isSelfDeclaring := d.isSelfDeclaring
+		d.m.Unlock()
+
+		if isSelfDeclaring {
+			return fmt.Errorf(
+				"explicit declaration of constructor for %s (%s:%d) is disallowed",
+				d.GetType(),
+				filepath.Base(file),
+				line,
+			)
+		}
+
+		return fmt.Errorf(
+			"constructor for %s (%s:%d) collides with existing constructor declared at %s:%d",
+			d.GetType(),
+			filepath.Base(file),
+			line,
+			filepath.Base(d.file),
+			d.line,
+		)
+	}
+
 	d.file = file
 	d.line = line
+
 	d.m.Unlock()
 
 	c, err := decl()

@@ -149,4 +149,25 @@ var _ = Describe("type Optional", func() {
 			),
 		)
 	})
+
+	It("panics if a constructor is declared for an optional type", func() {
+		Expect(func() {
+			imbue.With0(
+				container,
+				func(
+					ctx *imbue.Context,
+				) (imbue.Optional[Concrete1], error) {
+					panic("unexpected call")
+				},
+			)
+		}).To(
+			PanicWith(
+				MatchError(
+					MatchRegexp(
+						`declaration of constructor for imbue\.Optional\[imbue\.Concrete1\] \(optional_test\.go:\d+\) is disallowed`,
+					),
+				),
+			),
+		)
+	})
 })

@@ -24,6 +24,10 @@ The format is based on [Keep a Changelog], and this project adheres to
 - **[BC]** Changed `ByName.Value` from a field to a method
 - **[BC]** Changed `FromGroup.Value` from a field to a method
 
+### Fixed
+
+- `WithX()` now panics when declaring a constructor for a type that has already been declared
+
 ## [0.4.0] - 2022-06-22
 
 ### Added
@@ -38,14 +42,14 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 ### Changed
 
-- Improved panic messages produced by `InjectX()` functions.
+- Improved panic messages produced by `InjectX()` functions
 
 ## [0.3.0] - 2022-06-19
 
 ### Added
 
-- Add `Container.String()`, which returns a string representation of the dependency tree.
-- Add `InjectX()` functions for injecting dependencies into values after they are constructed.
+- Add `Container.String()`, which returns a string representation of the dependency tree
+- Add `InjectX()` functions for injecting dependencies into values after they are constructed
 
 ### Changed
 

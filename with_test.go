@@ -192,6 +192,36 @@ var _ = Describe("func WithX()", func() {
 		)
 	})
 
+	It("panics if the type has already been declared", func() {
+		imbue.With0(
+			container,
+			func(
+				ctx *imbue.Context,
+			) (Concrete1, error) {
+				panic("unexpected call")
+			},
+		)
+
+		Expect(func() {
+			imbue.With0(
+				container,
+				func(
+					ctx *imbue.Context,
+				) (Concrete1, error) {
+					panic("unexpected call")
+				},
+			)
+		}).To(
+			PanicWith(
+				MatchError(
+					MatchRegexp(
+						`constructor for imbue_test\.Concrete1 \(with_test\.go:\d+\) collides with existing constructor declared at with_test\.go:\d+`,
+					),
+				),
+			),
+		)
+	})
+
 	It("panics when a cyclic dependency is introduced within a single declaration", func() {
 		Expect(func() {
 			imbue.With1(
