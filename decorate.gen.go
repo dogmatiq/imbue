@@ -18,7 +18,7 @@ func Decorate0[T any](
 		panic(err)
 	}
 
-	if err := t.AddDecorator(
+	if err := t.Decorate(
 		func() (decorator[T], error) {
 			return dec, nil
 		},
@@ -44,7 +44,7 @@ func Decorate1[T, D any](
 		panic(err)
 	}
 
-	if err := t.AddDecorator(
+	if err := t.Decorate(
 		func() (decorator[T], error) {
 			d1, err := get[D](con)
 			if err != nil {
@@ -86,7 +86,7 @@ func Decorate2[T, D1, D2 any](
 		panic(err)
 	}
 
-	if err := t.AddDecorator(
+	if err := t.Decorate(
 		func() (decorator[T], error) {
 			d1, err := get[D1](con)
 			if err != nil {
@@ -142,7 +142,7 @@ func Decorate3[T, D1, D2, D3 any](
 		panic(err)
 	}
 
-	if err := t.AddDecorator(
+	if err := t.Decorate(
 		func() (decorator[T], error) {
 			d1, err := get[D1](con)
 			if err != nil {
@@ -212,7 +212,7 @@ func Decorate4[T, D1, D2, D3, D4 any](
 		panic(err)
 	}
 
-	if err := t.AddDecorator(
+	if err := t.Decorate(
 		func() (decorator[T], error) {
 			d1, err := get[D1](con)
 			if err != nil {
@@ -296,7 +296,7 @@ func Decorate5[T, D1, D2, D3, D4, D5 any](
 		panic(err)
 	}
 
-	if err := t.AddDecorator(
+	if err := t.Decorate(
 		func() (decorator[T], error) {
 			d1, err := get[D1](con)
 			if err != nil {
@@ -394,7 +394,7 @@ func Decorate6[T, D1, D2, D3, D4, D5, D6 any](
 		panic(err)
 	}
 
-	if err := t.AddDecorator(
+	if err := t.Decorate(
 		func() (decorator[T], error) {
 			d1, err := get[D1](con)
 			if err != nil {
@@ -506,7 +506,7 @@ func Decorate7[T, D1, D2, D3, D4, D5, D6, D7 any](
 		panic(err)
 	}
 
-	if err := t.AddDecorator(
+	if err := t.Decorate(
 		func() (decorator[T], error) {
 			d1, err := get[D1](con)
 			if err != nil {
@@ -632,7 +632,7 @@ func Decorate8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 		panic(err)
 	}
 
-	if err := t.AddDecorator(
+	if err := t.Decorate(
 		func() (decorator[T], error) {
 			d1, err := get[D1](con)
 			if err != nil {

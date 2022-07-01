@@ -103,7 +103,7 @@ func generateDecorateFuncBody(depCount int, code *jen.Group) {
 		If(
 			jen.Err().
 				Op(":=").
-				Add(declaringDeclVar(depCount)).Dot("AddDecorator").
+				Add(declaringDeclVar(depCount)).Dot("Decorate").
 				Call(
 					jen.Line().
 						Func().

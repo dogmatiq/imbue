@@ -18,9 +18,8 @@ type decoratorEntry[T any] struct {
 	Decorator decorator[T]
 }
 
-// AddDecorator adds a decorator function that is called after T's
-// constructor.
-func (d *declarationOf[T]) AddDecorator(
+// Decorate adds a decorator function that is called after T's constructor.
+func (d *declarationOf[T]) Decorate(
 	decl func() (decorator[T], error),
 ) error {
 	loc := findLocation()
