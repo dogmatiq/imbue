@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog], and this project adheres to
 ### Fixed
 
 - `DecorateX()` now panics when called for a type that has already been constructed
+- `Container.Close()` now gives file/line information about deferred functions that return an error
 
 ## [0.5.0] - 2022-06-29
 

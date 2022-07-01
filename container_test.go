@@ -112,9 +112,11 @@ var _ = Describe("type Container", func() {
 			err := container.Close()
 			Expect(err).To(
 				MatchError(
-					"2 error(s) occurred while calling deferred functions:"+
-						"\n\t1) <error-2>"+
-						"\n\t2) <error-1>",
+					MatchRegexp(
+						`2 error\(s\) occurred while calling deferred functions:`+
+							`\n\t1\) deferred by imbue_test\.Concrete2 constructor at container_test\.go:\d+: <error-2>`+
+							`\n\t2\) deferred by imbue_test\.Concrete1 constructor at container_test\.go:\d+: <error-1>`,
+					),
 				),
 				err.Error(),
 			)

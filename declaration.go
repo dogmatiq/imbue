@@ -251,7 +251,9 @@ func (d *declarationOf[T]) construct(ctx *Context) error {
 		return undeclaredConstructor{d}
 	}
 
-	v, err := d.constructor(ctx)
+	v, err := d.constructor(
+		ctx.newChild("constructor", d.GetType()),
+	)
 	if err != nil {
 		// If the type is self-declaring let it specify the exact error.
 		if d.isSelfDeclaring {
@@ -276,7 +278,10 @@ func (d *declarationOf[T]) construct(ctx *Context) error {
 func (d *declarationOf[T]) decorate(ctx *Context) error {
 	for _, e := range d.decorators {
 		var err error
-		d.value, err = e.Decorator(ctx, d.value)
+		d.value, err = e.Decorator(
+			ctx.newChild("decorator", d.GetType()),
+			d.value,
+		)
 		if err != nil {
 			return fmt.Errorf(
 				"decorator for %s (%s) failed: %w",

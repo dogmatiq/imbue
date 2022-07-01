@@ -2,22 +2,41 @@ package imbue
 
 import (
 	"fmt"
+	"reflect"
 	"sync"
 )
 
 // deferrer is a registry of deferred functions that are to be called when a
 // container is closed.
 type deferrer struct {
-	m     sync.Mutex
-	funcs []func() error
+	m      sync.Mutex
+	defers []deferEntry
+}
+
+type deferEntry struct {
+	FuncType string
+	DeclType reflect.Type
+	Location location
+	Func     func() error
 }
 
 // Add registers a function to be called when the deferrer is closed.
-func (d *deferrer) Add(fn func() error) {
+func (d *deferrer) Add(
+	f string,
+	t reflect.Type,
+	fn func() error,
+) {
+	loc := findLocation()
+
 	d.m.Lock()
 	defer d.m.Unlock()
 
-	d.funcs = append(d.funcs, fn)
+	d.defers = append(d.defers, deferEntry{
+		FuncType: f,
+		DeclType: t,
+		Func:     fn,
+		Location: loc,
+	})
 }
 
 // Close invokes the registered functions in reverse order.
@@ -33,18 +52,27 @@ func (d *deferrer) Close() error {
 }
 
 func (d *deferrer) call() (errors []error) {
-	funcs := d.funcs
-	d.funcs = nil
+	defers := d.defers
+	d.defers = nil
 
-	for _, fn := range funcs {
-		fn := fn // capture loop variable
+	for _, e := range defers {
+		e := e // capture loop variable
 
 		// All the deferred functions using an actual defer statement, thus
 		// guaranteeing that the functions are invoked in reverse order _and_
 		// that they are always invoked, even if one of them panics.
 		defer func() {
-			if err := fn(); err != nil {
-				errors = append(errors, err)
+			if err := e.Func(); err != nil {
+				errors = append(
+					errors,
+					fmt.Errorf(
+						"deferred by %s %s at %s: %w",
+						e.DeclType,
+						e.FuncType,
+						e.Location,
+						err,
+					),
+				)
 			}
 		}()
 	}
