@@ -37,7 +37,6 @@ func ExampleInvoke1() {
 	); err != nil {
 		panic(err)
 	}
-
 	// Output:
 	// {<value>}
 }
@@ -83,7 +82,6 @@ func ExampleInvoke2() {
 	); err != nil {
 		panic(err)
 	}
-
 	// Output:
 	// {<value-1>}
 	// {<value-2>}

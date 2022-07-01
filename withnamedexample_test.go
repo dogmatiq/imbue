@@ -18,7 +18,7 @@ type (
 	Background imbue.Name[Color]
 )
 
-func Example_namedDependencies() {
+func ExampleByName() {
 	con := imbue.New()
 	defer con.Close()
 
@@ -62,7 +62,6 @@ func Example_namedDependencies() {
 	if err != nil {
 		panic(err)
 	}
-
 	// Output:
 	// Foreground = <black>
 	// Background = <white>

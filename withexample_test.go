@@ -23,7 +23,6 @@ func ExampleWith0() {
 
 	// Print the dependency tree.
 	fmt.Println(con)
-
 	// Output:
 	// <container>
 	// └── *imbue_test.Dependency
@@ -53,7 +52,6 @@ func ExampleWith1() {
 
 	// Print the dependency tree.
 	fmt.Println(con)
-
 	// Output:
 	// <container>
 	// └── *imbue_test.Dependency
@@ -87,7 +85,6 @@ func ExampleWith2() {
 
 	// Print the dependency tree.
 	fmt.Println(con)
-
 	// Output:
 	// <container>
 	// └── *imbue_test.Dependency

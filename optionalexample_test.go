@@ -8,7 +8,7 @@ import (
 	"github.com/dogmatiq/imbue"
 )
 
-func ExampleOptional_success() {
+func ExampleOptional() {
 	con := imbue.New()
 	defer con.Close()
 
@@ -45,7 +45,6 @@ func ExampleOptional_success() {
 	); err != nil {
 		panic(err)
 	}
-
 	// Output:
 	// dependency is available: {<value>}
 }
@@ -87,9 +86,8 @@ func ExampleOptional_failingConstructor() {
 	); err != nil {
 		panic(err)
 	}
-
 	// Output:
-	// dependency is unavailable: constructor for imbue_test.Dependency (optionalexample_test.go:63) failed: <error>
+	// dependency is unavailable: constructor for imbue_test.Dependency (optionalexample_test.go:62) failed: <error>
 }
 
 func ExampleOptional_constructorNotDeclared() {
@@ -122,7 +120,6 @@ func ExampleOptional_constructorNotDeclared() {
 	); err != nil {
 		panic(err)
 	}
-
 	// Output:
 	// dependency is unavailable: no constructor is declared for imbue_test.Dependency
 }

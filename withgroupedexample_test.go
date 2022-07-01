@@ -23,7 +23,7 @@ type (
 	ServiceB imbue.Group
 )
 
-func Example_groupedDependencies() {
+func ExampleFromGroup() {
 	con := imbue.New()
 	defer con.Close()
 
@@ -90,7 +90,6 @@ func Example_groupedDependencies() {
 	if err != nil {
 		panic(err)
 	}
-
 	// Output:
 	// ServiceA = {<connection-a>}
 	// ServiceB = {<connection-b>}

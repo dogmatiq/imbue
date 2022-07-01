@@ -16,7 +16,7 @@ type (
 	APIPort imbue.EnvironmentVariable[uint16]
 )
 
-func Example_environmentVariables() {
+func ExampleFromEnvironment() {
 	// Set some environment variables to use in our example.
 	os.Setenv("API_HOST_NAME", "server.example.org")
 	os.Setenv("API_PORT", "8080")
@@ -42,7 +42,6 @@ func Example_environmentVariables() {
 	if err != nil {
 		panic(err)
 	}
-
 	// Output:
 	// API_HOST_NAME = server.example.org
 	// API_PORT = 8080
