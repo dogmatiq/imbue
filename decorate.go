@@ -51,7 +51,7 @@ func (d *declarationOf[T]) Decorate(
 
 // AddDecoratorDependency marks t as a dependency of one of d's decorators.
 func (d *declarationOf[T]) AddDecoratorDependency(t declaration) {
-	d.addDependency(t, "decorator")
+	d.dependsOn(t, "decorator")
 }
 
 // decorate applies the decorators to d.value.

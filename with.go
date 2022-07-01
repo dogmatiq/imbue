@@ -54,7 +54,7 @@ func (d *declarationOf[T]) Declare(
 
 // AddConstructorDependency marks t as a dependency of d's constructor.
 func (d *declarationOf[T]) AddConstructorDependency(t declaration) {
-	d.addDependency(t, "constructor")
+	d.dependsOn(t, "constructor")
 }
 
 // construct initializes d.value.

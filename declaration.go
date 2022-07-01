@@ -92,7 +92,8 @@ func (d *declarationOf[T]) Init(con *Container) {
 	}
 }
 
-func (d *declarationOf[T]) addDependency(t declaration, funcType string) {
+// dependsOn adds a dependency on type t.
+func (d *declarationOf[T]) dependsOn(t declaration, funcType string) {
 	path := findPath(t, d)
 
 	if len(path) == 1 {
