@@ -28,12 +28,39 @@ type declaration interface {
 	// sorted by type.
 	Dependencies() []declaration
 
-	// dependsOn returns true if d depends on t, whether directly or indirectly.
-	dependsOn(t declaration, cycle []declaration) ([]declaration, bool)
+	// IsImplicit returns true if this is an implicit declaration.
+	//
+	// Implicit declarations are added to the container as needed without the
+	// user declaring a constructor function.
+	IsImplicit() bool
 
 	// markAsDependency marks the declaration as a dependency. That is, other
 	// declarations depend upon this one.
 	markAsDependency()
+}
+
+// findPath returns the path from t to d, where d is a (possibly indirect)
+// dependency of t.
+//
+// If t does not depend on d, the path is an empty slice.
+//
+// If t is d, the path is a single-element slice containing t.
+func findPath(t, d declaration) []declaration {
+	if t == d {
+		return []declaration{t}
+	}
+
+	for _, dep := range t.Dependencies() {
+		if p := findPath(dep, d); len(p) != 0 {
+			if t.IsImplicit() {
+				return p
+			}
+
+			return append(p, t)
+		}
+	}
+
+	return nil
 }
 
 // declarationOf describes how to build values of type T.
@@ -71,32 +98,33 @@ func (d *declarationOf[T]) Init(con *Container) error {
 }
 
 func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
-	if cycle, ok := t.dependsOn(d, nil); ok {
-		if len(cycle) == 1 {
-			loc := findLocation()
+	path := findPath(t, d)
 
-			return fmt.Errorf(
-				"%s for %s (%s) depends on itself",
-				funcType,
-				d.Type(),
-				loc,
-			)
-		}
+	if len(path) == 1 {
+		loc := findLocation()
 
+		return fmt.Errorf(
+			"%s for %s (%s) depends on itself",
+			funcType,
+			d.Type(),
+			loc,
+		)
+	}
+
+	if len(path) != 0 {
 		message := fmt.Sprintf(
 			"%s for %s introduces a cyclic dependency:",
 			funcType,
 			d.Type(),
 		)
 
-		for i := len(cycle) - 1; i >= 0; i-- {
-			dep := cycle[i]
-			loc := dep.BestLocation()
+		for i := len(path) - 1; i >= 0; i-- {
+			dep := path[i]
 
 			message += fmt.Sprintf(
 				"\n\t-> %s (%s)",
 				dep.Type(),
-				loc,
+				dep.BestLocation(),
 			)
 		}
 
@@ -177,26 +205,15 @@ func (d *declarationOf[T]) Dependencies() []declaration {
 	return sortDeclarations(d.deps)
 }
 
-// dependsOn returns true if d depends on t, whether directly or indirectly.
-func (d *declarationOf[T]) dependsOn(t declaration, cycle []declaration) ([]declaration, bool) {
-	if t.Type() == d.Type() {
-		return append(cycle, d), true
-	}
-
+// IsImplicit returns true if this is an implicit declaration.
+//
+// Implicit declarations are added to the container as needed without the
+// user declaring a constructor function.
+func (d *declarationOf[T]) IsImplicit() bool {
 	d.m.Lock()
 	defer d.m.Unlock()
 
-	for _, dep := range d.deps {
-		if cycle, ok := dep.dependsOn(t, cycle); ok {
-			if d.isSelfDeclaring {
-				return cycle, true
-			}
-
-			return append(cycle, d), true
-		}
-	}
-
-	return nil, false
+	return d.isSelfDeclaring
 }
 
 // markAsDependency marks the declaration as a dependency. That is, other
