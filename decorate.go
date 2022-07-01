@@ -56,6 +56,11 @@ func (d *declarationOf[T]) Decorate(
 	return nil
 }
 
+// AddDecoratorDependency marks t as a dependency of one of d's decorators.
+func (d *declarationOf[T]) AddDecoratorDependency(t declaration) error {
+	return d.addDependency(t, "decorator")
+}
+
 // decorate applies the decorators to d.value.
 func (d *declarationOf[T]) decorate(ctx *Context) error {
 	for _, e := range d.decorators {
