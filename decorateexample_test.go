@@ -30,10 +30,50 @@ func ExampleDecorate0() {
 
 	// Print the dependency tree.
 	fmt.Println(con)
-
 	// Output:
 	// <container>
 	// └── *imbue_test.DecoratedDependency
+}
+
+func ExampleDecorate0_httpServeMux() {
+	con := imbue.New()
+	defer con.Close()
+
+	// This example illustrates how decoration can be used to add routes to an
+	// http.ServeMux that is declared in a separate location.
+
+	imbue.With0(
+		con,
+		func(
+			ctx *imbue.Context,
+		) (*http.ServeMux, error) {
+			return http.NewServeMux(), nil
+		},
+	)
+
+	imbue.Decorate0(
+		con,
+		func(
+			ctx *imbue.Context,
+			mux *http.ServeMux,
+		) (*http.ServeMux, error) {
+			mux.HandleFunc("/account", func(w http.ResponseWriter, r *http.Request) {
+				fmt.Fprintf(w, "account handler")
+			})
+
+			mux.HandleFunc("/dashboard", func(w http.ResponseWriter, r *http.Request) {
+				fmt.Fprintf(w, "dashboard handler")
+			})
+
+			return mux, nil
+		},
+	)
+
+	// Print the dependency tree.
+	fmt.Println(con)
+	// Output:
+	// <container>
+	// └── *http.ServeMux
 }
 
 func ExampleDecorate1() {
@@ -62,7 +102,6 @@ func ExampleDecorate1() {
 
 	// Print the dependency tree.
 	fmt.Println(con)
-
 	// Output:
 	// <container>
 	// └── *imbue_test.DecoratedDependency
@@ -100,54 +139,9 @@ func ExampleDecorate2() {
 
 	// Print the dependency tree.
 	fmt.Println(con)
-
 	// Output:
 	// <container>
 	// └── *imbue_test.DecoratedDependency
 	//     ├── *imbue_test.UpstreamDependency1
 	//     └── *imbue_test.UpstreamDependency2
-}
-
-func ExampleDecorate0_httpServeMux() {
-	con := imbue.New()
-	defer con.Close()
-
-	// This example illustrates how decoration can be used to add routes to an
-	// http.ServeMux that is declared in a separate location.
-
-	imbue.With0(
-		con,
-		func(
-			ctx *imbue.Context,
-		) (*http.ServeMux, error) {
-			return http.NewServeMux(), nil
-		},
-	)
-
-	imbue.Decorate0(
-		con,
-		func(
-			ctx *imbue.Context,
-			mux *http.ServeMux,
-		) (*http.ServeMux, error) {
-			mux.HandleFunc("/account", accountHandler)
-			mux.HandleFunc("/dashboard", dashboardHandler)
-			return mux, nil
-		},
-	)
-
-	// Print the dependency tree.
-	fmt.Println(con)
-
-	// Output:
-	// <container>
-	// └── *http.ServeMux
-}
-
-func accountHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "account handler")
-}
-
-func dashboardHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "dashboard handler")
 }
