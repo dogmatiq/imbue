@@ -79,11 +79,11 @@ func buildTree(t treeprint.Tree, d declaration) {
 	dependencies := d.Dependencies()
 
 	if len(dependencies) == 0 {
-		t.AddNode(d.GetType().String())
+		t.AddNode(d.Type().String())
 		return
 	}
 
-	sub := t.AddBranch(d.GetType().String())
+	sub := t.AddBranch(d.Type().String())
 
 	for _, dep := range dependencies {
 		buildTree(sub, dep)
@@ -99,7 +99,7 @@ func sortDeclarations(declarations map[reflect.Type]declaration) []declaration {
 	}
 
 	slices.SortFunc(sorted, func(a, b declaration) bool {
-		return a.GetType().String() < b.GetType().String()
+		return a.Type().String() < b.Type().String()
 	})
 
 	return sorted

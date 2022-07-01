@@ -10,8 +10,8 @@ import (
 // declaration is an interface that describes how to build a value of a specific
 // type.
 type declaration interface {
-	// GetType returns the type of the value constructed by this declaration.
-	GetType() reflect.Type
+	// Type returns the type of the value constructed by this declaration.
+	Type() reflect.Type
 
 	// Location returns the location of the declaration in code.
 	Location() location
@@ -93,14 +93,14 @@ func (d *declarationOf[T]) Declare(
 		if isSelfDeclaring {
 			return fmt.Errorf(
 				"explicit declaration of constructor for %s (%s) is disallowed",
-				d.GetType(),
+				d.Type(),
 				loc,
 			)
 		}
 
 		return fmt.Errorf(
 			"constructor for %s (%s) collides with existing constructor declared at %s",
-			d.GetType(),
+			d.Type(),
 			loc,
 			d.location,
 		)
@@ -152,7 +152,7 @@ func (d *declarationOf[T]) AddDecorator(
 	if d.isConstructed {
 		return fmt.Errorf(
 			"cannot add decorator for %s (%s) because it has already been constructed",
-			d.GetType(),
+			d.Type(),
 			loc,
 		)
 	}
@@ -180,7 +180,7 @@ func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 			return fmt.Errorf(
 				"%s for %s (%s) depends on itself",
 				funcType,
-				d.GetType(),
+				d.Type(),
 				loc,
 			)
 		}
@@ -188,7 +188,7 @@ func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 		message := fmt.Sprintf(
 			"%s for %s introduces a cyclic dependency:",
 			funcType,
-			d.GetType(),
+			d.Type(),
 		)
 
 		for i := len(cycle) - 1; i >= 0; i-- {
@@ -197,7 +197,7 @@ func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 
 			message += fmt.Sprintf(
 				"\n\t-> %s (%s)",
-				dep.GetType(),
+				dep.Type(),
 				loc,
 			)
 		}
@@ -212,7 +212,7 @@ func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 		d.deps = map[reflect.Type]declaration{}
 	}
 
-	d.deps[t.GetType()] = t
+	d.deps[t.Type()] = t
 	t.markAsDependency()
 
 	return nil
@@ -252,7 +252,7 @@ func (d *declarationOf[T]) construct(ctx *Context) error {
 	}
 
 	v, err := d.constructor(
-		ctx.newChild("constructor", d.GetType()),
+		ctx.newChild("constructor", d.Type()),
 	)
 	if err != nil {
 		// If the type is self-declaring let it specify the exact error.
@@ -263,7 +263,7 @@ func (d *declarationOf[T]) construct(ctx *Context) error {
 		// Otherwise, wrap the error with file/line information.
 		return fmt.Errorf(
 			"constructor for %s (%s) failed: %w",
-			d.GetType(),
+			d.Type(),
 			d.location,
 			err,
 		)
@@ -279,13 +279,13 @@ func (d *declarationOf[T]) decorate(ctx *Context) error {
 	for _, e := range d.decorators {
 		var err error
 		d.value, err = e.Decorator(
-			ctx.newChild("decorator", d.GetType()),
+			ctx.newChild("decorator", d.Type()),
 			d.value,
 		)
 		if err != nil {
 			return fmt.Errorf(
 				"decorator for %s (%s) failed: %w",
-				d.GetType(),
+				d.Type(),
 				e.Location,
 				err,
 			)
@@ -295,8 +295,8 @@ func (d *declarationOf[T]) decorate(ctx *Context) error {
 	return nil
 }
 
-// GetType returns the type of the value constructed by this declaration.
-func (d *declarationOf[T]) GetType() reflect.Type {
+// Type returns the type of the value constructed by this declaration.
+func (d *declarationOf[T]) Type() reflect.Type {
 	return typeOf[T]()
 }
 
@@ -327,7 +327,7 @@ func (d *declarationOf[T]) Dependencies() []declaration {
 
 // dependsOn returns true if d depends on t, whether directly or indirectly.
 func (d *declarationOf[T]) dependsOn(t declaration, cycle []declaration) ([]declaration, bool) {
-	if t.GetType() == d.GetType() {
+	if t.Type() == d.Type() {
 		return append(cycle, d), true
 	}
 
@@ -365,7 +365,7 @@ type undeclaredConstructor struct {
 func (e undeclaredConstructor) Error() string {
 	return fmt.Sprintf(
 		"no constructor is declared for %s",
-		e.Declaration.GetType(),
+		e.Declaration.Type(),
 	)
 }
 
