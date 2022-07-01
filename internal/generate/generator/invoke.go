@@ -117,7 +117,7 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 			Block(
 				jen.Return(
 					jen.
-						Id("filterInvokeError").
+						Qual(pkgPath, "filterInvokeError").
 						Call(
 							jen.Err(),
 						),
@@ -129,7 +129,7 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 
 	code.Return(
 		jen.
-			Id("filterInvokeError").
+			Qual(pkgPath, "filterInvokeError").
 			Call(
 				jen.
 					Add(invokeFuncVar()).
