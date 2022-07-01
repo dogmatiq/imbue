@@ -116,8 +116,9 @@ func (d *declarationOf[T]) Declare(
 	}
 
 	d.m.Lock()
+	defer d.m.Unlock()
+
 	d.constructor = c
-	d.m.Unlock()
 
 	return nil
 }
@@ -146,8 +147,17 @@ func (d *declarationOf[T]) AddDecorator(
 	}
 
 	d.m.Lock()
+	defer d.m.Unlock()
+
+	if d.isConstructed {
+		return fmt.Errorf(
+			"cannot add decorator for %s (%s) because it has already been constructed",
+			d.GetType(),
+			loc,
+		)
+	}
+
 	d.decorators = append(d.decorators, e)
-	d.m.Unlock()
 
 	return nil
 }

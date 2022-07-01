@@ -257,6 +257,46 @@ var _ = Describe("func DecorateX()", func() {
 		)
 	})
 
+	It("panics when a decorator is declared after the constructor has been called", func() {
+		imbue.With0(
+			container,
+			func(ctx *imbue.Context) (Concrete1, error) {
+				return "<concrete>", nil
+			},
+		)
+
+		imbue.Invoke1(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+				dep Concrete1,
+			) error {
+				return nil
+			},
+		)
+
+		Expect(func() {
+			imbue.Decorate0(
+				container,
+				func(
+					ctx *imbue.Context,
+					v Concrete1,
+				) (Concrete1, error) {
+					panic("unexpected call")
+				},
+			)
+		}).To(
+			PanicWith(
+				MatchError(
+					MatchRegexp(
+						`cannot add decorator for imbue_test\.Concrete1 \(decorate_test\.go:\d+\) because it has already been constructed`,
+					),
+				),
+			),
+		)
+	})
+
 	It("panics when a cyclic dependency is introduced within a single declaration", func() {
 		Expect(func() {
 			imbue.Decorate1(
