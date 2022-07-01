@@ -170,8 +170,7 @@ var _ = Describe("func FromEnvironment()", func() {
 				ctx context.Context,
 				v imbue.FromEnvironment[envTestString, string],
 			) error {
-				Fail("unexpected call")
-				return nil
+				panic("unexpected call")
 			},
 		)
 		Expect(err).To(MatchError("the ENV_TEST_STRING environment variable is not defined"))
@@ -191,8 +190,7 @@ var _ = Describe("func FromEnvironment()", func() {
 				ctx context.Context,
 				v imbue.FromEnvironment[envTestString, string],
 			) error {
-				Fail("unexpected call")
-				return nil
+				panic("unexpected call")
 			},
 		)
 		Expect(err).To(MatchError("the ENV_TEST_STRING environment variable is defined, but it is empty"))
@@ -270,8 +268,7 @@ func expectEnvError[
 			ctx context.Context,
 			v imbue.FromEnvironment[V, T],
 		) error {
-			Fail("unexpected call")
-			return nil
+			panic("unexpected call")
 		},
 	)
 	Expect(err).To(MatchError(message))

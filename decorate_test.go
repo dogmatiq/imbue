@@ -230,7 +230,7 @@ var _ = Describe("func DecorateX()", func() {
 		imbue.With0(
 			container,
 			func(ctx *imbue.Context) (Concrete1, error) {
-				return "<concrete-1>", nil
+				return "<concrete>", nil
 			},
 		)
 
@@ -251,7 +251,7 @@ var _ = Describe("func DecorateX()", func() {
 				ctx context.Context,
 				dep Concrete1,
 			) error {
-				Expect(dep).To(Equal(Concrete1("<concrete-1>+<decorated>")))
+				Expect(dep).To(Equal(Concrete1("<concrete>+<decorated>")))
 				return nil
 			},
 		)

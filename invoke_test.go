@@ -109,8 +109,7 @@ var _ = Describe("func InvokeX()", func() {
 				ctx context.Context,
 				dep Concrete1,
 			) error {
-				Fail("unexpected call")
-				return nil
+				panic("unexpected call")
 			},
 		)
 		Expect(err).Should(HaveOccurred())
@@ -152,8 +151,7 @@ var _ = Describe("func InvokeX()", func() {
 				ctx context.Context,
 				dep Concrete1,
 			) error {
-				Fail("unexpected call")
-				return nil
+				panic("unexpected call")
 			},
 		)
 		Expect(err).Should(HaveOccurred())
@@ -171,13 +169,16 @@ var _ = Describe("func InvokeX()", func() {
 					ctx context.Context,
 					dep Concrete1,
 				) error {
-					Fail("unexpected call")
-					return nil
+					panic("unexpected call")
 				},
 			)
-		}).To(PanicWith(MatchError(
-			`no constructor is declared for imbue_test.Concrete1`,
-		)))
+		}).To(
+			PanicWith(
+				MatchError(
+					`no constructor is declared for imbue_test.Concrete1`,
+				),
+			),
+		)
 	})
 
 	It("panics when an upstream dependency is not registered", func() {
@@ -199,12 +200,15 @@ var _ = Describe("func InvokeX()", func() {
 					ctx context.Context,
 					dep Concrete1,
 				) error {
-					Fail("unexpected call")
-					return nil
+					panic("unexpected call")
 				},
 			)
-		}).To(PanicWith(MatchError(
-			`no constructor is declared for imbue_test.Concrete2`,
-		)))
+		}).To(
+			PanicWith(
+				MatchError(
+					`no constructor is declared for imbue_test.Concrete2`,
+				),
+			),
+		)
 	})
 })
