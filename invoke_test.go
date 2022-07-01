@@ -174,9 +174,7 @@ var _ = Describe("func InvokeX()", func() {
 			)
 		}).To(
 			PanicWith(
-				MatchError(
-					`no constructor is declared for imbue_test.Concrete1`,
-				),
+				`no constructor is declared for imbue_test.Concrete1`,
 			),
 		)
 	})
@@ -205,9 +203,7 @@ var _ = Describe("func InvokeX()", func() {
 			)
 		}).To(
 			PanicWith(
-				MatchError(
-					`no constructor is declared for imbue_test.Concrete2`,
-				),
+				`no constructor is declared for imbue_test.Concrete2`,
 			),
 		)
 	})

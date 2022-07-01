@@ -115,13 +115,12 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 				jen.Err().Op("!=").Nil(),
 			).
 			Block(
-				jen.
-					Id("panicOnUndeclaredConstructor").
-					Call(
-						jen.Err(),
-					),
 				jen.Return(
-					jen.Err(),
+					jen.
+						Id("filterInvokeError").
+						Call(
+							jen.Err(),
+						),
 				),
 			)
 
@@ -130,9 +129,13 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 
 	code.Return(
 		jen.
-			Add(invokeFuncVar()).
+			Id("filterInvokeError").
 			Call(
-				inputVars(depCount, contextVar())...,
+				jen.
+					Add(invokeFuncVar()).
+					Call(
+						inputVars(depCount, contextVar())...,
+					),
 			),
 	)
 }

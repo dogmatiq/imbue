@@ -20,11 +20,10 @@ func Invoke1[D any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
-	return fn(ctx, v1)
+	return filterInvokeError(fn(ctx, v1))
 }
 
 // Invoke2 calls a function with 2 dependencies.
@@ -43,8 +42,7 @@ func Invoke2[D1, D2 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d2, err := get[D2](con)
@@ -54,11 +52,10 @@ func Invoke2[D1, D2 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
-	return fn(ctx, v1, v2)
+	return filterInvokeError(fn(ctx, v1, v2))
 }
 
 // Invoke3 calls a function with 3 dependencies.
@@ -77,8 +74,7 @@ func Invoke3[D1, D2, D3 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d2, err := get[D2](con)
@@ -88,8 +84,7 @@ func Invoke3[D1, D2, D3 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d3, err := get[D3](con)
@@ -99,11 +94,10 @@ func Invoke3[D1, D2, D3 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
-	return fn(ctx, v1, v2, v3)
+	return filterInvokeError(fn(ctx, v1, v2, v3))
 }
 
 // Invoke4 calls a function with 4 dependencies.
@@ -122,8 +116,7 @@ func Invoke4[D1, D2, D3, D4 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d2, err := get[D2](con)
@@ -133,8 +126,7 @@ func Invoke4[D1, D2, D3, D4 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d3, err := get[D3](con)
@@ -144,8 +136,7 @@ func Invoke4[D1, D2, D3, D4 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d4, err := get[D4](con)
@@ -155,11 +146,10 @@ func Invoke4[D1, D2, D3, D4 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
-	return fn(ctx, v1, v2, v3, v4)
+	return filterInvokeError(fn(ctx, v1, v2, v3, v4))
 }
 
 // Invoke5 calls a function with 5 dependencies.
@@ -178,8 +168,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d2, err := get[D2](con)
@@ -189,8 +178,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d3, err := get[D3](con)
@@ -200,8 +188,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d4, err := get[D4](con)
@@ -211,8 +198,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d5, err := get[D5](con)
@@ -222,11 +208,10 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 
 	v5, err := d5.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
-	return fn(ctx, v1, v2, v3, v4, v5)
+	return filterInvokeError(fn(ctx, v1, v2, v3, v4, v5))
 }
 
 // Invoke6 calls a function with 6 dependencies.
@@ -245,8 +230,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d2, err := get[D2](con)
@@ -256,8 +240,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d3, err := get[D3](con)
@@ -267,8 +250,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d4, err := get[D4](con)
@@ -278,8 +260,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d5, err := get[D5](con)
@@ -289,8 +270,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v5, err := d5.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d6, err := get[D6](con)
@@ -300,11 +280,10 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 
 	v6, err := d6.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
-	return fn(ctx, v1, v2, v3, v4, v5, v6)
+	return filterInvokeError(fn(ctx, v1, v2, v3, v4, v5, v6))
 }
 
 // Invoke7 calls a function with 7 dependencies.
@@ -323,8 +302,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d2, err := get[D2](con)
@@ -334,8 +312,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d3, err := get[D3](con)
@@ -345,8 +322,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d4, err := get[D4](con)
@@ -356,8 +332,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d5, err := get[D5](con)
@@ -367,8 +342,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v5, err := d5.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d6, err := get[D6](con)
@@ -378,8 +352,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v6, err := d6.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d7, err := get[D7](con)
@@ -389,11 +362,10 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 
 	v7, err := d7.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
-	return fn(ctx, v1, v2, v3, v4, v5, v6, v7)
+	return filterInvokeError(fn(ctx, v1, v2, v3, v4, v5, v6, v7))
 }
 
 // Invoke8 calls a function with 8 dependencies.
@@ -412,8 +384,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v1, err := d1.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d2, err := get[D2](con)
@@ -423,8 +394,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v2, err := d2.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d3, err := get[D3](con)
@@ -434,8 +404,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v3, err := d3.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d4, err := get[D4](con)
@@ -445,8 +414,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v4, err := d4.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d5, err := get[D5](con)
@@ -456,8 +424,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v5, err := d5.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d6, err := get[D6](con)
@@ -467,8 +434,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v6, err := d6.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d7, err := get[D7](con)
@@ -478,8 +444,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v7, err := d7.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
 	d8, err := get[D8](con)
@@ -489,9 +454,8 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 
 	v8, err := d8.Resolve(rctx)
 	if err != nil {
-		panicOnUndeclaredConstructor(err)
-		return err
+		return filterInvokeError(err)
 	}
 
-	return fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8)
+	return filterInvokeError(fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8))
 }

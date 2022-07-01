@@ -1,7 +1,6 @@
 package imbue
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -103,12 +102,4 @@ func (e undeclaredConstructorError) Error() string {
 		"no constructor is declared for %s",
 		e.Declaration.Type(),
 	)
-}
-
-// panicOnUndeclaredConstructor panics if err is an undeclaredConstructor error.
-func panicOnUndeclaredConstructor(err error) {
-	var u undeclaredConstructorError
-	if errors.As(err, &u) {
-		panic(u)
-	}
 }
