@@ -13,12 +13,7 @@ func Invoke1[D any](
 ) error {
 	rctx := rootContext(ctx, con)
 
-	d1, err := get[D](con)
-	if err != nil {
-		return err
-	}
-
-	v1, err := d1.Resolve(rctx)
+	v1, err := get[D](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
@@ -35,22 +30,12 @@ func Invoke2[D1, D2 any](
 ) error {
 	rctx := rootContext(ctx, con)
 
-	d1, err := get[D1](con)
-	if err != nil {
-		return err
-	}
-
-	v1, err := d1.Resolve(rctx)
+	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d2, err := get[D2](con)
-	if err != nil {
-		return err
-	}
-
-	v2, err := d2.Resolve(rctx)
+	v2, err := get[D2](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
@@ -67,32 +52,17 @@ func Invoke3[D1, D2, D3 any](
 ) error {
 	rctx := rootContext(ctx, con)
 
-	d1, err := get[D1](con)
-	if err != nil {
-		return err
-	}
-
-	v1, err := d1.Resolve(rctx)
+	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d2, err := get[D2](con)
-	if err != nil {
-		return err
-	}
-
-	v2, err := d2.Resolve(rctx)
+	v2, err := get[D2](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d3, err := get[D3](con)
-	if err != nil {
-		return err
-	}
-
-	v3, err := d3.Resolve(rctx)
+	v3, err := get[D3](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
@@ -109,42 +79,22 @@ func Invoke4[D1, D2, D3, D4 any](
 ) error {
 	rctx := rootContext(ctx, con)
 
-	d1, err := get[D1](con)
-	if err != nil {
-		return err
-	}
-
-	v1, err := d1.Resolve(rctx)
+	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d2, err := get[D2](con)
-	if err != nil {
-		return err
-	}
-
-	v2, err := d2.Resolve(rctx)
+	v2, err := get[D2](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d3, err := get[D3](con)
-	if err != nil {
-		return err
-	}
-
-	v3, err := d3.Resolve(rctx)
+	v3, err := get[D3](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d4, err := get[D4](con)
-	if err != nil {
-		return err
-	}
-
-	v4, err := d4.Resolve(rctx)
+	v4, err := get[D4](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
@@ -161,52 +111,27 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 ) error {
 	rctx := rootContext(ctx, con)
 
-	d1, err := get[D1](con)
-	if err != nil {
-		return err
-	}
-
-	v1, err := d1.Resolve(rctx)
+	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d2, err := get[D2](con)
-	if err != nil {
-		return err
-	}
-
-	v2, err := d2.Resolve(rctx)
+	v2, err := get[D2](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d3, err := get[D3](con)
-	if err != nil {
-		return err
-	}
-
-	v3, err := d3.Resolve(rctx)
+	v3, err := get[D3](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d4, err := get[D4](con)
-	if err != nil {
-		return err
-	}
-
-	v4, err := d4.Resolve(rctx)
+	v4, err := get[D4](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d5, err := get[D5](con)
-	if err != nil {
-		return err
-	}
-
-	v5, err := d5.Resolve(rctx)
+	v5, err := get[D5](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
@@ -223,62 +148,32 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 ) error {
 	rctx := rootContext(ctx, con)
 
-	d1, err := get[D1](con)
-	if err != nil {
-		return err
-	}
-
-	v1, err := d1.Resolve(rctx)
+	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d2, err := get[D2](con)
-	if err != nil {
-		return err
-	}
-
-	v2, err := d2.Resolve(rctx)
+	v2, err := get[D2](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d3, err := get[D3](con)
-	if err != nil {
-		return err
-	}
-
-	v3, err := d3.Resolve(rctx)
+	v3, err := get[D3](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d4, err := get[D4](con)
-	if err != nil {
-		return err
-	}
-
-	v4, err := d4.Resolve(rctx)
+	v4, err := get[D4](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d5, err := get[D5](con)
-	if err != nil {
-		return err
-	}
-
-	v5, err := d5.Resolve(rctx)
+	v5, err := get[D5](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d6, err := get[D6](con)
-	if err != nil {
-		return err
-	}
-
-	v6, err := d6.Resolve(rctx)
+	v6, err := get[D6](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
@@ -295,72 +190,37 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 ) error {
 	rctx := rootContext(ctx, con)
 
-	d1, err := get[D1](con)
-	if err != nil {
-		return err
-	}
-
-	v1, err := d1.Resolve(rctx)
+	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d2, err := get[D2](con)
-	if err != nil {
-		return err
-	}
-
-	v2, err := d2.Resolve(rctx)
+	v2, err := get[D2](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d3, err := get[D3](con)
-	if err != nil {
-		return err
-	}
-
-	v3, err := d3.Resolve(rctx)
+	v3, err := get[D3](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d4, err := get[D4](con)
-	if err != nil {
-		return err
-	}
-
-	v4, err := d4.Resolve(rctx)
+	v4, err := get[D4](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d5, err := get[D5](con)
-	if err != nil {
-		return err
-	}
-
-	v5, err := d5.Resolve(rctx)
+	v5, err := get[D5](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d6, err := get[D6](con)
-	if err != nil {
-		return err
-	}
-
-	v6, err := d6.Resolve(rctx)
+	v6, err := get[D6](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d7, err := get[D7](con)
-	if err != nil {
-		return err
-	}
-
-	v7, err := d7.Resolve(rctx)
+	v7, err := get[D7](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
@@ -377,82 +237,42 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 ) error {
 	rctx := rootContext(ctx, con)
 
-	d1, err := get[D1](con)
-	if err != nil {
-		return err
-	}
-
-	v1, err := d1.Resolve(rctx)
+	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d2, err := get[D2](con)
-	if err != nil {
-		return err
-	}
-
-	v2, err := d2.Resolve(rctx)
+	v2, err := get[D2](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d3, err := get[D3](con)
-	if err != nil {
-		return err
-	}
-
-	v3, err := d3.Resolve(rctx)
+	v3, err := get[D3](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d4, err := get[D4](con)
-	if err != nil {
-		return err
-	}
-
-	v4, err := d4.Resolve(rctx)
+	v4, err := get[D4](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d5, err := get[D5](con)
-	if err != nil {
-		return err
-	}
-
-	v5, err := d5.Resolve(rctx)
+	v5, err := get[D5](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d6, err := get[D6](con)
-	if err != nil {
-		return err
-	}
-
-	v6, err := d6.Resolve(rctx)
+	v6, err := get[D6](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d7, err := get[D7](con)
-	if err != nil {
-		return err
-	}
-
-	v7, err := d7.Resolve(rctx)
+	v7, err := get[D7](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}
 
-	d8, err := get[D8](con)
-	if err != nil {
-		return err
-	}
-
-	v8, err := d8.Resolve(rctx)
+	v8, err := get[D8](con).Resolve(rctx)
 	if err != nil {
 		return filterInvokeError(err)
 	}

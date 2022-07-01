@@ -34,14 +34,14 @@ func typeOf[T any]() reflect.Type {
 }
 
 // get returns the declaration for type T.
-func get[T any](con *Container) (*declarationOf[T], error) {
+func get[T any](con *Container) *declarationOf[T] {
 	t := typeOf[T]()
 
 	con.m.Lock()
 
 	if d, ok := con.declarations[t]; ok {
 		con.m.Unlock()
-		return d.(*declarationOf[T]), nil
+		return d.(*declarationOf[T])
 	}
 
 	d := &declarationOf[T]{}
@@ -49,11 +49,9 @@ func get[T any](con *Container) (*declarationOf[T], error) {
 
 	con.m.Unlock()
 
-	if err := d.Init(con); err != nil {
-		return nil, err
-	}
+	d.Init(con)
 
-	return d, nil
+	return d
 }
 
 // String returns a string representation of the dependency tree.

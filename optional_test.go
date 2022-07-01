@@ -96,10 +96,8 @@ var _ = Describe("type Optional", func() {
 			)
 		}).To(
 			PanicWith(
-				MatchError(
-					MatchRegexp(
-						`constructor for imbue_test\.Concrete1 \(optional_test\.go:\d+\) depends on itself`,
-					),
+				MatchRegexp(
+					`constructor for imbue_test\.Concrete1 \(optional_test\.go:\d+\) depends on itself`,
 				),
 			),
 		)
@@ -138,13 +136,11 @@ var _ = Describe("type Optional", func() {
 			)
 		}).To(
 			PanicWith(
-				MatchError(
-					MatchRegexp(
-						`(?m)constructor for imbue_test\.Concrete3 introduces a cyclic dependency:` +
-							`\n\t-> imbue_test\.Concrete2 \(optional_test\.go:\d+\)` +
-							`\n\t-> imbue_test\.Concrete1 \(optional_test\.go:\d+\)` +
-							`\n\t-> imbue_test\.Concrete3 \(optional_test\.go:\d+\)`,
-					),
+				MatchRegexp(
+					`(?m)constructor for imbue_test\.Concrete3 introduces a cyclic dependency:` +
+						`\n\t-> imbue_test\.Concrete2 \(optional_test\.go:\d+\)` +
+						`\n\t-> imbue_test\.Concrete1 \(optional_test\.go:\d+\)` +
+						`\n\t-> imbue_test\.Concrete3 \(optional_test\.go:\d+\)`,
 				),
 			),
 		)
@@ -162,10 +158,8 @@ var _ = Describe("type Optional", func() {
 			)
 		}).To(
 			PanicWith(
-				MatchError(
-					MatchRegexp(
-						`declaration of constructor for imbue\.Optional\[imbue\.Concrete1\] \(optional_test\.go:\d+\) is disallowed`,
-					),
+				MatchRegexp(
+					`declaration of constructor for imbue\.Optional\[imbue\.Concrete1\] \(optional_test\.go:\d+\) is disallowed`,
 				),
 			),
 		)

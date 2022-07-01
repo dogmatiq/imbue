@@ -288,10 +288,8 @@ var _ = Describe("func DecorateX()", func() {
 			)
 		}).To(
 			PanicWith(
-				MatchError(
-					MatchRegexp(
-						`cannot add decorator for imbue_test\.Concrete1 \(decorate_test\.go:\d+\) because it has already been constructed`,
-					),
+				MatchRegexp(
+					`cannot add decorator for imbue_test\.Concrete1 \(decorate_test\.go:\d+\) because it has already been constructed`,
 				),
 			),
 		)
@@ -311,10 +309,8 @@ var _ = Describe("func DecorateX()", func() {
 			)
 		}).To(
 			PanicWith(
-				MatchError(
-					MatchRegexp(
-						`decorator for imbue_test\.Concrete1 \(decorate_test\.go:\d+\) depends on itself`,
-					),
+				MatchRegexp(
+					`decorator for imbue_test\.Concrete1 \(decorate_test\.go:\d+\) depends on itself`,
 				),
 			),
 		)
@@ -354,13 +350,11 @@ var _ = Describe("func DecorateX()", func() {
 			)
 		}).To(
 			PanicWith(
-				MatchError(
-					MatchRegexp(
-						`(?m)decorator for imbue_test\.Concrete3 introduces a cyclic dependency:` +
-							`\n\t-> imbue_test\.Concrete2 \(decorate_test\.go:\d+\)` +
-							`\n\t-> imbue_test\.Concrete1 \(decorate_test\.go:\d+\)` +
-							`\n\t-> imbue_test\.Concrete3 \(decorate_test\.go:\d+\)`,
-					),
+				MatchRegexp(
+					`(?m)decorator for imbue_test\.Concrete3 introduces a cyclic dependency:` +
+						`\n\t-> imbue_test\.Concrete2 \(decorate_test\.go:\d+\)` +
+						`\n\t-> imbue_test\.Concrete1 \(decorate_test\.go:\d+\)` +
+						`\n\t-> imbue_test\.Concrete3 \(decorate_test\.go:\d+\)`,
 				),
 			),
 		)

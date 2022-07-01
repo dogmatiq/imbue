@@ -62,10 +62,7 @@ func generateWithFunc(code *jen.File, depCount int) {
 
 func generateWithFuncBody(depCount int, code *jen.Group) {
 	code.
-		List(
-			declaringDeclVar(depCount),
-			jen.Err(),
-		).
+		List(declaringDeclVar(depCount)).
 		Op(":=").
 		Qual(pkgPath, "get").
 		Types(
@@ -75,45 +72,25 @@ func generateWithFuncBody(depCount int, code *jen.Group) {
 			containerVar(),
 		)
 
-	code.
-		If(
-			jen.Err().Op("!=").Nil(),
-		).
-		Block(
-			jen.Panic(
-				jen.Err(),
-			),
-		)
-
 	code.Line()
 
 	code.
-		If(
-			jen.Err().
-				Op(":=").
-				Add(declaringDeclVar(depCount)).Dot("Declare").
-				Call(
-					jen.Line().
-						Func().
-						Params().
-						Params(
-							jen.
-								Id("constructor").
-								Types(
-									declaringType(depCount),
-								),
-							jen.Error(),
-						).
-						BlockFunc(func(g *jen.Group) {
-							generateConstructorFactoryFuncBody(depCount, g)
-						}),
-					jen.Line(),
+		Add(declaringDeclVar(depCount)).Dot("Declare").
+		Call(
+			jen.Line().
+				Func().
+				Params().
+				Params(
+					jen.
+						Id("constructor").
+						Types(
+							declaringType(depCount),
+						),
 				).
-				Op(";").
-				Err().Op("!=").Nil(),
-		).
-		Block(
-			jen.Panic(jen.Err()),
+				BlockFunc(func(g *jen.Group) {
+					generateConstructorFactoryFuncBody(depCount, g)
+				}),
+			jen.Line(),
 		)
 }
 
@@ -122,7 +99,6 @@ func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 		code.
 			Return(
 				jen.Add(constructorVar()),
-				jen.Nil(),
 			)
 
 		return
@@ -130,10 +106,7 @@ func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 
 	for n := 0; n < depCount; n++ {
 		code.
-			List(
-				dependencyDeclVar(depCount, n),
-				jen.Err(),
-			).
+			List(dependencyDeclVar(depCount, n)).
 			Op(":=").
 			Qual(pkgPath, "get").
 			Types(
@@ -143,37 +116,13 @@ func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 				containerVar(),
 			)
 
-		code.
-			If(
-				jen.Err().Op("!=").Nil(),
-			).
-			Block(
-				jen.Return(
-					jen.Nil(),
-					jen.Err(),
-				),
-			)
-
 		code.Line()
 
 		code.
-			If(
-				jen.
-					Err().
-					Op(":=").
-					Add(declaringDeclVar(depCount)).
-					Dot("AddConstructorDependency").
-					Call(
-						dependencyDeclVar(depCount, n),
-					).
-					Op(";").
-					Err().Op("!=").Nil(),
-			).
-			Block(
-				jen.Return(
-					jen.Nil(),
-					jen.Err(),
-				),
+			Add(declaringDeclVar(depCount)).
+			Dot("AddConstructorDependency").
+			Call(
+				dependencyDeclVar(depCount, n),
 			)
 
 		code.Line()
@@ -193,8 +142,6 @@ func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 				BlockFunc(func(g *jen.Group) {
 					generateConstructorFuncBody(depCount, g)
 				}),
-			jen.
-				Nil(),
 		)
 }
 

@@ -1,7 +1,6 @@
 package imbue
 
 import (
-	"errors"
 	"fmt"
 	"reflect"
 	"sync"
@@ -79,36 +78,32 @@ type declarationOf[T any] struct {
 // selfDeclaring is an interface for types that construct themselves without a
 // user-defined constructor function.
 type selfDeclaring[T any] interface {
-	declare(con *Container, decl *declarationOf[T]) error
+	declare(con *Container, decl *declarationOf[T])
 }
 
 // Init initializes the declaration.
-func (d *declarationOf[T]) Init(con *Container) error {
+func (d *declarationOf[T]) Init(con *Container) {
 	if sc, ok := any(d.value).(selfDeclaring[T]); ok {
 		d.m.Lock()
 		d.isSelfDeclaring = true
 		d.m.Unlock()
 
-		if err := sc.declare(con, d); err != nil {
-			return err
-		}
+		sc.declare(con, d)
 	}
-
-	return nil
 }
 
-func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
+func (d *declarationOf[T]) addDependency(t declaration, funcType string) {
 	path := findPath(t, d)
 
 	if len(path) == 1 {
 		loc := findLocation()
 
-		return fmt.Errorf(
+		panic(fmt.Sprintf(
 			"%s for %s (%s) depends on itself",
 			funcType,
 			d.Type(),
 			loc,
-		)
+		))
 	}
 
 	if len(path) != 0 {
@@ -128,7 +123,7 @@ func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 			)
 		}
 
-		return errors.New(message)
+		panic(message)
 	}
 
 	d.m.Lock()
@@ -140,8 +135,6 @@ func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 
 	d.deps[t.Type()] = t
 	t.markAsDependency()
-
-	return nil
 }
 
 // Resolve returns the value constructed by this declaration.

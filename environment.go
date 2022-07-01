@@ -90,9 +90,9 @@ func (v FromEnvironment[V, T]) String() string {
 func (FromEnvironment[V, T]) declare(
 	con *Container,
 	decl *declarationOf[FromEnvironment[V, T]],
-) error {
-	return decl.Declare(
-		func() (constructor[FromEnvironment[V, T]], error) {
+) {
+	decl.Declare(
+		func() constructor[FromEnvironment[V, T]] {
 			return func(ctx *Context) (FromEnvironment[V, T], error) {
 				name := identifier.ToScreamingSnakeCase(
 					typeOf[V]().Name(),
@@ -124,7 +124,7 @@ func (FromEnvironment[V, T]) declare(
 				}
 
 				return FromEnvironment[V, T]{name, raw, value}, nil
-			}, nil
+			}
 		},
 	)
 }

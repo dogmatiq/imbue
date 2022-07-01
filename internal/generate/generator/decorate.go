@@ -74,10 +74,7 @@ func generateDecorateFunc(code *jen.File, depCount int) {
 
 func generateDecorateFuncBody(depCount int, code *jen.Group) {
 	code.
-		List(
-			declaringDeclVar(depCount),
-			jen.Err(),
-		).
+		Add(declaringDeclVar(depCount)).
 		Op(":=").
 		Qual(pkgPath, "get").
 		Types(
@@ -87,47 +84,25 @@ func generateDecorateFuncBody(depCount int, code *jen.Group) {
 			containerVar(),
 		)
 
-	code.
-		If(
-			jen.Err().Op("!=").Nil(),
-		).
-		Block(
-			jen.Panic(
-				jen.Err(),
-			),
-		)
-
 	code.Line()
 
 	code.
-		If(
-			jen.Err().
-				Op(":=").
-				Add(declaringDeclVar(depCount)).Dot("Decorate").
-				Call(
-					jen.Line().
-						Func().
-						Params().
-						Params(
-							jen.
-								Id("decorator").
-								Types(
-									declaringType(depCount),
-								),
-							jen.Error(),
-						).
-						BlockFunc(func(g *jen.Group) {
-							generateDecoratorFactoryFuncBody(depCount, g)
-						}),
-					jen.Line(),
+		Add(declaringDeclVar(depCount)).Dot("Decorate").
+		Call(
+			jen.Line().
+				Func().
+				Params().
+				Params(
+					jen.
+						Id("decorator").
+						Types(
+							declaringType(depCount),
+						),
 				).
-				Op(";").
-				Err().Op("!=").Nil(),
-		).
-		Block(
-			jen.Panic(
-				jen.Err(),
-			),
+				BlockFunc(func(g *jen.Group) {
+					generateDecoratorFactoryFuncBody(depCount, g)
+				}),
+			jen.Line(),
 		)
 }
 
@@ -136,7 +111,6 @@ func generateDecoratorFactoryFuncBody(depCount int, code *jen.Group) {
 		code.
 			Return(
 				jen.Add(decoratorVar()),
-				jen.Nil(),
 			)
 
 		return
@@ -144,10 +118,7 @@ func generateDecoratorFactoryFuncBody(depCount int, code *jen.Group) {
 
 	for n := 0; n < depCount; n++ {
 		code.
-			List(
-				dependencyDeclVar(depCount, n),
-				jen.Err(),
-			).
+			Add(dependencyDeclVar(depCount, n)).
 			Op(":=").
 			Qual(pkgPath, "get").
 			Types(
@@ -157,37 +128,13 @@ func generateDecoratorFactoryFuncBody(depCount int, code *jen.Group) {
 				containerVar(),
 			)
 
-		code.
-			If(
-				jen.Err().Op("!=").Nil(),
-			).
-			Block(
-				jen.Return(
-					jen.Nil(),
-					jen.Err(),
-				),
-			)
-
 		code.Line()
 
 		code.
-			If(
-				jen.
-					Err().
-					Op(":=").
-					Add(declaringDeclVar(depCount)).
-					Dot("AddDecoratorDependency").
-					Call(
-						dependencyDeclVar(depCount, n),
-					).
-					Op(";").
-					Err().Op("!=").Nil(),
-			).
-			Block(
-				jen.Return(
-					jen.Nil(),
-					jen.Err(),
-				),
+			Add(declaringDeclVar(depCount)).
+			Dot("AddDecoratorDependency").
+			Call(
+				dependencyDeclVar(depCount, n),
 			)
 
 		code.Line()
@@ -208,8 +155,6 @@ func generateDecoratorFactoryFuncBody(depCount int, code *jen.Group) {
 				BlockFunc(func(g *jen.Group) {
 					generateDecoratorFuncBody(depCount, g)
 				}),
-			jen.
-				Nil(),
 		)
 }
 

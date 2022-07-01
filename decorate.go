@@ -20,8 +20,8 @@ type decoratorEntry[T any] struct {
 
 // Decorate adds a decorator function that is called after T's constructor.
 func (d *declarationOf[T]) Decorate(
-	decl func() (decorator[T], error),
-) error {
+	decl func() decorator[T],
+) {
 	loc := findLocation()
 
 	d.m.Lock()
@@ -30,35 +30,28 @@ func (d *declarationOf[T]) Decorate(
 	}
 	d.m.Unlock()
 
-	i, err := decl()
-	if err != nil {
-		return err
-	}
-
 	e := decoratorEntry[T]{
 		Location:  loc,
-		Decorator: i,
+		Decorator: decl(),
 	}
 
 	d.m.Lock()
 	defer d.m.Unlock()
 
 	if d.isConstructed {
-		return fmt.Errorf(
+		panic(fmt.Sprintf(
 			"cannot add decorator for %s (%s) because it has already been constructed",
 			d.Type(),
 			loc,
-		)
+		))
 	}
 
 	d.decorators = append(d.decorators, e)
-
-	return nil
 }
 
 // AddDecoratorDependency marks t as a dependency of one of d's decorators.
-func (d *declarationOf[T]) AddDecoratorDependency(t declaration) error {
-	return d.addDependency(t, "decorator")
+func (d *declarationOf[T]) AddDecoratorDependency(t declaration) {
+	d.addDependency(t, "decorator")
 }
 
 // decorate applies the decorators to d.value.

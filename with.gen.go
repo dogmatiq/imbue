@@ -8,18 +8,13 @@ func With0[T any](
 	ctor func(*Context) (T, error),
 	options ...WithOption,
 ) {
-	t, err := get[T](con)
-	if err != nil {
-		panic(err)
-	}
+	t := get[T](con)
 
-	if err := t.Declare(
-		func() (constructor[T], error) {
-			return ctor, nil
+	t.Declare(
+		func() constructor[T] {
+			return ctor
 		},
-	); err != nil {
-		panic(err)
-	}
+	)
 }
 
 // With1 describes how to construct values of type T from a single dependency.
@@ -28,21 +23,13 @@ func With1[T, D any](
 	ctor func(*Context, D) (T, error),
 	options ...WithOption,
 ) {
-	t, err := get[T](con)
-	if err != nil {
-		panic(err)
-	}
+	t := get[T](con)
 
-	if err := t.Declare(
-		func() (constructor[T], error) {
-			d1, err := get[D](con)
-			if err != nil {
-				return nil, err
-			}
+	t.Declare(
+		func() constructor[T] {
+			d1 := get[D](con)
 
-			if err := t.AddConstructorDependency(d1); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d1)
 
 			return func(ctx *Context) (v T, _ error) {
 				v1, err := d1.Resolve(ctx)
@@ -51,11 +38,9 @@ func With1[T, D any](
 				}
 
 				return ctor(ctx, v1)
-			}, nil
+			}
 		},
-	); err != nil {
-		panic(err)
-	}
+	)
 }
 
 // With2 describes how to construct values of type T from 2 dependencies.
@@ -64,30 +49,17 @@ func With2[T, D1, D2 any](
 	ctor func(*Context, D1, D2) (T, error),
 	options ...WithOption,
 ) {
-	t, err := get[T](con)
-	if err != nil {
-		panic(err)
-	}
+	t := get[T](con)
 
-	if err := t.Declare(
-		func() (constructor[T], error) {
-			d1, err := get[D1](con)
-			if err != nil {
-				return nil, err
-			}
+	t.Declare(
+		func() constructor[T] {
+			d1 := get[D1](con)
 
-			if err := t.AddConstructorDependency(d1); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d1)
 
-			d2, err := get[D2](con)
-			if err != nil {
-				return nil, err
-			}
+			d2 := get[D2](con)
 
-			if err := t.AddConstructorDependency(d2); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d2)
 
 			return func(ctx *Context) (v T, _ error) {
 				v1, err := d1.Resolve(ctx)
@@ -101,11 +73,9 @@ func With2[T, D1, D2 any](
 				}
 
 				return ctor(ctx, v1, v2)
-			}, nil
+			}
 		},
-	); err != nil {
-		panic(err)
-	}
+	)
 }
 
 // With3 describes how to construct values of type T from 3 dependencies.
@@ -114,39 +84,21 @@ func With3[T, D1, D2, D3 any](
 	ctor func(*Context, D1, D2, D3) (T, error),
 	options ...WithOption,
 ) {
-	t, err := get[T](con)
-	if err != nil {
-		panic(err)
-	}
+	t := get[T](con)
 
-	if err := t.Declare(
-		func() (constructor[T], error) {
-			d1, err := get[D1](con)
-			if err != nil {
-				return nil, err
-			}
+	t.Declare(
+		func() constructor[T] {
+			d1 := get[D1](con)
 
-			if err := t.AddConstructorDependency(d1); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d1)
 
-			d2, err := get[D2](con)
-			if err != nil {
-				return nil, err
-			}
+			d2 := get[D2](con)
 
-			if err := t.AddConstructorDependency(d2); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d2)
 
-			d3, err := get[D3](con)
-			if err != nil {
-				return nil, err
-			}
+			d3 := get[D3](con)
 
-			if err := t.AddConstructorDependency(d3); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d3)
 
 			return func(ctx *Context) (v T, _ error) {
 				v1, err := d1.Resolve(ctx)
@@ -165,11 +117,9 @@ func With3[T, D1, D2, D3 any](
 				}
 
 				return ctor(ctx, v1, v2, v3)
-			}, nil
+			}
 		},
-	); err != nil {
-		panic(err)
-	}
+	)
 }
 
 // With4 describes how to construct values of type T from 4 dependencies.
@@ -178,48 +128,25 @@ func With4[T, D1, D2, D3, D4 any](
 	ctor func(*Context, D1, D2, D3, D4) (T, error),
 	options ...WithOption,
 ) {
-	t, err := get[T](con)
-	if err != nil {
-		panic(err)
-	}
+	t := get[T](con)
 
-	if err := t.Declare(
-		func() (constructor[T], error) {
-			d1, err := get[D1](con)
-			if err != nil {
-				return nil, err
-			}
+	t.Declare(
+		func() constructor[T] {
+			d1 := get[D1](con)
 
-			if err := t.AddConstructorDependency(d1); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d1)
 
-			d2, err := get[D2](con)
-			if err != nil {
-				return nil, err
-			}
+			d2 := get[D2](con)
 
-			if err := t.AddConstructorDependency(d2); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d2)
 
-			d3, err := get[D3](con)
-			if err != nil {
-				return nil, err
-			}
+			d3 := get[D3](con)
 
-			if err := t.AddConstructorDependency(d3); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d3)
 
-			d4, err := get[D4](con)
-			if err != nil {
-				return nil, err
-			}
+			d4 := get[D4](con)
 
-			if err := t.AddConstructorDependency(d4); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d4)
 
 			return func(ctx *Context) (v T, _ error) {
 				v1, err := d1.Resolve(ctx)
@@ -243,11 +170,9 @@ func With4[T, D1, D2, D3, D4 any](
 				}
 
 				return ctor(ctx, v1, v2, v3, v4)
-			}, nil
+			}
 		},
-	); err != nil {
-		panic(err)
-	}
+	)
 }
 
 // With5 describes how to construct values of type T from 5 dependencies.
@@ -256,57 +181,29 @@ func With5[T, D1, D2, D3, D4, D5 any](
 	ctor func(*Context, D1, D2, D3, D4, D5) (T, error),
 	options ...WithOption,
 ) {
-	t, err := get[T](con)
-	if err != nil {
-		panic(err)
-	}
+	t := get[T](con)
 
-	if err := t.Declare(
-		func() (constructor[T], error) {
-			d1, err := get[D1](con)
-			if err != nil {
-				return nil, err
-			}
+	t.Declare(
+		func() constructor[T] {
+			d1 := get[D1](con)
 
-			if err := t.AddConstructorDependency(d1); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d1)
 
-			d2, err := get[D2](con)
-			if err != nil {
-				return nil, err
-			}
+			d2 := get[D2](con)
 
-			if err := t.AddConstructorDependency(d2); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d2)
 
-			d3, err := get[D3](con)
-			if err != nil {
-				return nil, err
-			}
+			d3 := get[D3](con)
 
-			if err := t.AddConstructorDependency(d3); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d3)
 
-			d4, err := get[D4](con)
-			if err != nil {
-				return nil, err
-			}
+			d4 := get[D4](con)
 
-			if err := t.AddConstructorDependency(d4); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d4)
 
-			d5, err := get[D5](con)
-			if err != nil {
-				return nil, err
-			}
+			d5 := get[D5](con)
 
-			if err := t.AddConstructorDependency(d5); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d5)
 
 			return func(ctx *Context) (v T, _ error) {
 				v1, err := d1.Resolve(ctx)
@@ -335,11 +232,9 @@ func With5[T, D1, D2, D3, D4, D5 any](
 				}
 
 				return ctor(ctx, v1, v2, v3, v4, v5)
-			}, nil
+			}
 		},
-	); err != nil {
-		panic(err)
-	}
+	)
 }
 
 // With6 describes how to construct values of type T from 6 dependencies.
@@ -348,66 +243,33 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 	ctor func(*Context, D1, D2, D3, D4, D5, D6) (T, error),
 	options ...WithOption,
 ) {
-	t, err := get[T](con)
-	if err != nil {
-		panic(err)
-	}
+	t := get[T](con)
 
-	if err := t.Declare(
-		func() (constructor[T], error) {
-			d1, err := get[D1](con)
-			if err != nil {
-				return nil, err
-			}
+	t.Declare(
+		func() constructor[T] {
+			d1 := get[D1](con)
 
-			if err := t.AddConstructorDependency(d1); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d1)
 
-			d2, err := get[D2](con)
-			if err != nil {
-				return nil, err
-			}
+			d2 := get[D2](con)
 
-			if err := t.AddConstructorDependency(d2); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d2)
 
-			d3, err := get[D3](con)
-			if err != nil {
-				return nil, err
-			}
+			d3 := get[D3](con)
 
-			if err := t.AddConstructorDependency(d3); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d3)
 
-			d4, err := get[D4](con)
-			if err != nil {
-				return nil, err
-			}
+			d4 := get[D4](con)
 
-			if err := t.AddConstructorDependency(d4); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d4)
 
-			d5, err := get[D5](con)
-			if err != nil {
-				return nil, err
-			}
+			d5 := get[D5](con)
 
-			if err := t.AddConstructorDependency(d5); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d5)
 
-			d6, err := get[D6](con)
-			if err != nil {
-				return nil, err
-			}
+			d6 := get[D6](con)
 
-			if err := t.AddConstructorDependency(d6); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d6)
 
 			return func(ctx *Context) (v T, _ error) {
 				v1, err := d1.Resolve(ctx)
@@ -441,11 +303,9 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 				}
 
 				return ctor(ctx, v1, v2, v3, v4, v5, v6)
-			}, nil
+			}
 		},
-	); err != nil {
-		panic(err)
-	}
+	)
 }
 
 // With7 describes how to construct values of type T from 7 dependencies.
@@ -454,75 +314,37 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	ctor func(*Context, D1, D2, D3, D4, D5, D6, D7) (T, error),
 	options ...WithOption,
 ) {
-	t, err := get[T](con)
-	if err != nil {
-		panic(err)
-	}
+	t := get[T](con)
 
-	if err := t.Declare(
-		func() (constructor[T], error) {
-			d1, err := get[D1](con)
-			if err != nil {
-				return nil, err
-			}
+	t.Declare(
+		func() constructor[T] {
+			d1 := get[D1](con)
 
-			if err := t.AddConstructorDependency(d1); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d1)
 
-			d2, err := get[D2](con)
-			if err != nil {
-				return nil, err
-			}
+			d2 := get[D2](con)
 
-			if err := t.AddConstructorDependency(d2); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d2)
 
-			d3, err := get[D3](con)
-			if err != nil {
-				return nil, err
-			}
+			d3 := get[D3](con)
 
-			if err := t.AddConstructorDependency(d3); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d3)
 
-			d4, err := get[D4](con)
-			if err != nil {
-				return nil, err
-			}
+			d4 := get[D4](con)
 
-			if err := t.AddConstructorDependency(d4); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d4)
 
-			d5, err := get[D5](con)
-			if err != nil {
-				return nil, err
-			}
+			d5 := get[D5](con)
 
-			if err := t.AddConstructorDependency(d5); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d5)
 
-			d6, err := get[D6](con)
-			if err != nil {
-				return nil, err
-			}
+			d6 := get[D6](con)
 
-			if err := t.AddConstructorDependency(d6); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d6)
 
-			d7, err := get[D7](con)
-			if err != nil {
-				return nil, err
-			}
+			d7 := get[D7](con)
 
-			if err := t.AddConstructorDependency(d7); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d7)
 
 			return func(ctx *Context) (v T, _ error) {
 				v1, err := d1.Resolve(ctx)
@@ -561,11 +383,9 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 				}
 
 				return ctor(ctx, v1, v2, v3, v4, v5, v6, v7)
-			}, nil
+			}
 		},
-	); err != nil {
-		panic(err)
-	}
+	)
 }
 
 // With8 describes how to construct values of type T from 8 dependencies.
@@ -574,84 +394,41 @@ func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	ctor func(*Context, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
 	options ...WithOption,
 ) {
-	t, err := get[T](con)
-	if err != nil {
-		panic(err)
-	}
+	t := get[T](con)
 
-	if err := t.Declare(
-		func() (constructor[T], error) {
-			d1, err := get[D1](con)
-			if err != nil {
-				return nil, err
-			}
+	t.Declare(
+		func() constructor[T] {
+			d1 := get[D1](con)
 
-			if err := t.AddConstructorDependency(d1); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d1)
 
-			d2, err := get[D2](con)
-			if err != nil {
-				return nil, err
-			}
+			d2 := get[D2](con)
 
-			if err := t.AddConstructorDependency(d2); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d2)
 
-			d3, err := get[D3](con)
-			if err != nil {
-				return nil, err
-			}
+			d3 := get[D3](con)
 
-			if err := t.AddConstructorDependency(d3); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d3)
 
-			d4, err := get[D4](con)
-			if err != nil {
-				return nil, err
-			}
+			d4 := get[D4](con)
 
-			if err := t.AddConstructorDependency(d4); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d4)
 
-			d5, err := get[D5](con)
-			if err != nil {
-				return nil, err
-			}
+			d5 := get[D5](con)
 
-			if err := t.AddConstructorDependency(d5); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d5)
 
-			d6, err := get[D6](con)
-			if err != nil {
-				return nil, err
-			}
+			d6 := get[D6](con)
 
-			if err := t.AddConstructorDependency(d6); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d6)
 
-			d7, err := get[D7](con)
-			if err != nil {
-				return nil, err
-			}
+			d7 := get[D7](con)
 
-			if err := t.AddConstructorDependency(d7); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d7)
 
-			d8, err := get[D8](con)
-			if err != nil {
-				return nil, err
-			}
+			d8 := get[D8](con)
 
-			if err := t.AddConstructorDependency(d8); err != nil {
-				return nil, err
-			}
+			t.AddConstructorDependency(d8)
 
 			return func(ctx *Context) (v T, _ error) {
 				v1, err := d1.Resolve(ctx)
@@ -695,9 +472,7 @@ func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 				}
 
 				return ctor(ctx, v1, v2, v3, v4, v5, v6, v7, v8)
-			}, nil
+			}
 		},
-	); err != nil {
-		panic(err)
-	}
+	)
 }

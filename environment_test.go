@@ -211,10 +211,8 @@ var _ = Describe("func FromEnvironment()", func() {
 			)
 		}).To(
 			PanicWith(
-				MatchError(
-					MatchRegexp(
-						`explicit declaration of constructor for imbue\.FromEnvironment\[imbue.envTestString,string\] \(environment_test\.go:\d+\) is disallowed`,
-					),
+				MatchRegexp(
+					`explicit declaration of constructor for imbue\.FromEnvironment\[imbue.envTestString,string\] \(environment_test\.go:\d+\) is disallowed`,
 				),
 			),
 		)
