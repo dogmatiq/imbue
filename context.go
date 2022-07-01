@@ -8,18 +8,18 @@ import (
 // container.
 type Context struct {
 	context.Context
-	con *Container
+	deferrer *deferrer
 }
 
 // Defer registers a function to be invoked when the container is closed.
 func (c *Context) Defer(fn func() error) {
-	c.con.addDefer(fn)
+	c.deferrer.Add(fn)
 }
 
 // rootContext returns a new root context.
 func rootContext(ctx context.Context, con *Container) *Context {
 	return &Context{
-		Context: ctx,
-		con:     con,
+		Context:  ctx,
+		deferrer: &con.deferrer,
 	}
 }

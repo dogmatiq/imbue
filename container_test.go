@@ -22,7 +22,7 @@ var _ = Describe("type Container", func() {
 		container.Close()
 	})
 
-	Describe("func Defer()", func() {
+	Describe("func Close()", func() {
 		It("calls deferred functions in reverse order", func() {
 			var order []string
 
@@ -112,12 +112,63 @@ var _ = Describe("type Container", func() {
 			err := container.Close()
 			Expect(err).To(
 				MatchError(
-					"2 error(s) occurred while closing the container:"+
+					"2 error(s) occurred while calling deferred functions:"+
 						"\n\t1) <error-2>"+
 						"\n\t2) <error-1>",
 				),
 				err.Error(),
 			)
+		})
+
+		It("calls all deferred functions even if one of them panics", func() {
+			var order []string
+
+			imbue.With0(
+				container,
+				func(
+					ctx *imbue.Context,
+				) (Concrete1, error) {
+					ctx.Defer(func() error {
+						order = append(order, "<defer-1>")
+						return nil
+					})
+					return "<concrete-1>", nil
+				},
+			)
+
+			imbue.With1(
+				container,
+				func(
+					ctx *imbue.Context,
+					_ Concrete1,
+				) (Concrete2, error) {
+					ctx.Defer(func() error {
+						order = append(order, "<defer-2>")
+						panic("<panic>")
+					})
+					return "<concrete-2>", nil
+				},
+			)
+
+			imbue.Invoke1(
+				context.Background(),
+				container,
+				func(
+					ctx context.Context,
+					_ Concrete2,
+				) error {
+					return nil
+				},
+			)
+
+			Expect(func() {
+				container.Close()
+			}).To(PanicWith("<panic>"))
+
+			Expect(order).To(Equal([]string{
+				"<defer-2>",
+				"<defer-1>",
+			}))
 		})
 	})
 

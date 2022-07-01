@@ -1,7 +1,6 @@
 package imbue
 
 import (
-	"fmt"
 	"reflect"
 	"sync"
 
@@ -13,56 +12,7 @@ import (
 type Container struct {
 	m            sync.Mutex
 	declarations map[reflect.Type]declaration
-	deferred     []func() error
-}
-
-// closeError is returned when there are one or more errors closing the
-// container.
-type closeError []error
-
-func (e closeError) Error() string {
-	message := fmt.Sprintf(
-		"%d error(s) occurred while closing the container:",
-		len(e),
-	)
-
-	for i, err := range e {
-		message += fmt.Sprintf("\n\t%d) %s", i+1, err)
-	}
-
-	return message
-}
-
-// Close closes the container, calling any deferred functions registered
-// during construction of dependencies.
-func (c *Container) Close() error {
-	c.m.Lock()
-	defer c.m.Unlock()
-
-	deferred := c.deferred
-	c.deferred = nil
-
-	var errors closeError
-
-	for i := len(deferred) - 1; i >= 0; i-- {
-		if err := deferred[i](); err != nil {
-			errors = append(errors, err)
-		}
-	}
-
-	if len(errors) > 0 {
-		return errors
-	}
-
-	return nil
-}
-
-// addDefer registers a function to be called when the container is closed.
-func (c *Container) addDefer(fn func() error) {
-	c.m.Lock()
-	defer c.m.Unlock()
-
-	c.deferred = append(c.deferred, fn)
+	deferrer     deferrer
 }
 
 // New returns a new, empty container.
@@ -70,6 +20,12 @@ func New() *Container {
 	return &Container{
 		declarations: map[reflect.Type]declaration{},
 	}
+}
+
+// Close closes the container, calling any deferred functions registered
+// during construction of dependencies.
+func (c *Container) Close() error {
+	return c.deferrer.Close()
 }
 
 // typeOf returns the reflect.Type for T.
