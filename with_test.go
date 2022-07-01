@@ -214,7 +214,7 @@ var _ = Describe("func WithX()", func() {
 		}).To(
 			PanicWith(
 				MatchRegexp(
-					`constructor for imbue_test\.Concrete1 \(with_test\.go:\d+\) collides with existing constructor declared at with_test\.go:\d+`,
+					`imbue_test\.Concrete1 constructor \(with_test\.go:\d+\) collides with existing constructor declared at with_test\.go:\d+`,
 				),
 			),
 		)
@@ -234,7 +234,7 @@ var _ = Describe("func WithX()", func() {
 		}).To(
 			PanicWith(
 				MatchRegexp(
-					`constructor for imbue_test\.Concrete1 \(with_test\.go:\d+\) depends on itself`,
+					`imbue_test\.Concrete1 constructor \(with_test\.go:\d+\) depends on itself`,
 				),
 			),
 		)
@@ -274,7 +274,7 @@ var _ = Describe("func WithX()", func() {
 		}).To(
 			PanicWith(
 				MatchRegexp(
-					`(?m)constructor for imbue_test\.Concrete3 introduces a cyclic dependency:` +
+					`(?m)imbue_test\.Concrete3 constructor introduces a cyclic dependency:` +
 						`\n\t-> imbue_test\.Concrete2 \(with_test\.go:\d+\)` +
 						`\n\t-> imbue_test\.Concrete1 \(with_test\.go:\d+\)` +
 						`\n\t-> imbue_test\.Concrete3 \(with_test\.go:\d+\)`,

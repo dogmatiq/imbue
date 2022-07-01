@@ -114,7 +114,7 @@ var _ = Describe("func InvokeX()", func() {
 		)
 		Expect(err).Should(HaveOccurred())
 		Expect(err.Error()).To(MatchRegexp(
-			`constructor for imbue_test\.Concrete1 \(invoke_test\.go:\d+\) failed: <error>`,
+			`imbue_test\.Concrete1 constructor \(invoke_test\.go:\d+\) failed: <error>`,
 		))
 	})
 
@@ -156,7 +156,7 @@ var _ = Describe("func InvokeX()", func() {
 		)
 		Expect(err).Should(HaveOccurred())
 		Expect(err.Error()).To(MatchRegexp(
-			`decorator for imbue_test\.Concrete1 \(invoke_test\.go:\d+\) failed: <error>`,
+			`imbue_test\.Concrete1 decorator \(invoke_test\.go:\d+\) failed: <error>`,
 		))
 	})
 

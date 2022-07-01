@@ -40,7 +40,7 @@ func (d *declarationOf[T]) Decorate(
 
 	if d.isConstructed {
 		panic(fmt.Sprintf(
-			"cannot add decorator for %s (%s) because it has already been constructed",
+			"cannot add %s decorator (%s) because the value has already been constructed",
 			d.Type(),
 			loc,
 		))
@@ -64,7 +64,7 @@ func (d *declarationOf[T]) decorate(ctx *Context) error {
 		)
 		if err != nil {
 			return fmt.Errorf(
-				"decorator for %s (%s) failed: %w",
+				"%s decorator (%s) failed: %w",
 				d.Type(),
 				e.Location,
 				err,

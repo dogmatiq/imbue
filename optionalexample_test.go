@@ -87,7 +87,7 @@ func ExampleOptional_failingConstructor() {
 		panic(err)
 	}
 	// Output:
-	// dependency is unavailable: constructor for imbue_test.Dependency (optionalexample_test.go:62) failed: <error>
+	// dependency is unavailable: imbue_test.Dependency constructor (optionalexample_test.go:62) failed: <error>
 }
 
 func ExampleOptional_constructorNotDeclared() {

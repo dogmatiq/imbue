@@ -26,14 +26,14 @@ func (d *declarationOf[T]) Declare(
 
 		if isSelfDeclaring {
 			panic(fmt.Sprintf(
-				"explicit declaration of constructor for %s (%s) is disallowed",
+				"explicit declaration of %s constructor (%s) is disallowed",
 				d.Type(),
 				loc,
 			))
 		}
 
 		panic(fmt.Sprintf(
-			"constructor for %s (%s) collides with existing constructor declared at %s",
+			"%s constructor (%s) collides with existing constructor declared at %s",
 			d.Type(),
 			loc,
 			d.location,
@@ -74,7 +74,7 @@ func (d *declarationOf[T]) construct(ctx *Context) error {
 
 		// Otherwise, wrap the error with file/line information.
 		return fmt.Errorf(
-			"constructor for %s (%s) failed: %w",
+			"%s constructor (%s) failed: %w",
 			d.Type(),
 			d.location,
 			err,

@@ -99,18 +99,18 @@ func (d *declarationOf[T]) addDependency(t declaration, funcType string) {
 		loc := findLocation()
 
 		panic(fmt.Sprintf(
-			"%s for %s (%s) depends on itself",
-			funcType,
+			"%s %s (%s) depends on itself",
 			d.Type(),
+			funcType,
 			loc,
 		))
 	}
 
 	if len(path) != 0 {
 		message := fmt.Sprintf(
-			"%s for %s introduces a cyclic dependency:",
-			funcType,
+			"%s %s introduces a cyclic dependency:",
 			d.Type(),
+			funcType,
 		)
 
 		for i := len(path) - 1; i >= 0; i-- {
