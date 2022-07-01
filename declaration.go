@@ -13,8 +13,13 @@ type declaration interface {
 	// Type returns the type of the value constructed by this declaration.
 	Type() reflect.Type
 
-	// Location returns the location of the declaration in code.
-	Location() location
+	// BestLocation returns the "best" known location of the declaration in
+	// code.
+	//
+	// Typically this is the location of the constructor for the definition, but
+	// it may refer to some other location (such as a decorator function) if the
+	// constructor has not yet been defined.
+	BestLocation() location
 
 	// IsDependency returns true if other declarations depend upon this one.
 	IsDependency() bool
@@ -193,7 +198,7 @@ func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 
 		for i := len(cycle) - 1; i >= 0; i-- {
 			dep := cycle[i]
-			loc := dep.Location()
+			loc := dep.BestLocation()
 
 			message += fmt.Sprintf(
 				"\n\t-> %s (%s)",
@@ -300,8 +305,12 @@ func (d *declarationOf[T]) Type() reflect.Type {
 	return typeOf[T]()
 }
 
-// Location returns the location of the declaration in code.
-func (d *declarationOf[T]) Location() location {
+// BestLocation returns the "best" known location of the declaration in code.
+//
+// Typically this is the location of the constructor for the definition, but it
+// may refer to some other location (such as a decorator function) if the
+// constructor has not yet been defined.
+func (d *declarationOf[T]) BestLocation() location {
 	d.m.Lock()
 	defer d.m.Unlock()
 
