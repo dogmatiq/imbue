@@ -66,7 +66,7 @@ func (d *declarationOf[T]) AddConstructorDependency(t declaration) error {
 // construct initializes d.value.
 func (d *declarationOf[T]) construct(ctx *Context) error {
 	if d.constructor == nil {
-		return undeclaredConstructor{d}
+		return undeclaredConstructorError{d}
 	}
 
 	v, err := d.constructor(
@@ -92,13 +92,13 @@ func (d *declarationOf[T]) construct(ctx *Context) error {
 	return nil
 }
 
-// undeclaredConstructor is an error returned by declarationOf[T].Resolve() when
-// no constructor has been declared for T.
-type undeclaredConstructor struct {
+// undeclaredConstructorError is an error returned by declarationOf[T].Resolve()
+// when no constructor has been declared for T.
+type undeclaredConstructorError struct {
 	Declaration declaration
 }
 
-func (e undeclaredConstructor) Error() string {
+func (e undeclaredConstructorError) Error() string {
 	return fmt.Sprintf(
 		"no constructor is declared for %s",
 		e.Declaration.Type(),
@@ -107,7 +107,7 @@ func (e undeclaredConstructor) Error() string {
 
 // panicOnUndeclaredConstructor panics if err is an undeclaredConstructor error.
 func panicOnUndeclaredConstructor(err error) {
-	var u undeclaredConstructor
+	var u undeclaredConstructorError
 	if errors.As(err, &u) {
 		panic(u)
 	}
