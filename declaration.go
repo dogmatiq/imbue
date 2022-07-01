@@ -3,10 +3,7 @@ package imbue
 import (
 	"errors"
 	"fmt"
-	"path/filepath"
 	"reflect"
-	"runtime"
-	"strings"
 	"sync"
 )
 
@@ -17,7 +14,7 @@ type declaration interface {
 	GetType() reflect.Type
 
 	// Location returns the location of the declaration in code.
-	Location() (string, int)
+	Location() location
 
 	// IsDependency returns true if other declarations depend upon this one.
 	IsDependency() bool
@@ -43,18 +40,14 @@ type decorator[T any] func(*Context, T) (T, error)
 // decoratorEntry encapsulates a decorator and information about where it was
 // declared.
 type decoratorEntry[T any] struct {
-	File      string
-	Line      int
+	Location  location
 	Decorator decorator[T]
 }
 
 // declarationOf describes how to build values of type T.
 type declarationOf[T any] struct {
-	m sync.Mutex
-
-	file string
-	line int
-
+	m               sync.Mutex
+	location        location
 	isSelfDeclaring bool
 	isConstructed   bool
 	deps            map[reflect.Type]declaration
@@ -89,7 +82,7 @@ func (d *declarationOf[T]) Init(con *Container) error {
 func (d *declarationOf[T]) Declare(
 	decl func() (constructor[T], error),
 ) error {
-	file, line := findLocation()
+	loc := findLocation()
 
 	d.m.Lock()
 
@@ -99,25 +92,21 @@ func (d *declarationOf[T]) Declare(
 
 		if isSelfDeclaring {
 			return fmt.Errorf(
-				"explicit declaration of constructor for %s (%s:%d) is disallowed",
+				"explicit declaration of constructor for %s (%s) is disallowed",
 				d.GetType(),
-				filepath.Base(file),
-				line,
+				loc,
 			)
 		}
 
 		return fmt.Errorf(
-			"constructor for %s (%s:%d) collides with existing constructor declared at %s:%d",
+			"constructor for %s (%s) collides with existing constructor declared at %s",
 			d.GetType(),
-			filepath.Base(file),
-			line,
-			filepath.Base(d.file),
-			d.line,
+			loc,
+			d.location,
 		)
 	}
 
-	d.file = file
-	d.line = line
+	d.location = loc
 
 	d.m.Unlock()
 
@@ -138,12 +127,11 @@ func (d *declarationOf[T]) Declare(
 func (d *declarationOf[T]) AddDecorator(
 	decl func() (decorator[T], error),
 ) error {
-	file, line := findLocation()
+	loc := findLocation()
 
 	d.m.Lock()
 	if d.constructor == nil {
-		d.file = file
-		d.line = line
+		d.location = loc
 	}
 	d.m.Unlock()
 
@@ -153,8 +141,7 @@ func (d *declarationOf[T]) AddDecorator(
 	}
 
 	e := decoratorEntry[T]{
-		File:      file,
-		Line:      line,
+		Location:  loc,
 		Decorator: i,
 	}
 
@@ -178,14 +165,13 @@ func (d *declarationOf[T]) AddDecoratorDependency(t declaration) error {
 func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 	if cycle, ok := t.dependsOn(d, nil); ok {
 		if len(cycle) == 1 {
-			file, line := findLocation()
+			loc := findLocation()
 
 			return fmt.Errorf(
-				"%s for %s (%s:%d) depends on itself",
+				"%s for %s (%s) depends on itself",
 				funcType,
 				d.GetType(),
-				filepath.Base(file),
-				line,
+				loc,
 			)
 		}
 
@@ -197,13 +183,12 @@ func (d *declarationOf[T]) addDependency(t declaration, funcType string) error {
 
 		for i := len(cycle) - 1; i >= 0; i-- {
 			dep := cycle[i]
-			file, line := dep.Location()
+			loc := dep.Location()
 
 			message += fmt.Sprintf(
-				"\n\t-> %s (%s:%d)",
+				"\n\t-> %s (%s)",
 				dep.GetType(),
-				filepath.Base(file),
-				line,
+				loc,
 			)
 		}
 
@@ -265,10 +250,9 @@ func (d *declarationOf[T]) construct(ctx *Context) error {
 
 		// Otherwise, wrap the error with file/line information.
 		return fmt.Errorf(
-			"constructor for %s (%s:%d) failed: %w",
+			"constructor for %s (%s) failed: %w",
 			d.GetType(),
-			filepath.Base(d.file),
-			d.line,
+			d.location,
 			err,
 		)
 	}
@@ -285,10 +269,9 @@ func (d *declarationOf[T]) decorate(ctx *Context) error {
 		d.value, err = e.Decorator(ctx, d.value)
 		if err != nil {
 			return fmt.Errorf(
-				"decorator for %s (%s:%d) failed: %w",
+				"decorator for %s (%s) failed: %w",
 				d.GetType(),
-				filepath.Base(e.File),
-				e.Line,
+				e.Location,
 				err,
 			)
 		}
@@ -303,11 +286,11 @@ func (d *declarationOf[T]) GetType() reflect.Type {
 }
 
 // Location returns the location of the declaration in code.
-func (d *declarationOf[T]) Location() (string, int) {
+func (d *declarationOf[T]) Location() location {
 	d.m.Lock()
 	defer d.m.Unlock()
 
-	return d.file, d.line
+	return d.location
 }
 
 // IsDependency returns true if other declarations depend upon this one.
@@ -356,27 +339,6 @@ func (d *declarationOf[T]) markAsDependency() {
 	defer d.m.Unlock()
 
 	d.isDep = true
-}
-
-// findLocation returns the file and line number of the first frame in the
-// current goroutine's stack that is NOT part of the imbue package.
-func findLocation() (string, int) {
-	var pointers [8]uintptr
-	skip := 2 // Always skip runtime.Callers() and findLocation().
-
-	for {
-		count := runtime.Callers(skip, pointers[:])
-		iter := runtime.CallersFrames(pointers[:count])
-		skip += count
-
-		for {
-			fr, more := iter.Next()
-
-			if !more || !strings.HasPrefix(fr.Function, "github.com/dogmatiq/imbue.") {
-				return fr.File, fr.Line
-			}
-		}
-	}
 }
 
 // undeclaredConstructor is an error returned by declarationOf[T].Resolve() when
