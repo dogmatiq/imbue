@@ -58,7 +58,7 @@ func (d *deferrer) call() (errors []error) {
 	for _, e := range defers {
 		e := e // capture loop variable
 
-		// All the deferred functions using an actual defer statement, thus
+		// Call the deferred functions using an actual defer statement, thus
 		// guaranteeing that the functions are invoked in reverse order _and_
 		// that they are always invoked, even if one of them panics.
 		defer func() {
