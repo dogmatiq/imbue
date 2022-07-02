@@ -16,9 +16,10 @@ type Context struct {
 // Defer registers a function to be invoked when the container is closed.
 func (c *Context) Defer(fn func() error) {
 	c.deferrer.Add(
-		deferEntry{
-			c.scope,
+		deferred{
 			fn,
+			findLocation(),
+			c.scope,
 		},
 	)
 }

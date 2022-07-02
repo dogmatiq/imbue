@@ -9,19 +9,30 @@ import (
 // container is closed.
 type deferrer struct {
 	m      sync.Mutex
-	defers []deferEntry
+	defers []deferred
 }
 
-type deferEntry struct {
+// deferred is a wrapper around a function that is deferred during construction
+// or decoration of a dependency.
+//
+// It implements the userFunction interface.
+type deferred struct {
+	// impl is the deferred function.
+	impl func() error
+
+	// loc is the location of the code that deferred the function.
+	loc location
+
+	// scope is the constructor or decorator that deferred the function.
 	scope userFunction
-	xfn   func() error
 }
 
-func (e deferEntry) Call() error {
-	if err := e.xfn(); err != nil {
+// Call invokes the deferred function.
+func (d deferred) Call() error {
+	if err := d.impl(); err != nil {
 		return fmt.Errorf(
-			"deferred by %s: %w",
-			e.scope,
+			"%s failed: %w",
+			d,
 			err,
 		)
 	}
@@ -29,12 +40,30 @@ func (e deferEntry) Call() error {
 	return nil
 }
 
+// Location returns the location of the code that deferred the function.
+//
+// This is typically the location of the call to the Context.Defer() method, not
+// the deferred function's definition.
+func (d deferred) Location() location {
+	return d.loc
+}
+
+// String returns a description of the deferred function for use in error
+// messages.
+func (d deferred) String() string {
+	return fmt.Sprintf(
+		"function deferred at %s by %s",
+		d.loc,
+		d.scope,
+	)
+}
+
 // Add registers a function to be called when the deferrer is closed.
-func (d *deferrer) Add(e deferEntry) {
+func (d *deferrer) Add(df deferred) {
 	d.m.Lock()
 	defer d.m.Unlock()
 
-	d.defers = append(d.defers, e)
+	d.defers = append(d.defers, df)
 }
 
 // Close invokes the registered functions in reverse order.

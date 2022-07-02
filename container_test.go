@@ -114,8 +114,8 @@ var _ = Describe("type Container", func() {
 				MatchError(
 					MatchRegexp(
 						`2 error\(s\) occurred in deferred functions:`+
-							`\n\t1\) deferred by imbue_test\.Concrete2 constructor \(container_test\.go:\d+\): <error-2>`+
-							`\n\t2\) deferred by imbue_test\.Concrete1 constructor \(container_test\.go:\d+\): <error-1>`,
+							`\n\t1\) function deferred at container_test\.go:\d+ by imbue_test\.Concrete2 constructor \(container_test\.go:\d+\) failed: <error-2>`+
+							`\n\t2\) function deferred at container_test\.go:\d+ by imbue_test\.Concrete1 constructor \(container_test\.go:\d+\) failed: <error-1>`,
 					),
 				),
 				err.Error(),

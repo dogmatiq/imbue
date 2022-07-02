@@ -8,12 +8,12 @@ type DecorateOption interface {
 	applyDecorateOption()
 }
 
-// decorator is a container for a function that decorates a value of type T.
+// decorator is a wrapper around a function that decorates a value of type T.
 //
 // It implements the userFunction interface.
 type decorator[T any] struct {
 	// impl is the decorator implementation. It is typically a closure generated
-	// by the DecorateX() functions. It wraps the user-provided constructor
+	// by the DecorateX() functions. It wraps the user-provided decorator
 	// function to provide a common signature.
 	impl func(*Context, T) (T, error)
 

@@ -2,7 +2,7 @@ package imbue
 
 import "fmt"
 
-// constructor is a container for a function that constructs a value of type T.
+// constructor is a wrapper around a function that constructs a value of type T.
 //
 // It implements the userFunction interface.
 type constructor[T any] struct {
