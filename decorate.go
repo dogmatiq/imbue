@@ -22,13 +22,8 @@ type decorator[T any] struct {
 }
 
 // Call returns the decorated version of v.
-func (d decorator[T]) Call(ctx *Context, v T) (T, error) {
-	ctx = &Context{
-		Context:  ctx,
-		deferrer: ctx.deferrer,
-		scope:    d,
-	}
-
+func (d decorator[T]) Call(ctx *Context, v T, defers *deferSet) (T, error) {
+	ctx = childContext(ctx, d, defers)
 	v, err := d.impl(ctx, v)
 	if err != nil {
 		return v, fmt.Errorf(

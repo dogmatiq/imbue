@@ -1,6 +1,7 @@
 package imbue
 
 import (
+	"fmt"
 	"reflect"
 	"sync"
 
@@ -12,7 +13,7 @@ import (
 type Container struct {
 	m            sync.Mutex
 	declarations map[reflect.Type]declaration
-	deferrer     deferrer
+	defers       deferSet
 }
 
 // New returns a new, empty container.
@@ -25,7 +26,14 @@ func New() *Container {
 // Close closes the container, calling any deferred functions registered
 // during construction of dependencies.
 func (c *Container) Close() error {
-	return c.deferrer.Close()
+	c.m.Lock()
+	defer c.m.Unlock()
+
+	if errors := c.defers.Call(); len(errors) != 0 {
+		return closeError(errors)
+	}
+
+	return nil
 }
 
 // typeOf returns the reflect.Type for T.
@@ -101,4 +109,20 @@ func sortDeclarations(declarations map[reflect.Type]declaration) []declaration {
 	})
 
 	return sorted
+}
+
+// closeError is returned when there are one or more errors closing a container.
+type closeError []error
+
+func (e closeError) Error() string {
+	message := fmt.Sprintf(
+		"%d error(s) occurred while closing the container:",
+		len(e),
+	)
+
+	for i, err := range e {
+		message += fmt.Sprintf("\n\t%d) %s", i+1, err)
+	}
+
+	return message
 }

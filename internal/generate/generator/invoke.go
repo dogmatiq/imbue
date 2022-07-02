@@ -63,7 +63,7 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 	code.
 		Id("rctx").
 		Op(":=").
-		Qual(pkgPath, "rootContext").
+		Qual(pkgPath, "invokeContext").
 		Call(
 			contextVar(),
 			containerVar(),

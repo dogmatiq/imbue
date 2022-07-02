@@ -228,18 +228,23 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 		return d.value, undeclaredConstructorError{d}
 	}
 
+	var defers deferSet
+	defer defers.Call()
+
 	var err error
-	d.value, err = d.constructor.Call(ctx)
+	d.value, err = d.constructor.Call(ctx, &defers)
 	if err != nil {
 		return d.value, err
 	}
 
 	for _, dec := range d.decorators {
-		d.value, err = dec.Call(ctx, d.value)
+		d.value, err = dec.Call(ctx, d.value, &defers)
 		if err != nil {
 			return d.value, err
 		}
 	}
+
+	defers.TransferOwnership(&ctx.con.defers)
 
 	d.isConstructed = true
 	d.constructor = constructor[T]{}

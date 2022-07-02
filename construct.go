@@ -21,13 +21,8 @@ type constructor[T any] struct {
 }
 
 // Call invokes the constructor and returns the constructed value.
-func (c constructor[T]) Call(ctx *Context) (T, error) {
-	ctx = &Context{
-		Context:  ctx,
-		deferrer: ctx.deferrer,
-		scope:    c,
-	}
-
+func (c constructor[T]) Call(ctx *Context, defers *deferSet) (T, error) {
+	ctx = childContext(ctx, c, defers)
 	v, err := c.impl(ctx)
 	if err != nil {
 		if c.rawErr {
