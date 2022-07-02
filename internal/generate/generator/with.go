@@ -62,7 +62,7 @@ func generateWithFunc(code *jen.File, depCount int) {
 
 func generateWithFuncBody(depCount int, code *jen.Group) {
 	code.
-		List(declaringDeclVar(depCount)).
+		Add(declaringDeclVar(depCount)).
 		Op(":=").
 		Qual(pkgPath, "get").
 		Types(
