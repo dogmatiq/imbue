@@ -11,7 +11,7 @@ func Invoke1[D any](
 	fn func(context.Context, D) error,
 	options ...InvokeOption,
 ) error {
-	rctx := rootContext(ctx, con)
+	rctx := invokeContext(ctx, con)
 
 	v1, err := get[D](con).Resolve(rctx)
 	if err != nil {
@@ -28,7 +28,7 @@ func Invoke2[D1, D2 any](
 	fn func(context.Context, D1, D2) error,
 	options ...InvokeOption,
 ) error {
-	rctx := rootContext(ctx, con)
+	rctx := invokeContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -50,7 +50,7 @@ func Invoke3[D1, D2, D3 any](
 	fn func(context.Context, D1, D2, D3) error,
 	options ...InvokeOption,
 ) error {
-	rctx := rootContext(ctx, con)
+	rctx := invokeContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -77,7 +77,7 @@ func Invoke4[D1, D2, D3, D4 any](
 	fn func(context.Context, D1, D2, D3, D4) error,
 	options ...InvokeOption,
 ) error {
-	rctx := rootContext(ctx, con)
+	rctx := invokeContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -109,7 +109,7 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 	fn func(context.Context, D1, D2, D3, D4, D5) error,
 	options ...InvokeOption,
 ) error {
-	rctx := rootContext(ctx, con)
+	rctx := invokeContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -146,7 +146,7 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
 	options ...InvokeOption,
 ) error {
-	rctx := rootContext(ctx, con)
+	rctx := invokeContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -188,7 +188,7 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
 	options ...InvokeOption,
 ) error {
-	rctx := rootContext(ctx, con)
+	rctx := invokeContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {
@@ -235,7 +235,7 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
 	options ...InvokeOption,
 ) error {
-	rctx := rootContext(ctx, con)
+	rctx := invokeContext(ctx, con)
 
 	v1, err := get[D1](con).Resolve(rctx)
 	if err != nil {

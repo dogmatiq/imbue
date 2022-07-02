@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 - `DecorateX()` now panics when called for a type that has already been constructed
 - `Container.Close()` now gives file/line information about deferred functions that return an error
+- Functions deferred by `Context.Defer()` are now called immediately if the constructor (or a decorator) fails
 
 ## [0.5.0] - 2022-06-29
 

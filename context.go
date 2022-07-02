@@ -9,13 +9,14 @@ import (
 type Context struct {
 	context.Context
 
-	deferrer *deferrer
-	scope    userFunction
+	con    *Container
+	scope  userFunction
+	defers *deferSet
 }
 
 // Defer registers a function to be invoked when the container is closed.
 func (c *Context) Defer(fn func() error) {
-	c.deferrer.Add(
+	c.defers.Add(
 		deferred{
 			fn,
 			findLocation(),
@@ -24,10 +25,28 @@ func (c *Context) Defer(fn func() error) {
 	)
 }
 
-// rootContext returns a new root context.
-func rootContext(ctx context.Context, con *Container) *Context {
+// invokeContext returns a new Context for a function invoked by InvokeX().
+func invokeContext(
+	parent context.Context,
+	con *Container,
+) *Context {
 	return &Context{
-		Context:  ctx,
-		deferrer: &con.deferrer,
+		Context: parent,
+		con:     con,
+	}
+}
+
+// childContext returns a new child Context for use within a constructor or
+// decorator.
+func childContext(
+	parent *Context,
+	scope userFunction,
+	defers *deferSet,
+) *Context {
+	return &Context{
+		Context: parent,
+		con:     parent.con,
+		scope:   scope,
+		defers:  defers,
 	}
 }
