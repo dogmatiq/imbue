@@ -57,30 +57,3 @@ func (d decorator[T]) String() string {
 		d.loc,
 	)
 }
-
-// Decorate adds a decorator function that is called after T's constructor.
-func (d *declarationOf[T]) Decorate(
-	impl func(*Context, T) (T, error),
-	deps ...declaration,
-) {
-	dec := decorator[T]{
-		impl,
-		findLocation(),
-	}
-
-	for _, dep := range deps {
-		d.dependsOn(dep, dec)
-	}
-
-	d.m.Lock()
-	defer d.m.Unlock()
-
-	if d.isConstructed {
-		panic(fmt.Sprintf(
-			"cannot add %s because the value has already been constructed",
-			dec,
-		))
-	}
-
-	d.decorators = append(d.decorators, dec)
-}

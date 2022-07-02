@@ -105,6 +105,72 @@ func (d *declarationOf[T]) Init(con *Container) {
 	}
 }
 
+// Declare declares a constructor for values of type T.
+func (d *declarationOf[T]) Declare(
+	impl func(*Context) (T, error),
+	deps ...declaration,
+) {
+	ctor := constructor[T]{
+		impl,
+		findLocation(),
+		d.isSelfDeclaring,
+	}
+
+	for _, dep := range deps {
+		d.dependsOn(dep, ctor)
+	}
+
+	d.m.Lock()
+	defer d.m.Unlock()
+
+	if d.isDeclared {
+		isSelfDeclaring := d.isSelfDeclaring
+
+		if isSelfDeclaring {
+			panic(fmt.Sprintf(
+				"explicit declaration of %s is disallowed",
+				ctor,
+			))
+		}
+
+		panic(fmt.Sprintf(
+			"%s collides with existing constructor declared at %s",
+			ctor,
+			d.constructor.Location(),
+		))
+	}
+
+	d.isDeclared = true
+	d.constructor = ctor
+}
+
+// Decorate adds a decorator function that is called after T's constructor.
+func (d *declarationOf[T]) Decorate(
+	impl func(*Context, T) (T, error),
+	deps ...declaration,
+) {
+	dec := decorator[T]{
+		impl,
+		findLocation(),
+	}
+
+	for _, dep := range deps {
+		d.dependsOn(dep, dec)
+	}
+
+	d.m.Lock()
+	defer d.m.Unlock()
+
+	if d.isConstructed {
+		panic(fmt.Sprintf(
+			"cannot add %s because the value has already been constructed",
+			dec,
+		))
+	}
+
+	d.decorators = append(d.decorators, dec)
+}
+
 // dependsOn adds a dependency on type t.
 func (d *declarationOf[T]) dependsOn(t declaration, scope userFunction) {
 	path := findPath(t, d)
@@ -242,4 +308,17 @@ func (d *declarationOf[T]) MarkAsDependency() {
 	defer d.m.Unlock()
 
 	d.isDep = true
+}
+
+// undeclaredConstructorError is an error returned by declarationOf[T].Resolve()
+// when no constructor has been declared for T.
+type undeclaredConstructorError struct {
+	Declaration declaration
+}
+
+func (e undeclaredConstructorError) Error() string {
+	return fmt.Sprintf(
+		"no constructor is declared for %s",
+		e.Declaration.Type(),
+	)
 }
