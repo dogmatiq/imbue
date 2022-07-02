@@ -71,7 +71,7 @@ type declarationOf[T any] struct {
 	isConstructed   bool
 	deps            map[reflect.Type]declaration
 	isDep           bool
-	constructor     constructorEntry[T]
+	constructor     constructor[T]
 	decorators      []decoratorEntry[T]
 	value           T
 }
@@ -167,7 +167,7 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 	}
 
 	d.isConstructed = true
-	d.constructor = constructorEntry[T]{}
+	d.constructor = constructor[T]{}
 	d.decorators = nil
 
 	return d.value, nil
