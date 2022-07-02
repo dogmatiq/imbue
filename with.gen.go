@@ -11,8 +11,8 @@ func With0[T any](
 	t := get[T](con)
 
 	t.Declare(
-		func() constructor[T] {
-			return ctor
+		func(ctx *Context) (v T, _ error) {
+			return ctor(ctx)
 		},
 	)
 }
@@ -24,22 +24,18 @@ func With1[T, D any](
 	options ...WithOption,
 ) {
 	t := get[T](con)
+	d1 := get[D](con)
 
 	t.Declare(
-		func() constructor[T] {
-			d1 := get[D](con)
-
-			t.AddConstructorDependency(d1)
-
-			return func(ctx *Context) (v T, _ error) {
-				v1, err := d1.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				return ctor(ctx, v1)
+		func(ctx *Context) (v T, _ error) {
+			v1, err := d1.Resolve(ctx)
+			if err != nil {
+				return v, err
 			}
+
+			return ctor(ctx, v1)
 		},
+		d1,
 	)
 }
 
@@ -50,31 +46,25 @@ func With2[T, D1, D2 any](
 	options ...WithOption,
 ) {
 	t := get[T](con)
+	d1 := get[D1](con)
+	d2 := get[D2](con)
 
 	t.Declare(
-		func() constructor[T] {
-			d1 := get[D1](con)
-
-			t.AddConstructorDependency(d1)
-
-			d2 := get[D2](con)
-
-			t.AddConstructorDependency(d2)
-
-			return func(ctx *Context) (v T, _ error) {
-				v1, err := d1.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v2, err := d2.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				return ctor(ctx, v1, v2)
+		func(ctx *Context) (v T, _ error) {
+			v1, err := d1.Resolve(ctx)
+			if err != nil {
+				return v, err
 			}
+
+			v2, err := d2.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			return ctor(ctx, v1, v2)
 		},
+		d1,
+		d2,
 	)
 }
 
@@ -85,40 +75,32 @@ func With3[T, D1, D2, D3 any](
 	options ...WithOption,
 ) {
 	t := get[T](con)
+	d1 := get[D1](con)
+	d2 := get[D2](con)
+	d3 := get[D3](con)
 
 	t.Declare(
-		func() constructor[T] {
-			d1 := get[D1](con)
-
-			t.AddConstructorDependency(d1)
-
-			d2 := get[D2](con)
-
-			t.AddConstructorDependency(d2)
-
-			d3 := get[D3](con)
-
-			t.AddConstructorDependency(d3)
-
-			return func(ctx *Context) (v T, _ error) {
-				v1, err := d1.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v2, err := d2.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v3, err := d3.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				return ctor(ctx, v1, v2, v3)
+		func(ctx *Context) (v T, _ error) {
+			v1, err := d1.Resolve(ctx)
+			if err != nil {
+				return v, err
 			}
+
+			v2, err := d2.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v3, err := d3.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			return ctor(ctx, v1, v2, v3)
 		},
+		d1,
+		d2,
+		d3,
 	)
 }
 
@@ -129,49 +111,39 @@ func With4[T, D1, D2, D3, D4 any](
 	options ...WithOption,
 ) {
 	t := get[T](con)
+	d1 := get[D1](con)
+	d2 := get[D2](con)
+	d3 := get[D3](con)
+	d4 := get[D4](con)
 
 	t.Declare(
-		func() constructor[T] {
-			d1 := get[D1](con)
-
-			t.AddConstructorDependency(d1)
-
-			d2 := get[D2](con)
-
-			t.AddConstructorDependency(d2)
-
-			d3 := get[D3](con)
-
-			t.AddConstructorDependency(d3)
-
-			d4 := get[D4](con)
-
-			t.AddConstructorDependency(d4)
-
-			return func(ctx *Context) (v T, _ error) {
-				v1, err := d1.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v2, err := d2.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v3, err := d3.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v4, err := d4.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				return ctor(ctx, v1, v2, v3, v4)
+		func(ctx *Context) (v T, _ error) {
+			v1, err := d1.Resolve(ctx)
+			if err != nil {
+				return v, err
 			}
+
+			v2, err := d2.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v3, err := d3.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v4, err := d4.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			return ctor(ctx, v1, v2, v3, v4)
 		},
+		d1,
+		d2,
+		d3,
+		d4,
 	)
 }
 
@@ -182,58 +154,46 @@ func With5[T, D1, D2, D3, D4, D5 any](
 	options ...WithOption,
 ) {
 	t := get[T](con)
+	d1 := get[D1](con)
+	d2 := get[D2](con)
+	d3 := get[D3](con)
+	d4 := get[D4](con)
+	d5 := get[D5](con)
 
 	t.Declare(
-		func() constructor[T] {
-			d1 := get[D1](con)
-
-			t.AddConstructorDependency(d1)
-
-			d2 := get[D2](con)
-
-			t.AddConstructorDependency(d2)
-
-			d3 := get[D3](con)
-
-			t.AddConstructorDependency(d3)
-
-			d4 := get[D4](con)
-
-			t.AddConstructorDependency(d4)
-
-			d5 := get[D5](con)
-
-			t.AddConstructorDependency(d5)
-
-			return func(ctx *Context) (v T, _ error) {
-				v1, err := d1.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v2, err := d2.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v3, err := d3.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v4, err := d4.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v5, err := d5.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				return ctor(ctx, v1, v2, v3, v4, v5)
+		func(ctx *Context) (v T, _ error) {
+			v1, err := d1.Resolve(ctx)
+			if err != nil {
+				return v, err
 			}
+
+			v2, err := d2.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v3, err := d3.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v4, err := d4.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v5, err := d5.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			return ctor(ctx, v1, v2, v3, v4, v5)
 		},
+		d1,
+		d2,
+		d3,
+		d4,
+		d5,
 	)
 }
 
@@ -244,67 +204,53 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 	options ...WithOption,
 ) {
 	t := get[T](con)
+	d1 := get[D1](con)
+	d2 := get[D2](con)
+	d3 := get[D3](con)
+	d4 := get[D4](con)
+	d5 := get[D5](con)
+	d6 := get[D6](con)
 
 	t.Declare(
-		func() constructor[T] {
-			d1 := get[D1](con)
-
-			t.AddConstructorDependency(d1)
-
-			d2 := get[D2](con)
-
-			t.AddConstructorDependency(d2)
-
-			d3 := get[D3](con)
-
-			t.AddConstructorDependency(d3)
-
-			d4 := get[D4](con)
-
-			t.AddConstructorDependency(d4)
-
-			d5 := get[D5](con)
-
-			t.AddConstructorDependency(d5)
-
-			d6 := get[D6](con)
-
-			t.AddConstructorDependency(d6)
-
-			return func(ctx *Context) (v T, _ error) {
-				v1, err := d1.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v2, err := d2.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v3, err := d3.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v4, err := d4.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v5, err := d5.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v6, err := d6.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				return ctor(ctx, v1, v2, v3, v4, v5, v6)
+		func(ctx *Context) (v T, _ error) {
+			v1, err := d1.Resolve(ctx)
+			if err != nil {
+				return v, err
 			}
+
+			v2, err := d2.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v3, err := d3.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v4, err := d4.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v5, err := d5.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v6, err := d6.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			return ctor(ctx, v1, v2, v3, v4, v5, v6)
 		},
+		d1,
+		d2,
+		d3,
+		d4,
+		d5,
+		d6,
 	)
 }
 
@@ -315,76 +261,60 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	options ...WithOption,
 ) {
 	t := get[T](con)
+	d1 := get[D1](con)
+	d2 := get[D2](con)
+	d3 := get[D3](con)
+	d4 := get[D4](con)
+	d5 := get[D5](con)
+	d6 := get[D6](con)
+	d7 := get[D7](con)
 
 	t.Declare(
-		func() constructor[T] {
-			d1 := get[D1](con)
-
-			t.AddConstructorDependency(d1)
-
-			d2 := get[D2](con)
-
-			t.AddConstructorDependency(d2)
-
-			d3 := get[D3](con)
-
-			t.AddConstructorDependency(d3)
-
-			d4 := get[D4](con)
-
-			t.AddConstructorDependency(d4)
-
-			d5 := get[D5](con)
-
-			t.AddConstructorDependency(d5)
-
-			d6 := get[D6](con)
-
-			t.AddConstructorDependency(d6)
-
-			d7 := get[D7](con)
-
-			t.AddConstructorDependency(d7)
-
-			return func(ctx *Context) (v T, _ error) {
-				v1, err := d1.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v2, err := d2.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v3, err := d3.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v4, err := d4.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v5, err := d5.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v6, err := d6.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v7, err := d7.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				return ctor(ctx, v1, v2, v3, v4, v5, v6, v7)
+		func(ctx *Context) (v T, _ error) {
+			v1, err := d1.Resolve(ctx)
+			if err != nil {
+				return v, err
 			}
+
+			v2, err := d2.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v3, err := d3.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v4, err := d4.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v5, err := d5.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v6, err := d6.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v7, err := d7.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			return ctor(ctx, v1, v2, v3, v4, v5, v6, v7)
 		},
+		d1,
+		d2,
+		d3,
+		d4,
+		d5,
+		d6,
+		d7,
 	)
 }
 
@@ -395,84 +325,66 @@ func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	options ...WithOption,
 ) {
 	t := get[T](con)
+	d1 := get[D1](con)
+	d2 := get[D2](con)
+	d3 := get[D3](con)
+	d4 := get[D4](con)
+	d5 := get[D5](con)
+	d6 := get[D6](con)
+	d7 := get[D7](con)
+	d8 := get[D8](con)
 
 	t.Declare(
-		func() constructor[T] {
-			d1 := get[D1](con)
-
-			t.AddConstructorDependency(d1)
-
-			d2 := get[D2](con)
-
-			t.AddConstructorDependency(d2)
-
-			d3 := get[D3](con)
-
-			t.AddConstructorDependency(d3)
-
-			d4 := get[D4](con)
-
-			t.AddConstructorDependency(d4)
-
-			d5 := get[D5](con)
-
-			t.AddConstructorDependency(d5)
-
-			d6 := get[D6](con)
-
-			t.AddConstructorDependency(d6)
-
-			d7 := get[D7](con)
-
-			t.AddConstructorDependency(d7)
-
-			d8 := get[D8](con)
-
-			t.AddConstructorDependency(d8)
-
-			return func(ctx *Context) (v T, _ error) {
-				v1, err := d1.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v2, err := d2.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v3, err := d3.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v4, err := d4.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v5, err := d5.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v6, err := d6.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v7, err := d7.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				v8, err := d8.Resolve(ctx)
-				if err != nil {
-					return v, err
-				}
-
-				return ctor(ctx, v1, v2, v3, v4, v5, v6, v7, v8)
+		func(ctx *Context) (v T, _ error) {
+			v1, err := d1.Resolve(ctx)
+			if err != nil {
+				return v, err
 			}
+
+			v2, err := d2.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v3, err := d3.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v4, err := d4.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v5, err := d5.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v6, err := d6.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v7, err := d7.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			v8, err := d8.Resolve(ctx)
+			if err != nil {
+				return v, err
+			}
+
+			return ctor(ctx, v1, v2, v3, v4, v5, v6, v7, v8)
 		},
+		d1,
+		d2,
+		d3,
+		d4,
+		d5,
+		d6,
+		d7,
+		d8,
 	)
 }

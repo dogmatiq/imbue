@@ -137,7 +137,7 @@ var _ = Describe("type Optional", func() {
 		}).To(
 			PanicWith(
 				MatchRegexp(
-					`(?m)imbue_test\.Concrete3 constructor introduces a cyclic dependency:` +
+					`imbue_test\.Concrete3 constructor \(optional_test\.go:\d+\) introduces a cyclic dependency:` +
 						`\n\t-> imbue_test\.Concrete2 \(optional_test\.go:\d+\)` +
 						`\n\t-> imbue_test\.Concrete1 \(optional_test\.go:\d+\)` +
 						`\n\t-> imbue_test\.Concrete3 \(optional_test\.go:\d+\)`,

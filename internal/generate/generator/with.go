@@ -72,41 +72,9 @@ func generateWithFuncBody(depCount int, code *jen.Group) {
 			containerVar(),
 		)
 
-	code.Line()
-
-	code.
-		Add(declaringDeclVar(depCount)).Dot("Declare").
-		Call(
-			jen.Line().
-				Func().
-				Params().
-				Params(
-					jen.
-						Id("constructor").
-						Types(
-							declaringType(depCount),
-						),
-				).
-				BlockFunc(func(g *jen.Group) {
-					generateConstructorFactoryFuncBody(depCount, g)
-				}),
-			jen.Line(),
-		)
-}
-
-func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
-	if depCount == 0 {
-		code.
-			Return(
-				jen.Add(constructorVar()),
-			)
-
-		return
-	}
-
 	for n := 0; n < depCount; n++ {
 		code.
-			List(dependencyDeclVar(depCount, n)).
+			Add(dependencyDeclVar(depCount, n)).
 			Op(":=").
 			Qual(pkgPath, "get").
 			Types(
@@ -115,33 +83,36 @@ func generateConstructorFactoryFuncBody(depCount int, code *jen.Group) {
 			Call(
 				containerVar(),
 			)
-
-		code.Line()
-
-		code.
-			Add(declaringDeclVar(depCount)).
-			Dot("AddConstructorDependency").
-			Call(
-				dependencyDeclVar(depCount, n),
-			)
-
-		code.Line()
 	}
 
+	code.Line()
+
 	code.
-		Return(
-			jen.
-				Func().
-				Params(
-					imbueContextParam(),
-				).
-				Params(
-					declaringVar(depCount).Add(declaringType(depCount)),
-					jen.Id("_").Error(),
-				).
-				BlockFunc(func(g *jen.Group) {
-					generateConstructorFuncBody(depCount, g)
-				}),
+		Add(declaringDeclVar(depCount)).Dot("Declare").
+		CallFunc(
+			func(code *jen.Group) {
+				code.
+					Line().
+					Func().
+					Params(
+						imbueContextParam(),
+					).
+					Params(
+						declaringVar(depCount).Add(declaringType(depCount)),
+						jen.Id("_").Error(),
+					).
+					BlockFunc(func(g *jen.Group) {
+						generateConstructorFuncBody(depCount, g)
+					})
+
+				for n := 0; n < depCount; n++ {
+					code.
+						Line().
+						Add(dependencyDeclVar(depCount, n))
+				}
+
+				code.Line()
+			},
 		)
 }
 

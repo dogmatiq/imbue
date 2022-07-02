@@ -351,7 +351,7 @@ var _ = Describe("func DecorateX()", func() {
 		}).To(
 			PanicWith(
 				MatchRegexp(
-					`(?m)imbue_test\.Concrete3 decorator introduces a cyclic dependency:` +
+					`imbue_test\.Concrete3 decorator \(decorate_test\.go:\d+\) introduces a cyclic dependency:` +
 						`\n\t-> imbue_test\.Concrete2 \(decorate_test\.go:\d+\)` +
 						`\n\t-> imbue_test\.Concrete1 \(decorate_test\.go:\d+\)` +
 						`\n\t-> imbue_test\.Concrete3 \(decorate_test\.go:\d+\)`,

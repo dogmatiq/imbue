@@ -12,73 +12,95 @@ type WithOption interface {
 // constructor is a function that constructs values of type T.
 type constructor[T any] func(*Context) (T, error)
 
-// Declare declares a constructor for values of type T.
-func (d *declarationOf[T]) Declare(
-	decl func() constructor[T],
-) {
-	loc := findLocation()
+type constructorEntry[T any] struct {
+	loc    location
+	impl   constructor[T]
+	rawErr bool
+}
 
-	d.m.Lock()
-
-	if d.constructor != nil {
-		isSelfDeclaring := d.isSelfDeclaring
-		d.m.Unlock()
-
-		if isSelfDeclaring {
-			panic(fmt.Sprintf(
-				"explicit declaration of %s constructor (%s) is disallowed",
-				d.Type(),
-				loc,
-			))
-		}
-
-		panic(fmt.Sprintf(
-			"%s constructor (%s) collides with existing constructor declared at %s",
-			d.Type(),
-			loc,
-			d.location,
-		))
+func (e constructorEntry[T]) Call(ctx *Context) (T, error) {
+	ctx = &Context{
+		Context:  ctx,
+		deferrer: ctx.deferrer,
+		scope:    e,
 	}
 
-	d.location = loc
+	v, err := e.impl(ctx)
+	if err != nil {
+		if e.rawErr {
+			return v, err
+		}
 
+		return v, fmt.Errorf(
+			"%s failed: %w",
+			e,
+			err,
+		)
+	}
+
+	return v, nil
+}
+
+func (e constructorEntry[T]) String() string {
+	return fmt.Sprintf(
+		"%s constructor (%s)",
+		typeOf[T](),
+		e.loc,
+	)
+}
+
+// Declare declares a constructor for values of type T.
+func (d *declarationOf[T]) Declare(
+	fn constructor[T],
+	deps ...declaration,
+) {
+	e := constructorEntry[T]{
+		findLocation(),
+		fn,
+		d.isSelfDeclaring,
+	}
+
+	d.m.Lock()
+	d.location = e.loc
 	d.m.Unlock()
 
-	c := decl()
+	for _, dep := range deps {
+		d.dependsOn(dep, e)
+	}
 
 	d.m.Lock()
 	defer d.m.Unlock()
 
-	d.constructor = c
-}
+	if d.isDeclared {
+		isSelfDeclaring := d.isSelfDeclaring
 
-// AddConstructorDependency marks t as a dependency of d's constructor.
-func (d *declarationOf[T]) AddConstructorDependency(t declaration) {
-	d.dependsOn(t, "constructor")
+		if isSelfDeclaring {
+			panic(fmt.Sprintf(
+				"explicit declaration of %s is disallowed",
+				e,
+			))
+		}
+
+		panic(fmt.Sprintf(
+			"%s collides with existing constructor declared at %s",
+			e,
+			d.location,
+		))
+	}
+
+	d.isDeclared = true
+	d.constructor = e
 }
 
 // construct initializes d.value.
 func (d *declarationOf[T]) construct(ctx *Context) error {
-	if d.constructor == nil {
+	if !d.isDeclared {
 		return undeclaredConstructorError{d}
 	}
 
-	v, err := d.constructor(
-		ctx.newChild("constructor", d.Type()),
-	)
+	v, err := d.constructor.Call(ctx)
 	if err != nil {
-		// If the type is self-declaring let it specify the exact error.
-		if d.isSelfDeclaring {
-			return err
-		}
-
-		// Otherwise, wrap the error with file/line information.
-		return fmt.Errorf(
-			"%s constructor (%s) failed: %w",
-			d.Type(),
-			d.location,
-			err,
-		)
+		return err
 	}
 
 	d.value = v

@@ -274,7 +274,7 @@ var _ = Describe("func WithX()", func() {
 		}).To(
 			PanicWith(
 				MatchRegexp(
-					`(?m)imbue_test\.Concrete3 constructor introduces a cyclic dependency:` +
+					`imbue_test\.Concrete3 constructor \(with_test\.go:\d+\) introduces a cyclic dependency:` +
 						`\n\t-> imbue_test\.Concrete2 \(with_test\.go:\d+\)` +
 						`\n\t-> imbue_test\.Concrete1 \(with_test\.go:\d+\)` +
 						`\n\t-> imbue_test\.Concrete3 \(with_test\.go:\d+\)`,

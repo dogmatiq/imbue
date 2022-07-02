@@ -19,16 +19,13 @@ func (Optional[T]) declare(
 	con *Container,
 	decl *declarationOf[Optional[T]],
 ) {
+	dep := get[T](con)
+
 	decl.Declare(
-		func() constructor[Optional[T]] {
-			dep := get[T](con)
-
-			decl.AddConstructorDependency(dep)
-
-			return func(ctx *Context) (Optional[T], error) {
-				v, err := dep.Resolve(ctx)
-				return Optional[T]{v, err}, nil
-			}
+		func(ctx *Context) (Optional[T], error) {
+			v, err := dep.Resolve(ctx)
+			return Optional[T]{v, err}, nil
 		},
+		dep,
 	)
 }

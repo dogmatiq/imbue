@@ -92,39 +92,37 @@ func (FromEnvironment[V, T]) declare(
 	decl *declarationOf[FromEnvironment[V, T]],
 ) {
 	decl.Declare(
-		func() constructor[FromEnvironment[V, T]] {
-			return func(ctx *Context) (FromEnvironment[V, T], error) {
-				name := identifier.ToScreamingSnakeCase(
-					typeOf[V]().Name(),
+		func(ctx *Context) (FromEnvironment[V, T], error) {
+			name := identifier.ToScreamingSnakeCase(
+				typeOf[V]().Name(),
+			)
+
+			raw, ok := os.LookupEnv(name)
+			if !ok {
+				return FromEnvironment[V, T]{}, fmt.Errorf(
+					"the %s environment variable is not defined",
+					name,
 				)
-
-				raw, ok := os.LookupEnv(name)
-				if !ok {
-					return FromEnvironment[V, T]{}, fmt.Errorf(
-						"the %s environment variable is not defined",
-						name,
-					)
-				}
-
-				if raw == "" {
-					return FromEnvironment[V, T]{}, fmt.Errorf(
-						"the %s environment variable is defined, but it is empty",
-						name,
-					)
-				}
-
-				var value T
-				if err := parseInto(raw, &value); err != nil {
-					return FromEnvironment[V, T]{}, fmt.Errorf(
-						"the %s environment variable (%#v) is invalid: %w",
-						name,
-						raw,
-						err,
-					)
-				}
-
-				return FromEnvironment[V, T]{name, raw, value}, nil
 			}
+
+			if raw == "" {
+				return FromEnvironment[V, T]{}, fmt.Errorf(
+					"the %s environment variable is defined, but it is empty",
+					name,
+				)
+			}
+
+			var value T
+			if err := parseInto(raw, &value); err != nil {
+				return FromEnvironment[V, T]{}, fmt.Errorf(
+					"the %s environment variable (%#v) is invalid: %w",
+					name,
+					raw,
+					err,
+				)
+			}
+
+			return FromEnvironment[V, T]{name, raw, value}, nil
 		},
 	)
 }

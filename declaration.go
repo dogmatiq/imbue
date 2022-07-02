@@ -67,12 +67,19 @@ type declarationOf[T any] struct {
 	m               sync.Mutex
 	location        location
 	isSelfDeclaring bool
+	isDeclared      bool
 	isConstructed   bool
 	deps            map[reflect.Type]declaration
 	isDep           bool
-	constructor     constructor[T]
+	constructor     constructorEntry[T]
 	decorators      []decoratorEntry[T]
 	value           T
+}
+
+// userFunction is an interface for a user-supplied function that forms part of
+// the life-cycle of a specific type, such as constructors and decorators.
+type userFunction interface {
+	String() string
 }
 
 // selfDeclaring is an interface for types that construct themselves without a
@@ -93,25 +100,20 @@ func (d *declarationOf[T]) Init(con *Container) {
 }
 
 // dependsOn adds a dependency on type t.
-func (d *declarationOf[T]) dependsOn(t declaration, funcType string) {
+func (d *declarationOf[T]) dependsOn(t declaration, scope userFunction) {
 	path := findPath(t, d)
 
 	if len(path) == 1 {
-		loc := findLocation()
-
 		panic(fmt.Sprintf(
-			"%s %s (%s) depends on itself",
-			d.Type(),
-			funcType,
-			loc,
+			"%s depends on itself",
+			scope,
 		))
 	}
 
 	if len(path) != 0 {
 		message := fmt.Sprintf(
-			"%s %s introduces a cyclic dependency:",
-			d.Type(),
-			funcType,
+			"%s introduces a cyclic dependency:",
+			scope,
 		)
 
 		for i := len(path) - 1; i >= 0; i-- {
@@ -159,7 +161,7 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 	}
 
 	d.isConstructed = true
-	d.constructor = nil
+	d.constructor = constructorEntry[T]{}
 	d.decorators = nil
 
 	return d.value, nil
