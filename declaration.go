@@ -33,9 +33,9 @@ type declaration interface {
 	// user declaring a constructor function.
 	IsImplicit() bool
 
-	// markAsDependency marks the declaration as a dependency. That is, other
+	// MarkAsDependency marks the declaration as a dependency. That is, other
 	// declarations depend upon this one.
-	markAsDependency()
+	MarkAsDependency()
 }
 
 // findPath returns the path from t to d, where d is a (possibly indirect)
@@ -143,7 +143,7 @@ func (d *declarationOf[T]) dependsOn(t declaration, scope userFunction) {
 	}
 
 	d.deps[t.Type()] = t
-	t.markAsDependency()
+	t.MarkAsDependency()
 }
 
 // Resolve returns the value constructed by this declaration.
@@ -226,9 +226,9 @@ func (d *declarationOf[T]) IsImplicit() bool {
 	return d.isSelfDeclaring
 }
 
-// markAsDependency marks the declaration as a dependency. That is, other
+// MarkAsDependency marks the declaration as a dependency. That is, other
 // declarations depend upon this one.
-func (d *declarationOf[T]) markAsDependency() {
+func (d *declarationOf[T]) MarkAsDependency() {
 	d.m.Lock()
 	defer d.m.Unlock()
 
