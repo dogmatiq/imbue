@@ -100,22 +100,6 @@ func (d *declarationOf[T]) Declare(
 	d.constructor = ctor
 }
 
-// construct initializes d.value.
-func (d *declarationOf[T]) construct(ctx *Context) error {
-	if !d.isDeclared {
-		return undeclaredConstructorError{d}
-	}
-
-	v, err := d.constructor.Call(ctx)
-	if err != nil {
-		return err
-	}
-
-	d.value = v
-
-	return nil
-}
-
 // undeclaredConstructorError is an error returned by declarationOf[T].Resolve()
 // when no constructor has been declared for T.
 type undeclaredConstructorError struct {

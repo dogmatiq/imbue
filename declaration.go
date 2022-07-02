@@ -158,7 +158,13 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 		return d.value, nil
 	}
 
-	if err := d.construct(ctx); err != nil {
+	if !d.isDeclared {
+		return d.value, undeclaredConstructorError{d}
+	}
+
+	var err error
+	d.value, err = d.constructor.Call(ctx)
+	if err != nil {
 		return d.value, err
 	}
 
