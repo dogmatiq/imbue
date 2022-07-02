@@ -47,7 +47,6 @@ func ExampleContext_Defer() {
 	if err != nil {
 		panic(err)
 	}
-
 	// Output:
 	// invoked!
 	// closed!
