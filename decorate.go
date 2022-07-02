@@ -84,16 +84,3 @@ func (d *declarationOf[T]) Decorate(
 
 	d.decorators = append(d.decorators, dec)
 }
-
-// decorate applies the declaration's decorators to d.value.
-func (d *declarationOf[T]) decorate(ctx *Context) error {
-	for _, dec := range d.decorators {
-		var err error
-		d.value, err = dec.Call(ctx, d.value)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}

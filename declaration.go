@@ -168,8 +168,11 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 		return d.value, err
 	}
 
-	if err := d.decorate(ctx); err != nil {
-		return d.value, err
+	for _, dec := range d.decorators {
+		d.value, err = dec.Call(ctx, d.value)
+		if err != nil {
+			return d.value, err
+		}
 	}
 
 	d.isConstructed = true
