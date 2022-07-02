@@ -72,7 +72,7 @@ type declarationOf[T any] struct {
 	deps            map[reflect.Type]declaration
 	isDep           bool
 	constructor     constructor[T]
-	decorators      []decoratorEntry[T]
+	decorators      []decorator[T]
 	value           T
 }
 
@@ -191,8 +191,8 @@ func (d *declarationOf[T]) BestLocation() location {
 		return d.constructor.Location()
 	}
 
-	for _, e := range d.decorators {
-		return e.Location()
+	for _, dec := range d.decorators {
+		return dec.Location()
 	}
 
 	return d.initLocation

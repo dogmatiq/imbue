@@ -46,8 +46,8 @@ func (c constructor[T]) Call(ctx *Context) (T, error) {
 
 // Location returns the location of the code that provided the constructor.
 //
-// This is typically the location of the call to the WithX() function, not
-// the constructor function's declaration.
+// This is typically the location of the call to the WithX() function, not the
+// constructor implementation function definition.
 func (c constructor[T]) Location() location {
 	return c.loc
 }

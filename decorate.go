@@ -8,28 +8,32 @@ type DecorateOption interface {
 	applyDecorateOption()
 }
 
-// decorator is a function that is called after T's constructor.
-type decorator[T any] func(*Context, T) (T, error)
+// decorator is a container for a function that decorates a value of type T.
+//
+// It implements the userFunction interface.
+type decorator[T any] struct {
+	// impl is the decorator implementation. It is typically a closure generated
+	// by the DecorateX() functions. It wraps the user-provided constructor
+	// function to provide a common signature.
+	impl func(*Context, T) (T, error)
 
-// decoratorEntry encapsulates a decorator and information about where it was
-// declared.
-type decoratorEntry[T any] struct {
+	// loc is the location of the code that provided the decorator.
 	loc location
-	xfn decorator[T]
 }
 
-func (e decoratorEntry[T]) Call(ctx *Context, v T) (T, error) {
+// Call returns the decorated version of v.
+func (d decorator[T]) Call(ctx *Context, v T) (T, error) {
 	ctx = &Context{
 		Context:  ctx,
 		deferrer: ctx.deferrer,
-		scope:    e,
+		scope:    d,
 	}
 
-	v, err := e.xfn(ctx, v)
+	v, err := d.impl(ctx, v)
 	if err != nil {
 		return v, fmt.Errorf(
 			"%s failed: %w",
-			e,
+			d,
 			err,
 		)
 	}
@@ -37,30 +41,35 @@ func (e decoratorEntry[T]) Call(ctx *Context, v T) (T, error) {
 	return v, nil
 }
 
-func (e decoratorEntry[T]) Location() location {
-	return e.loc
+// Location returns the location of the code that provided the decorator.
+//
+// This is typically the location of the call to the DecorateX() function, not
+// the decorator implementation function definition.
+func (d decorator[T]) Location() location {
+	return d.loc
 }
 
-func (e decoratorEntry[T]) String() string {
+// String returns a description of the decorator for use in error messages.
+func (d decorator[T]) String() string {
 	return fmt.Sprintf(
 		"%s decorator (%s)",
 		typeOf[T](),
-		e.loc,
+		d.loc,
 	)
 }
 
 // Decorate adds a decorator function that is called after T's constructor.
 func (d *declarationOf[T]) Decorate(
-	fn decorator[T],
+	impl func(*Context, T) (T, error),
 	deps ...declaration,
 ) {
-	e := decoratorEntry[T]{
+	dec := decorator[T]{
+		impl,
 		findLocation(),
-		fn,
 	}
 
 	for _, dep := range deps {
-		d.dependsOn(dep, e)
+		d.dependsOn(dep, dec)
 	}
 
 	d.m.Lock()
@@ -69,18 +78,18 @@ func (d *declarationOf[T]) Decorate(
 	if d.isConstructed {
 		panic(fmt.Sprintf(
 			"cannot add %s because the value has already been constructed",
-			e,
+			dec,
 		))
 	}
 
-	d.decorators = append(d.decorators, e)
+	d.decorators = append(d.decorators, dec)
 }
 
 // decorate applies the declaration's decorators to d.value.
 func (d *declarationOf[T]) decorate(ctx *Context) error {
-	for _, e := range d.decorators {
+	for _, dec := range d.decorators {
 		var err error
-		d.value, err = e.Call(ctx, d.value)
+		d.value, err = dec.Call(ctx, d.value)
 		if err != nil {
 			return err
 		}
