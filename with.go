@@ -41,6 +41,10 @@ func (e constructorEntry[T]) Call(ctx *Context) (T, error) {
 	return v, nil
 }
 
+func (e constructorEntry[T]) Location() location {
+	return e.loc
+}
+
 func (e constructorEntry[T]) String() string {
 	return fmt.Sprintf(
 		"%s constructor (%s)",
@@ -59,10 +63,6 @@ func (d *declarationOf[T]) Declare(
 		fn,
 		d.isSelfDeclaring,
 	}
-
-	d.m.Lock()
-	d.location = e.loc
-	d.m.Unlock()
 
 	for _, dep := range deps {
 		d.dependsOn(dep, e)
@@ -84,7 +84,7 @@ func (d *declarationOf[T]) Declare(
 		panic(fmt.Sprintf(
 			"%s collides with existing constructor declared at %s",
 			e,
-			d.location,
+			d.constructor.Location(),
 		))
 	}
 

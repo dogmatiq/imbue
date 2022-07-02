@@ -37,6 +37,10 @@ func (e decoratorEntry[T]) Call(ctx *Context, v T) (T, error) {
 	return v, nil
 }
 
+func (e decoratorEntry[T]) Location() location {
+	return e.loc
+}
+
 func (e decoratorEntry[T]) String() string {
 	return fmt.Sprintf(
 		"%s decorator (%s)",
@@ -54,12 +58,6 @@ func (d *declarationOf[T]) Decorate(
 		findLocation(),
 		fn,
 	}
-
-	d.m.Lock()
-	if !d.isDeclared {
-		d.location = e.loc
-	}
-	d.m.Unlock()
 
 	for _, dep := range deps {
 		d.dependsOn(dep, e)

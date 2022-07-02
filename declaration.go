@@ -65,7 +65,7 @@ func findPath(t, d declaration) []declaration {
 // declarationOf describes how to build values of type T.
 type declarationOf[T any] struct {
 	m               sync.Mutex
-	location        location
+	initLocation    location
 	isSelfDeclaring bool
 	isDeclared      bool
 	isConstructed   bool
@@ -79,6 +79,7 @@ type declarationOf[T any] struct {
 // userFunction is an interface for a user-supplied function that forms part of
 // the life-cycle of a specific type, such as constructors and decorators.
 type userFunction interface {
+	Location() location
 	String() string
 }
 
@@ -89,12 +90,17 @@ type selfDeclaring[T any] interface {
 }
 
 // Init initializes the declaration.
+//
+// It is called when the declaration is first added to the container.
 func (d *declarationOf[T]) Init(con *Container) {
-	if sc, ok := any(d.value).(selfDeclaring[T]); ok {
-		d.m.Lock()
-		d.isSelfDeclaring = true
-		d.m.Unlock()
+	sc, ok := any(d.value).(selfDeclaring[T])
 
+	d.m.Lock()
+	d.initLocation = findLocation()
+	d.isSelfDeclaring = ok
+	d.m.Unlock()
+
+	if ok {
 		sc.declare(con, d)
 	}
 }
@@ -181,7 +187,15 @@ func (d *declarationOf[T]) BestLocation() location {
 	d.m.Lock()
 	defer d.m.Unlock()
 
-	return d.location
+	if d.isDeclared {
+		return d.constructor.Location()
+	}
+
+	for _, e := range d.decorators {
+		return e.Location()
+	}
+
+	return d.initLocation
 }
 
 // IsDependency returns true if other declarations depend upon this one.
