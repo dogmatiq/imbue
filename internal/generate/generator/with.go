@@ -88,7 +88,8 @@ func generateWithFuncBody(depCount int, code *jen.Group) {
 	code.Line()
 
 	code.
-		Add(declaringDeclVar(depCount)).Dot("Declare").
+		Add(declaringDeclVar(depCount)).
+		Dot("Declare").
 		CallFunc(
 			func(code *jen.Group) {
 				code.
@@ -124,7 +125,8 @@ func generateConstructorFuncBody(depCount int, code *jen.Group) {
 				jen.Err(),
 			).
 			Op(":=").
-			Add(dependencyDeclVar(depCount, n)).Dot("Resolve").
+			Add(dependencyDeclVar(depCount, n)).
+			Dot("Resolve").
 			Call(
 				contextVar(),
 			)

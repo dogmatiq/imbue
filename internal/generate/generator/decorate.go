@@ -100,7 +100,8 @@ func generateDecorateFuncBody(depCount int, code *jen.Group) {
 	code.Line()
 
 	code.
-		Add(declaringDeclVar(depCount)).Dot("Decorate").
+		Add(declaringDeclVar(depCount)).
+		Dot("Decorate").
 		CallFunc(
 			func(code *jen.Group) {
 				code.
@@ -137,7 +138,8 @@ func generateDecoratorFuncBody(depCount int, code *jen.Group) {
 				jen.Err(),
 			).
 			Op(":=").
-			Add(dependencyDeclVar(depCount, n)).Dot("Resolve").
+			Add(dependencyDeclVar(depCount, n)).
+			Dot("Resolve").
 			Call(
 				contextVar(),
 			)
