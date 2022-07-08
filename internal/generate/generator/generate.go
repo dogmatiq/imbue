@@ -85,7 +85,7 @@ func stdContextType() *jen.Statement {
 
 // imbueContextType returns the type to use for Imbue's own context type.
 func imbueContextType() *jen.Statement {
-	return jen.Op("*").Qual(pkgPath, "Context")
+	return jen.Qual(pkgPath, "Context")
 }
 
 // containerParam returns the name and type for the container parameter.

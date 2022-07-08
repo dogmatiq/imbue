@@ -23,7 +23,7 @@ func ExampleContext_Defer() {
 	imbue.With0(
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 		) (Closable, error) {
 			c := Closable{}
 			ctx.Defer(c.Close)

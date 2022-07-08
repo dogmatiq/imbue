@@ -26,7 +26,7 @@ func ExampleByName() {
 	imbue.With0Named[Foreground](
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 		) (Color, error) {
 			return "<black>", nil
 		},
@@ -36,7 +36,7 @@ func ExampleByName() {
 	imbue.With0Named[Background](
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 		) (Color, error) {
 			return "<white>", nil
 		},

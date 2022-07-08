@@ -52,7 +52,9 @@ func get[T any](con *Container) *declarationOf[T] {
 		return d.(*declarationOf[T])
 	}
 
-	d := &declarationOf[T]{}
+	d := &declarationOf[T]{
+		defers: &con.defers,
+	}
 	con.declarations[t] = d
 
 	con.m.Unlock()

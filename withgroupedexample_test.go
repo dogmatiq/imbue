@@ -31,7 +31,7 @@ func ExampleFromGroup() {
 	imbue.With0Grouped[ServiceA](
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 		) (Connection, error) {
 			return "<connection-a>", nil
 		},
@@ -41,7 +41,7 @@ func ExampleFromGroup() {
 	imbue.With1Grouped[ServiceA](
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 			conn imbue.FromGroup[ServiceA, Connection],
 		) (Client, error) {
 			return Client{conn.Value()}, nil
@@ -52,7 +52,7 @@ func ExampleFromGroup() {
 	imbue.With0Grouped[ServiceB](
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 		) (Connection, error) {
 			return "<connection-b>", nil
 		},
@@ -62,7 +62,7 @@ func ExampleFromGroup() {
 	imbue.With1Grouped[ServiceB](
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 			conn imbue.FromGroup[ServiceB, Connection],
 		) (Client, error) {
 			return Client{conn.Value()}, nil

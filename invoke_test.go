@@ -23,7 +23,7 @@ var _ = Describe("func InvokeX()", func() {
 	It("can obtain a single dependency from the container", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
@@ -45,14 +45,14 @@ var _ = Describe("func InvokeX()", func() {
 	It("can obtain multiple dependencies from the container", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
 
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete2, error) {
+			func(ctx imbue.Context) (Concrete2, error) {
 				return "<concrete-2>", nil
 			},
 		)
@@ -76,7 +76,7 @@ var _ = Describe("func InvokeX()", func() {
 	It("returns the error returned by the invoked function", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete>", nil
 			},
 		)
@@ -97,7 +97,7 @@ var _ = Describe("func InvokeX()", func() {
 	It("returns an error when a constructor returns an error", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "", errors.New("<error>")
 			},
 		)
@@ -121,14 +121,14 @@ var _ = Describe("func InvokeX()", func() {
 	It("returns an error when an decorator returns an error", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
 
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete2, error) {
+			func(ctx imbue.Context) (Concrete2, error) {
 				return "<concrete-2>", nil
 			},
 		)
@@ -136,7 +136,7 @@ var _ = Describe("func InvokeX()", func() {
 		imbue.Decorate1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				v Concrete1,
 				dep Concrete2,
 			) (Concrete1, error) {
@@ -183,7 +183,7 @@ var _ = Describe("func InvokeX()", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete2,
 			) (Concrete1, error) {
 				return "<concrete-1>", nil

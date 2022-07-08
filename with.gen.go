@@ -5,13 +5,13 @@ package imbue
 // With0 describes how to construct values of type T.
 func With0[T any](
 	con *Container,
-	ctor func(*Context) (T, error),
+	ctor func(Context) (T, error),
 	options ...WithOption,
 ) {
 	t := get[T](con)
 
 	t.Declare(
-		func(ctx *Context) (v T, _ error) {
+		func(ctx Context) (v T, _ error) {
 			return ctor(ctx)
 		},
 	)
@@ -20,14 +20,14 @@ func With0[T any](
 // With1 describes how to construct values of type T from a single dependency.
 func With1[T, D any](
 	con *Container,
-	ctor func(*Context, D) (T, error),
+	ctor func(Context, D) (T, error),
 	options ...WithOption,
 ) {
 	t := get[T](con)
 	d1 := get[D](con)
 
 	t.Declare(
-		func(ctx *Context) (v T, _ error) {
+		func(ctx Context) (v T, _ error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -42,7 +42,7 @@ func With1[T, D any](
 // With2 describes how to construct values of type T from 2 dependencies.
 func With2[T, D1, D2 any](
 	con *Container,
-	ctor func(*Context, D1, D2) (T, error),
+	ctor func(Context, D1, D2) (T, error),
 	options ...WithOption,
 ) {
 	t := get[T](con)
@@ -50,7 +50,7 @@ func With2[T, D1, D2 any](
 	d2 := get[D2](con)
 
 	t.Declare(
-		func(ctx *Context) (v T, _ error) {
+		func(ctx Context) (v T, _ error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -71,7 +71,7 @@ func With2[T, D1, D2 any](
 // With3 describes how to construct values of type T from 3 dependencies.
 func With3[T, D1, D2, D3 any](
 	con *Container,
-	ctor func(*Context, D1, D2, D3) (T, error),
+	ctor func(Context, D1, D2, D3) (T, error),
 	options ...WithOption,
 ) {
 	t := get[T](con)
@@ -80,7 +80,7 @@ func With3[T, D1, D2, D3 any](
 	d3 := get[D3](con)
 
 	t.Declare(
-		func(ctx *Context) (v T, _ error) {
+		func(ctx Context) (v T, _ error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -107,7 +107,7 @@ func With3[T, D1, D2, D3 any](
 // With4 describes how to construct values of type T from 4 dependencies.
 func With4[T, D1, D2, D3, D4 any](
 	con *Container,
-	ctor func(*Context, D1, D2, D3, D4) (T, error),
+	ctor func(Context, D1, D2, D3, D4) (T, error),
 	options ...WithOption,
 ) {
 	t := get[T](con)
@@ -117,7 +117,7 @@ func With4[T, D1, D2, D3, D4 any](
 	d4 := get[D4](con)
 
 	t.Declare(
-		func(ctx *Context) (v T, _ error) {
+		func(ctx Context) (v T, _ error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -150,7 +150,7 @@ func With4[T, D1, D2, D3, D4 any](
 // With5 describes how to construct values of type T from 5 dependencies.
 func With5[T, D1, D2, D3, D4, D5 any](
 	con *Container,
-	ctor func(*Context, D1, D2, D3, D4, D5) (T, error),
+	ctor func(Context, D1, D2, D3, D4, D5) (T, error),
 	options ...WithOption,
 ) {
 	t := get[T](con)
@@ -161,7 +161,7 @@ func With5[T, D1, D2, D3, D4, D5 any](
 	d5 := get[D5](con)
 
 	t.Declare(
-		func(ctx *Context) (v T, _ error) {
+		func(ctx Context) (v T, _ error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -200,7 +200,7 @@ func With5[T, D1, D2, D3, D4, D5 any](
 // With6 describes how to construct values of type T from 6 dependencies.
 func With6[T, D1, D2, D3, D4, D5, D6 any](
 	con *Container,
-	ctor func(*Context, D1, D2, D3, D4, D5, D6) (T, error),
+	ctor func(Context, D1, D2, D3, D4, D5, D6) (T, error),
 	options ...WithOption,
 ) {
 	t := get[T](con)
@@ -212,7 +212,7 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 	d6 := get[D6](con)
 
 	t.Declare(
-		func(ctx *Context) (v T, _ error) {
+		func(ctx Context) (v T, _ error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -257,7 +257,7 @@ func With6[T, D1, D2, D3, D4, D5, D6 any](
 // With7 describes how to construct values of type T from 7 dependencies.
 func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
-	ctor func(*Context, D1, D2, D3, D4, D5, D6, D7) (T, error),
+	ctor func(Context, D1, D2, D3, D4, D5, D6, D7) (T, error),
 	options ...WithOption,
 ) {
 	t := get[T](con)
@@ -270,7 +270,7 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	d7 := get[D7](con)
 
 	t.Declare(
-		func(ctx *Context) (v T, _ error) {
+		func(ctx Context) (v T, _ error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -321,7 +321,7 @@ func With7[T, D1, D2, D3, D4, D5, D6, D7 any](
 // With8 describes how to construct values of type T from 8 dependencies.
 func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
-	ctor func(*Context, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
+	ctor func(Context, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
 	options ...WithOption,
 ) {
 	t := get[T](con)
@@ -335,7 +335,7 @@ func With8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	d8 := get[D8](con)
 
 	t.Declare(
-		func(ctx *Context) (v T, _ error) {
+		func(ctx Context) (v T, _ error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err

@@ -20,7 +20,7 @@ func ExampleDecorate0() {
 	imbue.Decorate0(
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 			d *DecoratedDependency,
 		) (*DecoratedDependency, error) {
 			d.Value = "<decorated value>"
@@ -45,7 +45,7 @@ func ExampleDecorate0_httpServeMux() {
 	imbue.With0(
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 		) (*http.ServeMux, error) {
 			return http.NewServeMux(), nil
 		},
@@ -54,7 +54,7 @@ func ExampleDecorate0_httpServeMux() {
 	imbue.Decorate0(
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 			mux *http.ServeMux,
 		) (*http.ServeMux, error) {
 			mux.HandleFunc("/account", func(w http.ResponseWriter, r *http.Request) {
@@ -91,7 +91,7 @@ func ExampleDecorate1() {
 	imbue.Decorate1(
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 			d *DecoratedDependency,
 			up *UpstreamDependency,
 		) (*DecoratedDependency, error) {
@@ -126,7 +126,7 @@ func ExampleDecorate2() {
 	imbue.Decorate2(
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 			d *DecoratedDependency,
 			up1 *UpstreamDependency1,
 			up2 *UpstreamDependency2,

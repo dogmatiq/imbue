@@ -22,14 +22,14 @@ var _ = Describe("func DecorateX()", func() {
 	It("can request a single dependency via the decorators's input parameters", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
 
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete2, error) {
+			func(ctx imbue.Context) (Concrete2, error) {
 				return "<concrete-2>", nil
 			},
 		)
@@ -38,7 +38,7 @@ var _ = Describe("func DecorateX()", func() {
 		imbue.Decorate1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				v Concrete2,
 				dep Concrete1,
 			) (Concrete2, error) {
@@ -67,21 +67,21 @@ var _ = Describe("func DecorateX()", func() {
 	It("can request multiple dependencies via the decorator's input parameters", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
 
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete2, error) {
+			func(ctx imbue.Context) (Concrete2, error) {
 				return "<concrete-2>", nil
 			},
 		)
 
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete3, error) {
+			func(ctx imbue.Context) (Concrete3, error) {
 				return "<concrete-3>", nil
 			},
 		)
@@ -90,7 +90,7 @@ var _ = Describe("func DecorateX()", func() {
 		imbue.Decorate2(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				v Concrete3,
 				dep1 Concrete1,
 				dep2 Concrete2,
@@ -120,7 +120,7 @@ var _ = Describe("func DecorateX()", func() {
 	It("can request dependencies that have dependencies of their own", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
@@ -128,7 +128,7 @@ var _ = Describe("func DecorateX()", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete1,
 			) (Concrete2, error) {
 				Expect(dep).To(Equal(Concrete1("<concrete-1>")))
@@ -138,7 +138,7 @@ var _ = Describe("func DecorateX()", func() {
 
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete3, error) {
+			func(ctx imbue.Context) (Concrete3, error) {
 				return "<concrete-3>", nil
 			},
 		)
@@ -147,7 +147,7 @@ var _ = Describe("func DecorateX()", func() {
 		imbue.Decorate1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				v Concrete3,
 				dep Concrete2,
 			) (Concrete3, error) {
@@ -175,14 +175,14 @@ var _ = Describe("func DecorateX()", func() {
 	It("only invokes the decorator once even if the value is requested multiple times", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
 
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete2, error) {
+			func(ctx imbue.Context) (Concrete2, error) {
 				return "<concrete-2>", nil
 			},
 		)
@@ -191,7 +191,7 @@ var _ = Describe("func DecorateX()", func() {
 		imbue.Decorate1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				v Concrete1,
 				dep Concrete2,
 			) (Concrete1, error) {
@@ -229,7 +229,7 @@ var _ = Describe("func DecorateX()", func() {
 	It("replaces the input value with the result of the decorator", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete>", nil
 			},
 		)
@@ -237,7 +237,7 @@ var _ = Describe("func DecorateX()", func() {
 		imbue.Decorate0(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				v Concrete1,
 			) (Concrete1, error) {
 				return v + "+<decorated>", nil
@@ -260,7 +260,7 @@ var _ = Describe("func DecorateX()", func() {
 	It("panics when a decorator is declared after the constructor has been called", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete>", nil
 			},
 		)
@@ -280,7 +280,7 @@ var _ = Describe("func DecorateX()", func() {
 			imbue.Decorate0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					v Concrete1,
 				) (Concrete1, error) {
 					panic("unexpected call")
@@ -300,7 +300,7 @@ var _ = Describe("func DecorateX()", func() {
 			imbue.Decorate1(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					v Concrete1,
 					dep Concrete1,
 				) (Concrete1, error) {
@@ -320,7 +320,7 @@ var _ = Describe("func DecorateX()", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete3,
 			) (Concrete1, error) {
 				panic("unexpected call")
@@ -330,7 +330,7 @@ var _ = Describe("func DecorateX()", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete1,
 			) (Concrete2, error) {
 				panic("unexpected call")
@@ -341,7 +341,7 @@ var _ = Describe("func DecorateX()", func() {
 			imbue.Decorate1(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					v Concrete3,
 					dep Concrete2,
 				) (Concrete3, error) {

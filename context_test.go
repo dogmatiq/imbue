@@ -27,7 +27,7 @@ var _ = Describe("type Context", func() {
 				imbue.With0(
 					container,
 					func(
-						ctx *imbue.Context,
+						ctx imbue.Context,
 					) (Concrete1, error) {
 						ctx.Defer(func() error {
 							called = true
@@ -59,7 +59,7 @@ var _ = Describe("type Context", func() {
 				imbue.With0(
 					container,
 					func(
-						ctx *imbue.Context,
+						ctx imbue.Context,
 					) (Concrete1, error) {
 						return "<concrete>", nil
 					},
@@ -69,7 +69,7 @@ var _ = Describe("type Context", func() {
 				imbue.Decorate0(
 					container,
 					func(
-						ctx *imbue.Context,
+						ctx imbue.Context,
 						dep Concrete1,
 					) (Concrete1, error) {
 						ctx.Defer(func() error {
@@ -104,7 +104,7 @@ var _ = Describe("type Context", func() {
 				imbue.With0(
 					container,
 					func(
-						ctx *imbue.Context,
+						ctx imbue.Context,
 					) (Concrete1, error) {
 						ctx.Defer(func() error {
 							order = append(order, "<concrete-1-constructor>")
@@ -117,7 +117,7 @@ var _ = Describe("type Context", func() {
 				imbue.Decorate0(
 					container,
 					func(
-						ctx *imbue.Context,
+						ctx imbue.Context,
 						dep Concrete1,
 					) (Concrete1, error) {
 						ctx.Defer(func() error {
@@ -131,7 +131,7 @@ var _ = Describe("type Context", func() {
 				imbue.With1(
 					container,
 					func(
-						ctx *imbue.Context,
+						ctx imbue.Context,
 						_ Concrete1,
 					) (Concrete2, error) {
 						ctx.Defer(func() error {
@@ -167,7 +167,7 @@ var _ = Describe("type Context", func() {
 				imbue.With0(
 					container,
 					func(
-						ctx *imbue.Context,
+						ctx imbue.Context,
 					) (Concrete1, error) {
 						ctx.Defer(func() error {
 							return errors.New("<concrete-1-constructor>")
@@ -179,7 +179,7 @@ var _ = Describe("type Context", func() {
 				imbue.Decorate0(
 					container,
 					func(
-						ctx *imbue.Context,
+						ctx imbue.Context,
 						dep Concrete1,
 					) (Concrete1, error) {
 						ctx.Defer(func() error {
@@ -192,7 +192,7 @@ var _ = Describe("type Context", func() {
 				imbue.With1(
 					container,
 					func(
-						ctx *imbue.Context,
+						ctx imbue.Context,
 						_ Concrete1,
 					) (Concrete2, error) {
 						ctx.Defer(func() error {
@@ -235,7 +235,7 @@ var _ = Describe("type Context", func() {
 			imbue.With0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
 						count++
@@ -248,7 +248,7 @@ var _ = Describe("type Context", func() {
 			imbue.Decorate0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete1,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
@@ -262,7 +262,7 @@ var _ = Describe("type Context", func() {
 			imbue.With1(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					_ Concrete1,
 				) (Concrete2, error) {
 					ctx.Defer(func() error {
@@ -297,7 +297,7 @@ var _ = Describe("type Context", func() {
 			imbue.With0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
 						if closingAgain {
@@ -312,7 +312,7 @@ var _ = Describe("type Context", func() {
 			imbue.Decorate0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete1,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
@@ -352,7 +352,7 @@ var _ = Describe("type Context", func() {
 			imbue.With0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
 						called = true
@@ -386,7 +386,7 @@ var _ = Describe("type Context", func() {
 			imbue.With0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (Concrete1, error) {
 					return "<concrete>", nil
 				},
@@ -396,7 +396,7 @@ var _ = Describe("type Context", func() {
 			imbue.Decorate0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete1,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
@@ -433,7 +433,7 @@ var _ = Describe("type Context", func() {
 			imbue.With0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
 						order = append(order, "<concrete-1-constructor>")
@@ -446,7 +446,7 @@ var _ = Describe("type Context", func() {
 			imbue.Decorate0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete1,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
@@ -460,7 +460,7 @@ var _ = Describe("type Context", func() {
 			imbue.Decorate0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete1,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
@@ -495,7 +495,7 @@ var _ = Describe("type Context", func() {
 			imbue.With0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
 						count++
@@ -508,7 +508,7 @@ var _ = Describe("type Context", func() {
 			imbue.Decorate0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete1,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
@@ -540,7 +540,7 @@ var _ = Describe("type Context", func() {
 			imbue.With0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {
 						if closing {
@@ -555,7 +555,7 @@ var _ = Describe("type Context", func() {
 			imbue.Decorate0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete1,
 				) (Concrete1, error) {
 					ctx.Defer(func() error {

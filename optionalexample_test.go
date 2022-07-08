@@ -20,7 +20,7 @@ func ExampleOptional() {
 	// Declare a constructor for Dependency, but have it return an error.
 	imbue.With0(
 		con,
-		func(ctx *imbue.Context) (Dependency, error) {
+		func(ctx imbue.Context) (Dependency, error) {
 			return Dependency{"<value>"}, nil
 		},
 	)
@@ -61,7 +61,7 @@ func ExampleOptional_failingConstructor() {
 	// Declare a constructor for Dependency, but have it return an error.
 	imbue.With0(
 		con,
-		func(ctx *imbue.Context) (Dependency, error) {
+		func(ctx imbue.Context) (Dependency, error) {
 			return Dependency{}, errors.New("<error>")
 		},
 	)

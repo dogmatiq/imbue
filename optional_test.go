@@ -23,7 +23,7 @@ var _ = Describe("type Optional", func() {
 	It("enables the container to construct values of the declared type", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete>", nil
 			},
 		)
@@ -61,7 +61,7 @@ var _ = Describe("type Optional", func() {
 	It("treats the dependency as unavailable if its constructor returns an error", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "", errors.New("<error>")
 			},
 		)
@@ -88,7 +88,7 @@ var _ = Describe("type Optional", func() {
 			imbue.With1(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep imbue.Optional[Concrete1],
 				) (Concrete1, error) {
 					panic("unexpected call")
@@ -107,7 +107,7 @@ var _ = Describe("type Optional", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete3,
 			) (Concrete1, error) {
 				panic("unexpected call")
@@ -117,7 +117,7 @@ var _ = Describe("type Optional", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep imbue.Optional[Concrete1],
 			) (Concrete2, error) {
 				panic("unexpected call")
@@ -128,7 +128,7 @@ var _ = Describe("type Optional", func() {
 			imbue.With1(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete2,
 				) (Concrete3, error) {
 					panic("unexpected call")
@@ -151,7 +151,7 @@ var _ = Describe("type Optional", func() {
 			imbue.With0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (imbue.Optional[Concrete1], error) {
 					panic("unexpected call")
 				},

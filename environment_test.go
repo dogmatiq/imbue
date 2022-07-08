@@ -204,7 +204,7 @@ var _ = Describe("func FromEnvironment()", func() {
 			imbue.With0(
 				con,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (imbue.FromEnvironment[envTestString, string], error) {
 					panic("unexpected call")
 				},

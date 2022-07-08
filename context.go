@@ -4,18 +4,26 @@ import (
 	"context"
 )
 
-// Context is the context used during construction of dependencies within a
-// container.
-type Context struct {
+// Context is an extended version of the standard context.Context interface that
+// is used when constructing and decorating dependencies.
+type Context interface {
 	context.Context
 
-	con    *Container
+	// Defer registers a function to be invoked when the container is closed.
+	Defer(fn func() error)
+}
+
+// scopedContext is the context used during construction of dependencies within
+// a container.
+type scopedContext struct {
+	context.Context
+
 	scope  userFunction
 	defers *deferSet
 }
 
 // Defer registers a function to be invoked when the container is closed.
-func (c *Context) Defer(fn func() error) {
+func (c *scopedContext) Defer(fn func() error) {
 	c.defers.Add(
 		deferred{
 			fn,
@@ -23,30 +31,4 @@ func (c *Context) Defer(fn func() error) {
 			c.scope,
 		},
 	)
-}
-
-// invokeContext returns a new Context for a function invoked by InvokeX().
-func invokeContext(
-	parent context.Context,
-	con *Container,
-) *Context {
-	return &Context{
-		Context: parent,
-		con:     con,
-	}
-}
-
-// childContext returns a new child Context for use within a constructor or
-// decorator.
-func childContext(
-	parent *Context,
-	scope userFunction,
-	defers *deferSet,
-) *Context {
-	return &Context{
-		Context: parent,
-		con:     parent.con,
-		scope:   scope,
-		defers:  defers,
-	}
 }

@@ -22,7 +22,7 @@ var _ = Describe("func WithX()", func() {
 	It("enables the container to construct values of the declared type", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete>", nil
 			},
 		)
@@ -43,7 +43,7 @@ var _ = Describe("func WithX()", func() {
 	It("can request a single dependency via the constructor's input parameters", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
@@ -51,7 +51,7 @@ var _ = Describe("func WithX()", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete1,
 			) (Concrete2, error) {
 				Expect(dep).To(Equal(Concrete1("<concrete-1>")))
@@ -75,14 +75,14 @@ var _ = Describe("func WithX()", func() {
 	It("can request multiple dependencies via the constructor's input parameters", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
 
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete2, error) {
+			func(ctx imbue.Context) (Concrete2, error) {
 				return "<concrete-2>", nil
 			},
 		)
@@ -90,7 +90,7 @@ var _ = Describe("func WithX()", func() {
 		imbue.With2(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep1 Concrete1,
 				dep2 Concrete2,
 			) (Concrete3, error) {
@@ -116,7 +116,7 @@ var _ = Describe("func WithX()", func() {
 	It("can request dependencies that have dependencies of their own", func() {
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				return "<concrete-1>", nil
 			},
 		)
@@ -124,7 +124,7 @@ var _ = Describe("func WithX()", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete1,
 			) (Concrete2, error) {
 				Expect(dep).To(Equal(Concrete1("<concrete-1>")))
@@ -135,7 +135,7 @@ var _ = Describe("func WithX()", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete2,
 			) (Concrete3, error) {
 				Expect(dep).To(Equal(Concrete2("<concrete-2>")))
@@ -160,7 +160,7 @@ var _ = Describe("func WithX()", func() {
 		called := false
 		imbue.With0(
 			container,
-			func(ctx *imbue.Context) (Concrete1, error) {
+			func(ctx imbue.Context) (Concrete1, error) {
 				Expect(called).To(BeFalse(), "constructor called multiple times")
 				called = true
 				return "<concrete>", nil
@@ -196,7 +196,7 @@ var _ = Describe("func WithX()", func() {
 		imbue.With0(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 			) (Concrete1, error) {
 				panic("unexpected call")
 			},
@@ -206,7 +206,7 @@ var _ = Describe("func WithX()", func() {
 			imbue.With0(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 				) (Concrete1, error) {
 					panic("unexpected call")
 				},
@@ -225,7 +225,7 @@ var _ = Describe("func WithX()", func() {
 			imbue.With1(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete1,
 				) (Concrete1, error) {
 					panic("unexpected call")
@@ -244,7 +244,7 @@ var _ = Describe("func WithX()", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete3,
 			) (Concrete1, error) {
 				panic("unexpected call")
@@ -254,7 +254,7 @@ var _ = Describe("func WithX()", func() {
 		imbue.With1(
 			container,
 			func(
-				ctx *imbue.Context,
+				ctx imbue.Context,
 				dep Concrete1,
 			) (Concrete2, error) {
 				panic("unexpected call")
@@ -265,7 +265,7 @@ var _ = Describe("func WithX()", func() {
 			imbue.With1(
 				container,
 				func(
-					ctx *imbue.Context,
+					ctx imbue.Context,
 					dep Concrete2,
 				) (Concrete3, error) {
 					panic("unexpected call")

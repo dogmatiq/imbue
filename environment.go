@@ -92,7 +92,7 @@ func (FromEnvironment[V, T]) declare(
 	decl *declarationOf[FromEnvironment[V, T]],
 ) {
 	decl.Declare(
-		func(ctx *Context) (FromEnvironment[V, T], error) {
+		func(ctx Context) (FromEnvironment[V, T], error) {
 			name := identifier.ToScreamingSnakeCase(
 				typeOf[V]().Name(),
 			)

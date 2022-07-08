@@ -17,7 +17,7 @@ func ExampleInvoke1() {
 	// Declare a constructor for the Dependency type.
 	imbue.With0(
 		con,
-		func(ctx *imbue.Context) (Dependency, error) {
+		func(ctx imbue.Context) (Dependency, error) {
 			return Dependency{"<value>"}, nil
 		},
 	)
@@ -52,7 +52,7 @@ func ExampleInvoke2() {
 	// Declare a constructor for the Dependency1 type.
 	imbue.With0(
 		con,
-		func(ctx *imbue.Context) (Dependency1, error) {
+		func(ctx imbue.Context) (Dependency1, error) {
 			return Dependency1{"<value-1>"}, nil
 		},
 	)
@@ -60,7 +60,7 @@ func ExampleInvoke2() {
 	// Declare a constructor for the Dependency2 type.
 	imbue.With0(
 		con,
-		func(ctx *imbue.Context) (Dependency2, error) {
+		func(ctx imbue.Context) (Dependency2, error) {
 			return Dependency2{"<value-2>"}, nil
 		},
 	)

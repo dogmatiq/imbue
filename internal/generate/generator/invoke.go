@@ -60,17 +60,6 @@ func generateInvokeFunc(code *jen.File, depCount int) {
 }
 
 func generateInvokeFuncBody(depCount int, code *jen.Group) {
-	code.
-		Id("rctx").
-		Op(":=").
-		Qual(pkgPath, "invokeContext").
-		Call(
-			contextVar(),
-			containerVar(),
-		)
-
-	code.Line()
-
 	for n := 0; n < depCount; n++ {
 		code.
 			List(
@@ -87,7 +76,7 @@ func generateInvokeFuncBody(depCount int, code *jen.Group) {
 			).
 			Dot("Resolve").
 			Call(
-				jen.Id("rctx"),
+				jen.Id("ctx"),
 			)
 
 		code.

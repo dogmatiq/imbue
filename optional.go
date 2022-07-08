@@ -22,7 +22,7 @@ func (Optional[T]) declare(
 	dep := get[T](con)
 
 	decl.Declare(
-		func(ctx *Context) (Optional[T], error) {
+		func(ctx Context) (Optional[T], error) {
 			v, err := dep.Resolve(ctx)
 			return Optional[T]{v, err}, nil
 		},

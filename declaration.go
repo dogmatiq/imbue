@@ -1,6 +1,7 @@
 package imbue
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 	"sync"
@@ -65,6 +66,7 @@ func findPath(t, d declaration) []declaration {
 // declarationOf describes how to build values of type T.
 type declarationOf[T any] struct {
 	m               sync.Mutex
+	defers          *deferSet
 	initLocation    location
 	isSelfDeclaring bool
 	isDeclared      bool
@@ -107,7 +109,7 @@ func (d *declarationOf[T]) Init(con *Container) {
 
 // Declare declares a constructor for values of type T.
 func (d *declarationOf[T]) Declare(
-	impl func(*Context) (T, error),
+	impl func(Context) (T, error),
 	deps ...declaration,
 ) {
 	ctor := constructor[T]{
@@ -146,7 +148,7 @@ func (d *declarationOf[T]) Declare(
 
 // Decorate adds a decorator function that is called after T's constructor.
 func (d *declarationOf[T]) Decorate(
-	impl func(*Context, T) (T, error),
+	impl func(Context, T) (T, error),
 	deps ...declaration,
 ) {
 	dec := decorator[T]{
@@ -216,7 +218,7 @@ func (d *declarationOf[T]) dependsOn(t declaration, scope userFunction) {
 //
 // The constructor is called only once. Subsequent calls to Resolve() return the
 // same value.
-func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
+func (d *declarationOf[T]) Resolve(ctx context.Context) (T, error) {
 	d.m.Lock()
 	defer d.m.Unlock()
 
@@ -244,7 +246,7 @@ func (d *declarationOf[T]) Resolve(ctx *Context) (T, error) {
 		}
 	}
 
-	defers.TransferOwnership(&ctx.con.defers)
+	defers.TransferOwnership(d.defers)
 
 	d.isConstructed = true
 	d.constructor = constructor[T]{}

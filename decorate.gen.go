@@ -10,13 +10,13 @@ package imbue
 // The decorated dependency may be manipulated in-place.
 func Decorate0[T any](
 	con *Container,
-	dec func(*Context, T) (T, error),
+	dec func(Context, T) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
 
 	t.Decorate(
-		func(ctx *Context, v T) (T, error) {
+		func(ctx Context, v T) (T, error) {
 			return dec(ctx, v)
 		},
 	)
@@ -31,14 +31,14 @@ func Decorate0[T any](
 // The decorated dependency may be manipulated in-place.
 func Decorate1[T, D any](
 	con *Container,
-	dec func(*Context, T, D) (T, error),
+	dec func(Context, T, D) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
 	d1 := get[D](con)
 
 	t.Decorate(
-		func(ctx *Context, v T) (T, error) {
+		func(ctx Context, v T) (T, error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -59,7 +59,7 @@ func Decorate1[T, D any](
 // The decorated dependency may be manipulated in-place.
 func Decorate2[T, D1, D2 any](
 	con *Container,
-	dec func(*Context, T, D1, D2) (T, error),
+	dec func(Context, T, D1, D2) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -67,7 +67,7 @@ func Decorate2[T, D1, D2 any](
 	d2 := get[D2](con)
 
 	t.Decorate(
-		func(ctx *Context, v T) (T, error) {
+		func(ctx Context, v T) (T, error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -94,7 +94,7 @@ func Decorate2[T, D1, D2 any](
 // The decorated dependency may be manipulated in-place.
 func Decorate3[T, D1, D2, D3 any](
 	con *Container,
-	dec func(*Context, T, D1, D2, D3) (T, error),
+	dec func(Context, T, D1, D2, D3) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -103,7 +103,7 @@ func Decorate3[T, D1, D2, D3 any](
 	d3 := get[D3](con)
 
 	t.Decorate(
-		func(ctx *Context, v T) (T, error) {
+		func(ctx Context, v T) (T, error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -136,7 +136,7 @@ func Decorate3[T, D1, D2, D3 any](
 // The decorated dependency may be manipulated in-place.
 func Decorate4[T, D1, D2, D3, D4 any](
 	con *Container,
-	dec func(*Context, T, D1, D2, D3, D4) (T, error),
+	dec func(Context, T, D1, D2, D3, D4) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -146,7 +146,7 @@ func Decorate4[T, D1, D2, D3, D4 any](
 	d4 := get[D4](con)
 
 	t.Decorate(
-		func(ctx *Context, v T) (T, error) {
+		func(ctx Context, v T) (T, error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -185,7 +185,7 @@ func Decorate4[T, D1, D2, D3, D4 any](
 // The decorated dependency may be manipulated in-place.
 func Decorate5[T, D1, D2, D3, D4, D5 any](
 	con *Container,
-	dec func(*Context, T, D1, D2, D3, D4, D5) (T, error),
+	dec func(Context, T, D1, D2, D3, D4, D5) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -196,7 +196,7 @@ func Decorate5[T, D1, D2, D3, D4, D5 any](
 	d5 := get[D5](con)
 
 	t.Decorate(
-		func(ctx *Context, v T) (T, error) {
+		func(ctx Context, v T) (T, error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -241,7 +241,7 @@ func Decorate5[T, D1, D2, D3, D4, D5 any](
 // The decorated dependency may be manipulated in-place.
 func Decorate6[T, D1, D2, D3, D4, D5, D6 any](
 	con *Container,
-	dec func(*Context, T, D1, D2, D3, D4, D5, D6) (T, error),
+	dec func(Context, T, D1, D2, D3, D4, D5, D6) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -253,7 +253,7 @@ func Decorate6[T, D1, D2, D3, D4, D5, D6 any](
 	d6 := get[D6](con)
 
 	t.Decorate(
-		func(ctx *Context, v T) (T, error) {
+		func(ctx Context, v T) (T, error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -304,7 +304,7 @@ func Decorate6[T, D1, D2, D3, D4, D5, D6 any](
 // The decorated dependency may be manipulated in-place.
 func Decorate7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	con *Container,
-	dec func(*Context, T, D1, D2, D3, D4, D5, D6, D7) (T, error),
+	dec func(Context, T, D1, D2, D3, D4, D5, D6, D7) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -317,7 +317,7 @@ func Decorate7[T, D1, D2, D3, D4, D5, D6, D7 any](
 	d7 := get[D7](con)
 
 	t.Decorate(
-		func(ctx *Context, v T) (T, error) {
+		func(ctx Context, v T) (T, error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err
@@ -374,7 +374,7 @@ func Decorate7[T, D1, D2, D3, D4, D5, D6, D7 any](
 // The decorated dependency may be manipulated in-place.
 func Decorate8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	con *Container,
-	dec func(*Context, T, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
+	dec func(Context, T, D1, D2, D3, D4, D5, D6, D7, D8) (T, error),
 	options ...DecorateOption,
 ) {
 	t := get[T](con)
@@ -388,7 +388,7 @@ func Decorate8[T, D1, D2, D3, D4, D5, D6, D7, D8 any](
 	d8 := get[D8](con)
 
 	t.Decorate(
-		func(ctx *Context, v T) (T, error) {
+		func(ctx Context, v T) (T, error) {
 			v1, err := d1.Resolve(ctx)
 			if err != nil {
 				return v, err

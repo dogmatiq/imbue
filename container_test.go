@@ -24,7 +24,7 @@ var _ = Describe("type Container", func() {
 			imbue.With0(
 				container,
 				func(
-					*imbue.Context,
+					imbue.Context,
 				) (Concrete1, error) {
 					panic("not implemented")
 				},
@@ -41,7 +41,7 @@ var _ = Describe("type Container", func() {
 			imbue.With1(
 				container,
 				func(
-					*imbue.Context,
+					imbue.Context,
 					Concrete2,
 				) (Concrete1, error) {
 					panic("not implemented")
@@ -60,7 +60,7 @@ var _ = Describe("type Container", func() {
 			imbue.With2(
 				container,
 				func(
-					*imbue.Context,
+					imbue.Context,
 					Concrete2,
 					Concrete3,
 				) (Concrete1, error) {
@@ -81,7 +81,7 @@ var _ = Describe("type Container", func() {
 			imbue.With1(
 				container,
 				func(
-					*imbue.Context,
+					imbue.Context,
 					Concrete2,
 				) (Concrete1, error) {
 					panic("not implemented")
@@ -91,7 +91,7 @@ var _ = Describe("type Container", func() {
 			imbue.With1(
 				container,
 				func(
-					*imbue.Context,
+					imbue.Context,
 					Concrete3,
 				) (Concrete2, error) {
 					panic("not implemented")

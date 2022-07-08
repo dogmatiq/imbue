@@ -16,7 +16,7 @@ func ExampleWith0() {
 	// Declare a constructor for the Dependency type.
 	imbue.With0(
 		con,
-		func(ctx *imbue.Context) (*Dependency, error) {
+		func(ctx imbue.Context) (*Dependency, error) {
 			return &Dependency{}, nil
 		},
 	)
@@ -43,7 +43,7 @@ func ExampleWith1() {
 	imbue.With1(
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 			up *UpstreamDependency,
 		) (*Dependency, error) {
 			return &Dependency{up}, nil
@@ -75,7 +75,7 @@ func ExampleWith2() {
 	imbue.With2(
 		con,
 		func(
-			ctx *imbue.Context,
+			ctx imbue.Context,
 			up1 *UpstreamDependency1,
 			up2 *UpstreamDependency2,
 		) (*Dependency, error) {
