@@ -11,10 +11,9 @@ import (
 // The value is released when there are no concurrent InvokeX() calls that
 // depend on T.
 type Shared[T any] struct {
-	m       sync.Mutex
-	refs    int
-	value   T
-	release Releaser
+	m    sync.Mutex
+	refs int
+	inst *Instance[T]
 }
 
 var _ Policy[int] = (*Shared[int])(nil)
@@ -22,23 +21,25 @@ var _ Policy[int] = (*Shared[int])(nil)
 func (p *Shared[T]) Acquire(
 	ctx context.Context,
 	new Factory[T],
-) (T, Releaser, error) {
+) (*Instance[T], error) {
 	p.m.Lock()
 	defer p.m.Unlock()
 
 	if p.refs == 0 {
-		value, release, err := new(ctx)
+		inst, err := new(ctx)
 		if err != nil {
-			return value, nil, err
+			return nil, err
 		}
 
-		p.value = value
-		p.release = release
+		p.inst = inst
 	}
 
 	p.refs++
 
-	return p.value, p.releaseOne, nil
+	return &Instance[T]{
+		p.inst.Value,
+		p.releaseOne,
+	}, nil
 }
 
 func (p *Shared[T]) releaseOne() error {
@@ -51,11 +52,10 @@ func (p *Shared[T]) releaseOne() error {
 	}
 
 	defer func() {
-		zero(&p.value)
-		p.release = nil
+		p.inst = nil
 	}()
 
-	return p.release()
+	return p.inst.Release()
 }
 
 func (p *Shared[T]) Close() error {

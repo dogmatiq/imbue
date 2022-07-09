@@ -19,15 +19,16 @@ var _ = Describe("type Private", func() {
 	BeforeEach(func() {
 		policy = Private[int]{}
 
-		factory = func(ctx context.Context) (int, Releaser, error) {
+		factory = func(ctx context.Context) (*Instance[int], error) {
 			count++
 
-			release := func() error {
-				count--
-				return nil
-			}
-
-			return count, release, nil
+			return &Instance[int]{
+				Value: count,
+				Releaser: func() error {
+					count--
+					return nil
+				},
+			}, nil
 		}
 
 		count = 0
@@ -39,35 +40,35 @@ var _ = Describe("type Private", func() {
 	})
 
 	Describe("func Acquire()", func() {
-		It("returns a new value on each call", func() {
-			value, release, err := policy.Acquire(context.Background(), factory)
+		It("returns a new instance on each call", func() {
+			inst, err := policy.Acquire(context.Background(), factory)
 			Expect(err).ShouldNot(HaveOccurred())
-			defer release()
+			defer inst.Release()
 
-			Expect(value).To(Equal(1))
+			Expect(inst.Value).To(Equal(1))
 
-			value, release, err = policy.Acquire(context.Background(), factory)
+			inst, err = policy.Acquire(context.Background(), factory)
 			Expect(err).ShouldNot(HaveOccurred())
-			defer release()
+			defer inst.Release()
 
-			Expect(value).To(Equal(2))
+			Expect(inst.Value).To(Equal(2))
 		})
 
-		It("returns the factory's releaser", func() {
-			_, release, err := policy.Acquire(context.Background(), factory)
+		It("uses the factory's releaser on each instance", func() {
+			inst, err := policy.Acquire(context.Background(), factory)
 			Expect(err).ShouldNot(HaveOccurred())
 
-			err = release()
+			err = inst.Release()
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(count).To(Equal(0))
 		})
 
 		It("returns an error if the factory returns an error", func() {
-			factory = func(ctx context.Context) (int, Releaser, error) {
-				return 0, nil, errors.New("<error>")
+			factory = func(ctx context.Context) (*Instance[int], error) {
+				return nil, errors.New("<error>")
 			}
 
-			_, _, err := policy.Acquire(context.Background(), factory)
+			_, err := policy.Acquire(context.Background(), factory)
 			Expect(err).To(MatchError("<error>"))
 		})
 	})

@@ -9,10 +9,9 @@ import (
 // Singleton is a lifecycle policy that reuses a single value of type T that is
 // released when the container is closed.
 type Singleton[T any] struct {
-	resolved uint32
-	m        sync.Mutex
-	value    T
-	release  Releaser
+	exists uint32 // atomic bool
+	m      sync.Mutex
+	inst   *Instance[T]
 }
 
 var _ Policy[int] = (*Singleton[int])(nil)
@@ -20,37 +19,39 @@ var _ Policy[int] = (*Singleton[int])(nil)
 func (p *Singleton[T]) Acquire(
 	ctx context.Context,
 	new Factory[T],
-) (T, Releaser, error) {
-	if atomic.LoadUint32(&p.resolved) == 0 {
+) (*Instance[T], error) {
+	if atomic.LoadUint32(&p.exists) == 0 {
 		p.m.Lock()
 		defer p.m.Unlock()
 
-		if p.resolved == 0 {
-			value, release, err := new(ctx)
+		if p.exists == 0 {
+			inst, err := new(ctx)
 			if err != nil {
-				return value, nil, err
+				return nil, err
 			}
 
-			p.value = value
-			p.release = release
-			atomic.StoreUint32(&p.resolved, 1)
+			p.inst = inst
+			atomic.StoreUint32(&p.exists, 1)
 		}
 	}
 
-	return p.value, noopReleaser, nil
+	return &Instance[T]{
+		Value: p.inst.Value,
+	}, nil
 }
 
 func (p *Singleton[T]) Close() error {
-	if atomic.LoadUint32(&p.resolved) == 0 {
-		p.m.Lock()
-		defer p.m.Unlock()
+	p.m.Lock()
+	defer p.m.Unlock()
 
-		if p.resolved == 0 {
-			return nil
-		}
+	if p.exists == 0 {
+		return nil
 	}
 
-	zero(&p.value)
+	inst := p.inst
 
-	return p.release()
+	p.exists = 0
+	p.inst = nil
+
+	return inst.Release()
 }

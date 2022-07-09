@@ -19,18 +19,20 @@ var _ = Describe("type Singleton", func() {
 	BeforeEach(func() {
 		policy = Singleton[int]{}
 
-		factory = func(ctx context.Context) (int, Releaser, error) {
+		factory = func(ctx context.Context) (*Instance[int], error) {
 			if exists {
 				panic("unexpected call")
 			}
 
 			exists = true
-			release := func() error {
-				exists = false
-				return nil
-			}
 
-			return 123, release, nil
+			return &Instance[int]{
+				Value: 123,
+				Releaser: func() error {
+					exists = false
+					return nil
+				},
+			}, nil
 		}
 
 		exists = false
@@ -44,28 +46,28 @@ var _ = Describe("type Singleton", func() {
 	When("no value has been acquired", func() {
 		Describe("func Acquire()", func() {
 			It("returns a new value", func() {
-				value, release, err := policy.Acquire(context.Background(), factory)
+				inst, err := policy.Acquire(context.Background(), factory)
 				Expect(err).ShouldNot(HaveOccurred())
-				defer release()
+				defer inst.Release()
 
-				Expect(value).To(Equal(123))
+				Expect(inst.Value).To(Equal(123))
 			})
 
 			It("returns a no-op releaser", func() {
-				_, release, err := policy.Acquire(context.Background(), factory)
+				inst, err := policy.Acquire(context.Background(), factory)
 				Expect(err).ShouldNot(HaveOccurred())
 
-				err = release()
+				err = inst.Release()
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(exists).To(BeTrue())
 			})
 
 			It("returns an error if the factory returns an error", func() {
-				factory = func(ctx context.Context) (int, Releaser, error) {
-					return 0, nil, errors.New("<error>")
+				factory = func(ctx context.Context) (*Instance[int], error) {
+					return nil, errors.New("<error>")
 				}
 
-				_, _, err := policy.Acquire(context.Background(), factory)
+				_, err := policy.Acquire(context.Background(), factory)
 				Expect(err).To(MatchError("<error>"))
 			})
 		})
@@ -79,33 +81,33 @@ var _ = Describe("type Singleton", func() {
 	})
 
 	When("a value has already been acquired", func() {
-		var release Releaser
+		var firstInstance *Instance[int]
 
 		BeforeEach(func() {
 			var err error
-			_, release, err = policy.Acquire(context.Background(), factory)
+			firstInstance, err = policy.Acquire(context.Background(), factory)
 			Expect(err).ShouldNot(HaveOccurred())
 		})
 
 		AfterEach(func() {
-			err := release()
+			err := firstInstance.Release()
 			Expect(err).ShouldNot(HaveOccurred())
 		})
 
 		Describe("func Acquire()", func() {
 			It("returns the same value", func() {
-				value, release, err := policy.Acquire(context.Background(), factory)
+				inst, err := policy.Acquire(context.Background(), factory)
 				Expect(err).ShouldNot(HaveOccurred())
-				defer release()
+				defer inst.Release()
 
-				Expect(value).To(Equal(123))
+				Expect(inst.Value).To(Equal(123))
 			})
 
 			It("returns a no-op releaser", func() {
-				_, release, err := policy.Acquire(context.Background(), factory)
+				inst, err := policy.Acquire(context.Background(), factory)
 				Expect(err).ShouldNot(HaveOccurred())
 
-				err = release()
+				err = inst.Release()
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(exists).To(BeTrue())
 			})

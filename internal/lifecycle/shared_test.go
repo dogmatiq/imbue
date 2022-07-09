@@ -20,19 +20,21 @@ var _ = Describe("type Shared", func() {
 	BeforeEach(func() {
 		policy = Shared[int]{}
 
-		factory = func(ctx context.Context) (int, Releaser, error) {
+		factory = func(ctx context.Context) (*Instance[int], error) {
 			if exists {
 				panic("unexpected call")
 			}
 
 			exists = true
-			release := func() error {
-				exists = false
-				return nil
-			}
-
 			count++
-			return count, release, nil
+
+			return &Instance[int]{
+				Value: count,
+				Releaser: func() error {
+					exists = false
+					return nil
+				},
+			}, nil
 		}
 
 		exists = false
@@ -47,28 +49,19 @@ var _ = Describe("type Shared", func() {
 	When("no value has been acquired", func() {
 		Describe("func Acquire()", func() {
 			It("returns a new value", func() {
-				value, release, err := policy.Acquire(context.Background(), factory)
+				inst, err := policy.Acquire(context.Background(), factory)
 				Expect(err).ShouldNot(HaveOccurred())
-				defer release()
+				defer inst.Release()
 
-				Expect(value).To(Equal(1))
+				Expect(inst.Value).To(Equal(1))
 			})
 
-			// It("returns a no-op releaser", func() {
-			// 	_, release, err := policy.Acquire(context.Background(), factory)
-			// 	Expect(err).ShouldNot(HaveOccurred())
-
-			// 	err = release()
-			// 	Expect(err).ShouldNot(HaveOccurred())
-			// 	Expect(count).To(Equal(1))
-			// })
-
 			It("returns an error if the factory returns an error", func() {
-				factory = func(ctx context.Context) (int, Releaser, error) {
-					return 0, nil, errors.New("<error>")
+				factory = func(ctx context.Context) (*Instance[int], error) {
+					return nil, errors.New("<error>")
 				}
 
-				_, _, err := policy.Acquire(context.Background(), factory)
+				_, err := policy.Acquire(context.Background(), factory)
 				Expect(err).To(MatchError("<error>"))
 			})
 		})
@@ -82,62 +75,59 @@ var _ = Describe("type Shared", func() {
 	})
 
 	When("a value has already been acquired", func() {
-		var releaseFirst Releaser
+		var firstInstance *Instance[int]
 
 		BeforeEach(func() {
 			var err error
-			_, releaseFirst, err = policy.Acquire(context.Background(), factory)
+			firstInstance, err = policy.Acquire(context.Background(), factory)
 			Expect(err).ShouldNot(HaveOccurred())
 		})
 
 		AfterEach(func() {
-			if releaseFirst != nil {
-				err := releaseFirst()
-				Expect(err).ShouldNot(HaveOccurred())
-			}
+			firstInstance.Release()
 		})
 
 		Describe("func Acquire()", func() {
 			It("returns the same value", func() {
-				value, release, err := policy.Acquire(context.Background(), factory)
+				inst, err := policy.Acquire(context.Background(), factory)
 				Expect(err).ShouldNot(HaveOccurred())
-				defer release()
+				defer inst.Release()
 
-				Expect(value).To(Equal(1))
+				Expect(inst.Value).To(Equal(1))
 			})
 
 			It("calls the factory's releaser only once all releasers have been called", func() {
-				_, release, err := policy.Acquire(context.Background(), factory)
+				inst, err := policy.Acquire(context.Background(), factory)
 				Expect(err).ShouldNot(HaveOccurred())
 
-				err = releaseFirst()
-				releaseFirst = nil
+				err = firstInstance.Release()
+				firstInstance.Releaser = nil
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(exists).To(BeTrue())
 
-				err = release()
+				err = inst.Release()
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(exists).To(BeFalse())
 			})
 
 			It("returns a new value if acquired after all releasers have been called", func() {
-				_, release, err := policy.Acquire(context.Background(), factory)
+				inst, err := policy.Acquire(context.Background(), factory)
 				Expect(err).ShouldNot(HaveOccurred())
 
-				err = releaseFirst()
-				releaseFirst = nil
+				err = firstInstance.Release()
+				firstInstance.Releaser = nil
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(exists).To(BeTrue())
 
-				err = release()
+				err = inst.Release()
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(exists).To(BeFalse())
 
-				value, release, err := policy.Acquire(context.Background(), factory)
+				inst, err = policy.Acquire(context.Background(), factory)
 				Expect(err).ShouldNot(HaveOccurred())
-				defer release()
+				defer inst.Release()
 
-				Expect(value).To(Equal(2))
+				Expect(inst.Value).To(Equal(2))
 			})
 
 			Describe("func Close()", func() {

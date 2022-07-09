@@ -13,7 +13,7 @@ var _ Policy[int] = (*Private[int])(nil)
 func (p *Private[T]) Acquire(
 	ctx context.Context,
 	new Factory[T],
-) (T, Releaser, error) {
+) (*Instance[T], error) {
 	return new(ctx)
 }
 
