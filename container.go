@@ -13,6 +13,7 @@ import (
 type Container struct {
 	m            sync.Mutex
 	declarations map[reflect.Type]declaration
+	definitions  map[reflect.Type]definition
 	defers       deferSet
 }
 
@@ -34,6 +35,13 @@ func (c *Container) Close() error {
 	}
 
 	return nil
+}
+
+func (c *Container) withLock(fn func() error) error {
+	c.m.Lock()
+	defer c.m.Unlock()
+
+	return fn()
 }
 
 // typeOf returns the reflect.Type for T.
