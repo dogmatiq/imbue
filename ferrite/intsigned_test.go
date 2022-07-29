@@ -28,6 +28,27 @@ var _ = Describe("func Int()", func() {
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(int8(expect)))
 				}
+
+				// Int16
+				{
+					actual, err := Int16("FERRITE_VALUE").Get()
+					Expect(err).ShouldNot(HaveOccurred())
+					Expect(actual).To(Equal(int16(expect)))
+				}
+
+				// Int32
+				{
+					actual, err := Int32("FERRITE_VALUE").Get()
+					Expect(err).ShouldNot(HaveOccurred())
+					Expect(actual).To(Equal(int32(expect)))
+				}
+
+				// Int64
+				{
+					actual, err := Int64("FERRITE_VALUE").Get()
+					Expect(err).ShouldNot(HaveOccurred())
+					Expect(actual).To(Equal(int64(expect)))
+				}
 			},
 			Entry(
 				"zero",
@@ -363,7 +384,7 @@ var _ = Describe("func Int()", func() {
 				`FERRITE_VALUE is empty, expected (\d+)-bit signed integer`,
 			),
 			Entry(
-				"invalid",
+				"non-numeric",
 				"<invalid>",
 				`FERRITE_VALUE is invalid, expected (\d+)-bit signed integer, got '<invalid>'`,
 			),
