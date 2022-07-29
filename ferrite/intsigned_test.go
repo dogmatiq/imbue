@@ -342,6 +342,28 @@ var _ = Describe("func Int()", func() {
 		})
 	})
 
+	When("using the Default() option", func() {
+		When("the environment variable is undefined", func() {
+			It("returns the default value", func() {
+				os.Unsetenv("FERRITE_VALUE")
+
+				actual, err := Int("FERRITE_VALUE").Default(10).Get()
+				Expect(err).ShouldNot(HaveOccurred())
+				Expect(actual).To(Equal(10))
+			})
+		})
+
+		When("the environment variable is empty", func() {
+			It("returns the default value", func() {
+				os.Setenv("FERRITE_VALUE", "")
+
+				actual, err := Int("FERRITE_VALUE").Default(10).Get()
+				Expect(err).ShouldNot(HaveOccurred())
+				Expect(actual).To(Equal(10))
+			})
+		})
+	})
+
 	When("the environment variable does not contain a valid integer", func() {
 		DescribeTable(
 			"it returns an error",

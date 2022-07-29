@@ -91,9 +91,9 @@ func Uint64(name string) Integer[uint64, uint64] {
 
 // Integer parses and validates signed integer environment variables.
 type Integer[T, B constraints.Integer] struct {
-	name     string
-	parse    func(string, int, int) (B, error)
-	min, max *T
+	name          string
+	parse         func(string, int, int) (B, error)
+	min, max, def *T
 }
 
 // Min sets a minimum acceptable value.
@@ -108,6 +108,13 @@ func (i Integer[T, B]) Max(max T) Integer[T, B] {
 	return i
 }
 
+// Default sets a default value to use when the environment variable is not
+// defined.
+func (i Integer[T, B]) Default(v T) Integer[T, B] {
+	i.def = &v
+	return i
+}
+
 // Get returns the integer value.
 //
 // It returns an error if the environment variable is invalid or does not meet
@@ -115,6 +122,10 @@ func (i Integer[T, B]) Max(max T) Integer[T, B] {
 func (i Integer[T, B]) Get() (T, error) {
 	s := os.Getenv(i.name)
 	if s == "" {
+		if i.def != nil {
+			return *i.def, nil
+		}
+
 		return 0, fmt.Errorf(
 			"%s is empty, expected %s",
 			i.name,
