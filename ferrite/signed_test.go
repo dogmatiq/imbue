@@ -8,7 +8,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("func Int()", func() {
+var _ = Describe("func Signed()", func() {
 	When("the environment variable contains a valid integer", func() {
 		DescribeTable(
 			"it returns the integer value",
@@ -17,35 +17,35 @@ var _ = Describe("func Int()", func() {
 
 				// Int
 				{
-					actual, err := Int("FERRITE_VALUE").Get()
+					actual, err := Signed[int]("FERRITE_VALUE").Get()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(expect))
 				}
 
 				// Int8
 				{
-					actual, err := Int8("FERRITE_VALUE").Get()
+					actual, err := Signed[int8]("FERRITE_VALUE").Get()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(int8(expect)))
 				}
 
 				// Int16
 				{
-					actual, err := Int16("FERRITE_VALUE").Get()
+					actual, err := Signed[int16]("FERRITE_VALUE").Get()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(int16(expect)))
 				}
 
 				// Int32
 				{
-					actual, err := Int32("FERRITE_VALUE").Get()
+					actual, err := Signed[int32]("FERRITE_VALUE").Get()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(int32(expect)))
 				}
 
 				// Int64
 				{
-					actual, err := Int64("FERRITE_VALUE").Get()
+					actual, err := Signed[int64]("FERRITE_VALUE").Get()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(int64(expect)))
 				}
@@ -77,35 +77,35 @@ var _ = Describe("func Int()", func() {
 
 					// Int
 					{
-						actual, err := Int("FERRITE_VALUE").Min(min).Get()
+						actual, err := Signed[int]("FERRITE_VALUE").Min(min).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(expect))
 					}
 
 					// Int8
 					{
-						actual, err := Int8("FERRITE_VALUE").Min(int8(min)).Get()
+						actual, err := Signed[int8]("FERRITE_VALUE").Min(int8(min)).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(int8(expect)))
 					}
 
 					// Int16
 					{
-						actual, err := Int16("FERRITE_VALUE").Min(int16(min)).Get()
+						actual, err := Signed[int16]("FERRITE_VALUE").Min(int16(min)).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(int16(expect)))
 					}
 
 					// Int32
 					{
-						actual, err := Int32("FERRITE_VALUE").Min(int32(min)).Get()
+						actual, err := Signed[int32]("FERRITE_VALUE").Min(int32(min)).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(int32(expect)))
 					}
 
 					// Int64
 					{
-						actual, err := Int64("FERRITE_VALUE").Min(int64(min)).Get()
+						actual, err := Signed[int64]("FERRITE_VALUE").Min(int64(min)).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(int64(expect)))
 					}
@@ -151,31 +151,31 @@ var _ = Describe("func Int()", func() {
 
 					// Int
 					{
-						_, err := Int("FERRITE_VALUE").Min(min).Get()
+						_, err := Signed[int]("FERRITE_VALUE").Min(min).Get()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Int8
 					{
-						_, err := Int8("FERRITE_VALUE").Min(int8(min)).Get()
+						_, err := Signed[int8]("FERRITE_VALUE").Min(int8(min)).Get()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Int16
 					{
-						_, err := Int16("FERRITE_VALUE").Min(int16(min)).Get()
+						_, err := Signed[int16]("FERRITE_VALUE").Min(int16(min)).Get()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Int32
 					{
-						_, err := Int32("FERRITE_VALUE").Min(int32(min)).Get()
+						_, err := Signed[int32]("FERRITE_VALUE").Min(int32(min)).Get()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Int64
 					{
-						_, err := Int64("FERRITE_VALUE").Min(int64(min)).Get()
+						_, err := Signed[int64]("FERRITE_VALUE").Min(int64(min)).Get()
 						Expect(err).To(MatchError(expect))
 					}
 				},
@@ -210,35 +210,35 @@ var _ = Describe("func Int()", func() {
 
 					// Int
 					{
-						actual, err := Int("FERRITE_VALUE").Max(max).Get()
+						actual, err := Signed[int]("FERRITE_VALUE").Max(max).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(expect))
 					}
 
 					// Int8
 					{
-						actual, err := Int8("FERRITE_VALUE").Max(int8(max)).Get()
+						actual, err := Signed[int8]("FERRITE_VALUE").Max(int8(max)).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(int8(expect)))
 					}
 
 					// Int16
 					{
-						actual, err := Int16("FERRITE_VALUE").Max(int16(max)).Get()
+						actual, err := Signed[int16]("FERRITE_VALUE").Max(int16(max)).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(int16(expect)))
 					}
 
 					// Int32
 					{
-						actual, err := Int32("FERRITE_VALUE").Max(int32(max)).Get()
+						actual, err := Signed[int32]("FERRITE_VALUE").Max(int32(max)).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(int32(expect)))
 					}
 
 					// Int64
 					{
-						actual, err := Int64("FERRITE_VALUE").Max(int64(max)).Get()
+						actual, err := Signed[int64]("FERRITE_VALUE").Max(int64(max)).Get()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(int64(expect)))
 					}
@@ -284,31 +284,31 @@ var _ = Describe("func Int()", func() {
 
 					// Int
 					{
-						_, err := Int("FERRITE_VALUE").Max(max).Get()
+						_, err := Signed[int]("FERRITE_VALUE").Max(max).Get()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Int8
 					{
-						_, err := Int8("FERRITE_VALUE").Max(int8(max)).Get()
+						_, err := Signed[int8]("FERRITE_VALUE").Max(int8(max)).Get()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Int16
 					{
-						_, err := Int16("FERRITE_VALUE").Max(int16(max)).Get()
+						_, err := Signed[int16]("FERRITE_VALUE").Max(int16(max)).Get()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Int32
 					{
-						_, err := Int32("FERRITE_VALUE").Max(int32(max)).Get()
+						_, err := Signed[int32]("FERRITE_VALUE").Max(int32(max)).Get()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Int64
 					{
-						_, err := Int64("FERRITE_VALUE").Max(int64(max)).Get()
+						_, err := Signed[int64]("FERRITE_VALUE").Max(int64(max)).Get()
 						Expect(err).To(MatchError(expect))
 					}
 				},
@@ -337,7 +337,7 @@ var _ = Describe("func Int()", func() {
 	When("using the Min() and Max() constraints together", func() {
 		It("explains the range in error messages", func() {
 			os.Setenv("FERRITE_VALUE", "2")
-			_, err := Int("FERRITE_VALUE").Min(-1).Max(+1).Get()
+			_, err := Signed[int]("FERRITE_VALUE").Min(-1).Max(+1).Get()
 			Expect(err).To(MatchError("FERRITE_VALUE is too high, expected a value between -1 and +1, got +2"))
 		})
 	})
@@ -347,7 +347,7 @@ var _ = Describe("func Int()", func() {
 			It("returns the default value", func() {
 				os.Unsetenv("FERRITE_VALUE")
 
-				actual, err := Int("FERRITE_VALUE").Default(10).Get()
+				actual, err := Signed[int]("FERRITE_VALUE").Default(10).Get()
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(actual).To(Equal(10))
 			})
@@ -357,7 +357,7 @@ var _ = Describe("func Int()", func() {
 			It("returns the default value", func() {
 				os.Setenv("FERRITE_VALUE", "")
 
-				actual, err := Int("FERRITE_VALUE").Default(10).Get()
+				actual, err := Signed[int]("FERRITE_VALUE").Default(10).Get()
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(actual).To(Equal(10))
 			})
@@ -372,31 +372,31 @@ var _ = Describe("func Int()", func() {
 
 				// Int
 				{
-					_, err := Int("FERRITE_VALUE").Get()
+					_, err := Signed[int]("FERRITE_VALUE").Get()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 
 				// Int8
 				{
-					_, err := Int8("FERRITE_VALUE").Get()
+					_, err := Signed[int8]("FERRITE_VALUE").Get()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 
 				// Int16
 				{
-					_, err := Int16("FERRITE_VALUE").Get()
+					_, err := Signed[int16]("FERRITE_VALUE").Get()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 
 				// Int32
 				{
-					_, err := Int32("FERRITE_VALUE").Get()
+					_, err := Signed[int32]("FERRITE_VALUE").Get()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 
 				// Int64
 				{
-					_, err := Int64("FERRITE_VALUE").Get()
+					_, err := Signed[int64]("FERRITE_VALUE").Get()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 			},
