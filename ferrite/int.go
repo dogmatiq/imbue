@@ -10,36 +10,36 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-// Int parses and validates integer environment variables.
+// IntVar parses and validates integer environment variables.
 //
 // T is the type of integer to produce. L is the largest integer type that can
 // represent values of type T.
-type Int[T, L constraints.Integer] struct {
+type IntVar[T, L constraints.Integer] struct {
 	name          string
 	parse         func(string, int, int) (L, error)
 	min, max, def *T
 }
 
-func (i Int[T, L]) Name() string {
+func (i IntVar[T, L]) Name() string {
 	return i.name
 }
 
 // Min sets a minimum acceptable value.
-func (i Int[T, L]) Min(min T) Int[T, L] {
+func (i IntVar[T, L]) Min(min T) IntVar[T, L] {
 	i.min = &min
 	return i
 }
 
 // Max sets a maximum acceptable value.
-func (i Int[T, L]) Max(max T) Int[T, L] {
+func (i IntVar[T, L]) Max(max T) IntVar[T, L] {
 	i.max = &max
 	return i
 }
 
 // Default sets a default value to use when the environment variable is not
 // defined.
-func (i Int[T, L]) Default(v T) Int[T, L] {
-	i.def = &v
+func (i IntVar[T, L]) Default(def T) IntVar[T, L] {
+	i.def = &def
 	return i
 }
 
@@ -47,8 +47,8 @@ func (i Int[T, L]) Default(v T) Int[T, L] {
 //
 // It panics if the environment variable is not a valid integer or does not meet
 // the constraints..
-func (i Int[T, L]) Value() T {
-	v, err := i.Get()
+func (i IntVar[T, L]) Value() T {
+	v, err := i.Parse()
 	if err != nil {
 		panic(err)
 	}
@@ -56,11 +56,11 @@ func (i Int[T, L]) Value() T {
 	return v
 }
 
-// Get returns the integer value.
+// Parse returns the integer value.
 //
 // It returns an error if the environment variable is invalid or does not meet
 // the min/max constraints.
-func (i Int[T, L]) Get() (T, error) {
+func (i IntVar[T, L]) Parse() (T, error) {
 	s := os.Getenv(i.name)
 	if s == "" {
 		if i.def != nil {
@@ -117,7 +117,7 @@ func (i Int[T, L]) Get() (T, error) {
 }
 
 // expected returns a description of the expected value.
-func (i Int[T, L]) expected() string {
+func (i IntVar[T, L]) expected() string {
 	if i.min != nil {
 		if i.max != nil {
 			return fmt.Sprintf("a value between %+d and %+d", *i.min, *i.max)

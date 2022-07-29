@@ -17,35 +17,35 @@ var _ = Describe("func Unsigned()", func() {
 
 				// Uint
 				{
-					actual, err := Unsigned[uint]("FERRITE_VALUE").Get()
+					actual, err := Unsigned[uint]("FERRITE_VALUE").Parse()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(uint(expect)))
 				}
 
 				// Uint8
 				{
-					actual, err := Unsigned[uint8]("FERRITE_VALUE").Get()
+					actual, err := Unsigned[uint8]("FERRITE_VALUE").Parse()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(uint8(expect)))
 				}
 
 				// Uint16
 				{
-					actual, err := Unsigned[uint16]("FERRITE_VALUE").Get()
+					actual, err := Unsigned[uint16]("FERRITE_VALUE").Parse()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(uint16(expect)))
 				}
 
 				// Uint32
 				{
-					actual, err := Unsigned[uint32]("FERRITE_VALUE").Get()
+					actual, err := Unsigned[uint32]("FERRITE_VALUE").Parse()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(uint32(expect)))
 				}
 
 				// Uint64
 				{
-					actual, err := Unsigned[uint64]("FERRITE_VALUE").Get()
+					actual, err := Unsigned[uint64]("FERRITE_VALUE").Parse()
 					Expect(err).ShouldNot(HaveOccurred())
 					Expect(actual).To(Equal(uint64(expect)))
 				}
@@ -72,35 +72,35 @@ var _ = Describe("func Unsigned()", func() {
 
 					// Uint
 					{
-						actual, err := Unsigned[uint]("FERRITE_VALUE").Min(uint(min)).Get()
+						actual, err := Unsigned[uint]("FERRITE_VALUE").Min(uint(min)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint(expect)))
 					}
 
 					// Uint8
 					{
-						actual, err := Unsigned[uint8]("FERRITE_VALUE").Min(uint8(min)).Get()
+						actual, err := Unsigned[uint8]("FERRITE_VALUE").Min(uint8(min)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint8(expect)))
 					}
 
 					// Uint16
 					{
-						actual, err := Unsigned[uint16]("FERRITE_VALUE").Min(uint16(min)).Get()
+						actual, err := Unsigned[uint16]("FERRITE_VALUE").Min(uint16(min)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint16(expect)))
 					}
 
 					// Uint32
 					{
-						actual, err := Unsigned[uint32]("FERRITE_VALUE").Min(uint32(min)).Get()
+						actual, err := Unsigned[uint32]("FERRITE_VALUE").Min(uint32(min)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint32(expect)))
 					}
 
 					// Uint64
 					{
-						actual, err := Unsigned[uint64]("FERRITE_VALUE").Min(uint64(min)).Get()
+						actual, err := Unsigned[uint64]("FERRITE_VALUE").Min(uint64(min)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint64(expect)))
 					}
@@ -128,31 +128,31 @@ var _ = Describe("func Unsigned()", func() {
 
 					// Uint
 					{
-						_, err := Unsigned[uint]("FERRITE_VALUE").Min(uint(min)).Get()
+						_, err := Unsigned[uint]("FERRITE_VALUE").Min(uint(min)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Uint8
 					{
-						_, err := Unsigned[uint8]("FERRITE_VALUE").Min(uint8(min)).Get()
+						_, err := Unsigned[uint8]("FERRITE_VALUE").Min(uint8(min)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Uint16
 					{
-						_, err := Unsigned[uint16]("FERRITE_VALUE").Min(uint16(min)).Get()
+						_, err := Unsigned[uint16]("FERRITE_VALUE").Min(uint16(min)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Uint32
 					{
-						_, err := Unsigned[uint32]("FERRITE_VALUE").Min(uint32(min)).Get()
+						_, err := Unsigned[uint32]("FERRITE_VALUE").Min(uint32(min)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Uint64
 					{
-						_, err := Unsigned[uint64]("FERRITE_VALUE").Min(uint64(min)).Get()
+						_, err := Unsigned[uint64]("FERRITE_VALUE").Min(uint64(min)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 				},
@@ -175,35 +175,35 @@ var _ = Describe("func Unsigned()", func() {
 
 					// Uint
 					{
-						actual, err := Unsigned[uint]("FERRITE_VALUE").Max(uint(max)).Get()
+						actual, err := Unsigned[uint]("FERRITE_VALUE").Max(uint(max)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint(expect)))
 					}
 
 					// Uint8
 					{
-						actual, err := Unsigned[uint8]("FERRITE_VALUE").Max(uint8(max)).Get()
+						actual, err := Unsigned[uint8]("FERRITE_VALUE").Max(uint8(max)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint8(expect)))
 					}
 
 					// Uint16
 					{
-						actual, err := Unsigned[uint16]("FERRITE_VALUE").Max(uint16(max)).Get()
+						actual, err := Unsigned[uint16]("FERRITE_VALUE").Max(uint16(max)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint16(expect)))
 					}
 
 					// Uint32
 					{
-						actual, err := Unsigned[uint32]("FERRITE_VALUE").Max(uint32(max)).Get()
+						actual, err := Unsigned[uint32]("FERRITE_VALUE").Max(uint32(max)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint32(expect)))
 					}
 
 					// Uint64
 					{
-						actual, err := Unsigned[uint64]("FERRITE_VALUE").Max(uint64(max)).Get()
+						actual, err := Unsigned[uint64]("FERRITE_VALUE").Max(uint64(max)).Parse()
 						Expect(err).ShouldNot(HaveOccurred())
 						Expect(actual).To(Equal(uint64(expect)))
 					}
@@ -231,31 +231,31 @@ var _ = Describe("func Unsigned()", func() {
 
 					// Uint
 					{
-						_, err := Unsigned[uint]("FERRITE_VALUE").Max(uint(max)).Get()
+						_, err := Unsigned[uint]("FERRITE_VALUE").Max(uint(max)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Uint8
 					{
-						_, err := Unsigned[uint8]("FERRITE_VALUE").Max(uint8(max)).Get()
+						_, err := Unsigned[uint8]("FERRITE_VALUE").Max(uint8(max)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Uint16
 					{
-						_, err := Unsigned[uint16]("FERRITE_VALUE").Max(uint16(max)).Get()
+						_, err := Unsigned[uint16]("FERRITE_VALUE").Max(uint16(max)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Uint32
 					{
-						_, err := Unsigned[uint32]("FERRITE_VALUE").Max(uint32(max)).Get()
+						_, err := Unsigned[uint32]("FERRITE_VALUE").Max(uint32(max)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 
 					// Uint64
 					{
-						_, err := Unsigned[uint64]("FERRITE_VALUE").Max(uint64(max)).Get()
+						_, err := Unsigned[uint64]("FERRITE_VALUE").Max(uint64(max)).Parse()
 						Expect(err).To(MatchError(expect))
 					}
 				},
@@ -272,7 +272,7 @@ var _ = Describe("func Unsigned()", func() {
 	When("using the Min() and Max() constraints together", func() {
 		It("explains the range in error messages", func() {
 			os.Setenv("FERRITE_VALUE", "3")
-			_, err := Unsigned[uint]("FERRITE_VALUE").Min(1).Max(2).Get()
+			_, err := Unsigned[uint]("FERRITE_VALUE").Min(1).Max(2).Parse()
 			Expect(err).To(MatchError("FERRITE_VALUE is too high, expected a value between +1 and +2, got +3"))
 		})
 	})
@@ -282,7 +282,7 @@ var _ = Describe("func Unsigned()", func() {
 			It("returns the default value", func() {
 				os.Unsetenv("FERRITE_VALUE")
 
-				actual, err := Unsigned[uint]("FERRITE_VALUE").Default(10).Get()
+				actual, err := Unsigned[uint]("FERRITE_VALUE").Default(10).Parse()
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(actual).To(Equal(uint(10)))
 			})
@@ -292,7 +292,7 @@ var _ = Describe("func Unsigned()", func() {
 			It("returns the default value", func() {
 				os.Setenv("FERRITE_VALUE", "")
 
-				actual, err := Unsigned[uint]("FERRITE_VALUE").Default(10).Get()
+				actual, err := Unsigned[uint]("FERRITE_VALUE").Default(10).Parse()
 				Expect(err).ShouldNot(HaveOccurred())
 				Expect(actual).To(Equal(uint(10)))
 			})
@@ -307,31 +307,31 @@ var _ = Describe("func Unsigned()", func() {
 
 				// Uint
 				{
-					_, err := Unsigned[uint]("FERRITE_VALUE").Get()
+					_, err := Unsigned[uint]("FERRITE_VALUE").Parse()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 
 				// Uint8
 				{
-					_, err := Unsigned[uint8]("FERRITE_VALUE").Get()
+					_, err := Unsigned[uint8]("FERRITE_VALUE").Parse()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 
 				// Uint16
 				{
-					_, err := Unsigned[uint16]("FERRITE_VALUE").Get()
+					_, err := Unsigned[uint16]("FERRITE_VALUE").Parse()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 
 				// Uint32
 				{
-					_, err := Unsigned[uint32]("FERRITE_VALUE").Get()
+					_, err := Unsigned[uint32]("FERRITE_VALUE").Parse()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 
 				// Uint64
 				{
-					_, err := Unsigned[uint64]("FERRITE_VALUE").Get()
+					_, err := Unsigned[uint64]("FERRITE_VALUE").Parse()
 					Expect(err).To(MatchError(MatchRegexp(expect)))
 				}
 			},
