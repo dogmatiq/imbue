@@ -408,22 +408,22 @@ var _ = Describe("func Signed()", func() {
 			Entry(
 				"non-numeric",
 				"<invalid>",
-				`FERRITE_VALUE is invalid, expected (\d+)-bit signed integer, got '<invalid>'`,
+				`FERRITE_VALUE is invalid, expected (\d+)-bit signed integer, got "<invalid>"`,
 			),
 			Entry(
 				"decimal",
 				"5.1",
-				`FERRITE_VALUE is invalid, expected (\d+)-bit signed integer, got '5.1'`,
+				`FERRITE_VALUE is invalid, expected (\d+)-bit signed integer, got "5.1"`,
 			),
 			Entry(
 				"underflow",
 				"-100000000000000000000000000000000000",
-				`FERRITE_VALUE is out of range, expected (\d+)-bit signed integer, got '-100000000000000000000000000000000000'`,
+				`FERRITE_VALUE is out of range, expected (\d+)-bit signed integer, got -100000000000000000000000000000000000`,
 			),
 			Entry(
 				"overflow",
 				"100000000000000000000000000000000000",
-				`FERRITE_VALUE is out of range, expected (\d+)-bit signed integer, got '100000000000000000000000000000000000'`,
+				`FERRITE_VALUE is out of range, expected (\d+)-bit signed integer, got 100000000000000000000000000000000000`,
 			),
 		)
 	})

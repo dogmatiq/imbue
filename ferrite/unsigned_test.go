@@ -343,22 +343,22 @@ var _ = Describe("func Unsigned()", func() {
 			Entry(
 				"non-numeric",
 				"<invalid>",
-				`FERRITE_VALUE is invalid, expected (\d+)-bit unsigned integer, got '<invalid>'`,
+				`FERRITE_VALUE is invalid, expected (\d+)-bit unsigned integer, got "<invalid>"`,
 			),
 			Entry(
 				"decimal",
 				"5.1",
-				`FERRITE_VALUE is invalid, expected (\d+)-bit unsigned integer, got '5.1'`,
+				`FERRITE_VALUE is invalid, expected (\d+)-bit unsigned integer, got "5.1"`,
 			),
 			Entry(
 				"underflow",
 				"-100000000000000000000000000000000000",
-				`FERRITE_VALUE is invalid, expected (\d+)-bit unsigned integer, got '-100000000000000000000000000000000000'`,
+				`FERRITE_VALUE is invalid, expected (\d+)-bit unsigned integer, got "-100000000000000000000000000000000000"`,
 			),
 			Entry(
 				"overflow",
 				"100000000000000000000000000000000000",
-				`FERRITE_VALUE is out of range, expected (\d+)-bit unsigned integer, got '100000000000000000000000000000000000'`,
+				`FERRITE_VALUE is out of range, expected (\d+)-bit unsigned integer, got 100000000000000000000000000000000000`,
 			),
 		)
 	})

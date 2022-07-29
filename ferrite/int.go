@@ -20,114 +20,114 @@ type IntVar[T, L constraints.Integer] struct {
 	min, max, def *T
 }
 
-func (i IntVar[T, L]) Name() string {
-	return i.name
+func (v IntVar[T, L]) Name() string {
+	return v.name
 }
 
 // Min sets a minimum acceptable value.
-func (i IntVar[T, L]) Min(min T) IntVar[T, L] {
-	i.min = &min
-	return i
+func (v IntVar[T, L]) Min(min T) IntVar[T, L] {
+	v.min = &min
+	return v
 }
 
 // Max sets a maximum acceptable value.
-func (i IntVar[T, L]) Max(max T) IntVar[T, L] {
-	i.max = &max
-	return i
+func (v IntVar[T, L]) Max(max T) IntVar[T, L] {
+	v.max = &max
+	return v
 }
 
 // Default sets a default value to use when the environment variable is not
 // defined.
-func (i IntVar[T, L]) Default(def T) IntVar[T, L] {
-	i.def = &def
-	return i
+func (v IntVar[T, L]) Default(def T) IntVar[T, L] {
+	v.def = &def
+	return v
 }
 
 // Get returns the integer value.
 //
 // It panics if the environment variable is not a valid integer or does not meet
 // the constraints..
-func (i IntVar[T, L]) Value() T {
-	v, err := i.Parse()
+func (v IntVar[T, L]) Value() T {
+	value, err := v.Parse()
 	if err != nil {
 		panic(err)
 	}
 
-	return v
+	return value
 }
 
 // Parse returns the integer value.
 //
 // It returns an error if the environment variable is invalid or does not meet
 // the min/max constraints.
-func (i IntVar[T, L]) Parse() (T, error) {
-	s := os.Getenv(i.name)
+func (v IntVar[T, L]) Parse() (T, error) {
+	s := os.Getenv(v.name)
 	if s == "" {
-		if i.def != nil {
-			return *i.def, nil
+		if v.def != nil {
+			return *v.def, nil
 		}
 
 		return 0, fmt.Errorf(
 			"%s is empty, expected %s",
-			i.name,
-			i.expected(),
+			v.name,
+			v.expected(),
 		)
 	}
 
-	v64, err := i.parse(s, 10, bits[T]())
+	value64, err := v.parse(s, 10, bits[T]())
 	if err != nil {
 		if errors.Is(err, strconv.ErrRange) {
 			return 0, fmt.Errorf(
-				"%s is out of range, expected %s, got '%s'",
-				i.name,
-				i.expected(),
+				"%s is out of range, expected %s, got %s",
+				v.name,
+				v.expected(),
 				s,
 			)
 		}
 
 		return 0, fmt.Errorf(
-			"%s is invalid, expected %s, got '%s'",
-			i.name,
-			i.expected(),
+			"%s is invalid, expected %s, got %q",
+			v.name,
+			v.expected(),
 			s,
 		)
 	}
 
-	v := T(v64)
+	value := T(value64)
 
-	if i.min != nil && v < *i.min {
+	if v.min != nil && value < *v.min {
 		return 0, fmt.Errorf(
 			"%s is too low, expected %s, got %+d",
-			i.name,
-			i.expected(),
-			v,
+			v.name,
+			v.expected(),
+			value,
 		)
 	}
 
-	if i.max != nil && v > *i.max {
+	if v.max != nil && value > *v.max {
 		return 0, fmt.Errorf(
 			"%s is too high, expected %s, got %+d",
-			i.name,
-			i.expected(),
-			v,
+			v.name,
+			v.expected(),
+			value,
 		)
 	}
 
-	return T(v64), nil
+	return T(value64), nil
 }
 
 // expected returns a description of the expected value.
-func (i IntVar[T, L]) expected() string {
-	if i.min != nil {
-		if i.max != nil {
-			return fmt.Sprintf("a value between %+d and %+d", *i.min, *i.max)
+func (v IntVar[T, L]) expected() string {
+	if v.min != nil {
+		if v.max != nil {
+			return fmt.Sprintf("a value between %+d and %+d", *v.min, *v.max)
 		}
 
-		return fmt.Sprintf("%+d or greater", *i.min)
+		return fmt.Sprintf("%+d or greater", *v.min)
 	}
 
-	if i.max != nil {
-		return fmt.Sprintf("%+d or lower", *i.max)
+	if v.max != nil {
+		return fmt.Sprintf("%+d or lower", *v.max)
 	}
 
 	if isSigned[T]() {
