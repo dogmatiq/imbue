@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"unsafe"
 
 	"golang.org/x/exp/constraints"
 )
@@ -89,28 +90,31 @@ func Uint64(name string) Integer[uint64, uint64] {
 	}
 }
 
-// Integer parses and validates signed integer environment variables.
-type Integer[T, B constraints.Integer] struct {
+// Integer parses and validates integer environment variables.
+//
+// T is the type of integer to produce. L is the largest integer type that can
+// represent values of type T.
+type Integer[T, L constraints.Integer] struct {
 	name          string
-	parse         func(string, int, int) (B, error)
+	parse         func(string, int, int) (L, error)
 	min, max, def *T
 }
 
 // Min sets a minimum acceptable value.
-func (i Integer[T, B]) Min(min T) Integer[T, B] {
+func (i Integer[T, L]) Min(min T) Integer[T, L] {
 	i.min = &min
 	return i
 }
 
 // Max sets a maximum acceptable value.
-func (i Integer[T, B]) Max(max T) Integer[T, B] {
+func (i Integer[T, L]) Max(max T) Integer[T, L] {
 	i.max = &max
 	return i
 }
 
 // Default sets a default value to use when the environment variable is not
 // defined.
-func (i Integer[T, B]) Default(v T) Integer[T, B] {
+func (i Integer[T, L]) Default(v T) Integer[T, L] {
 	i.def = &v
 	return i
 }
@@ -119,7 +123,7 @@ func (i Integer[T, B]) Default(v T) Integer[T, B] {
 //
 // It returns an error if the environment variable is invalid or does not meet
 // the min/max constraints.
-func (i Integer[T, B]) Get() (T, error) {
+func (i Integer[T, L]) Get() (T, error) {
 	s := os.Getenv(i.name)
 	if s == "" {
 		if i.def != nil {
@@ -176,7 +180,7 @@ func (i Integer[T, B]) Get() (T, error) {
 }
 
 // expected returns a description of the expected value.
-func (i Integer[T, B]) expected() string {
+func (i Integer[T, L]) expected() string {
 	if i.min != nil {
 		if i.max != nil {
 			return fmt.Sprintf("a value between %+d and %+d", *i.min, *i.max)
@@ -196,7 +200,14 @@ func (i Integer[T, B]) expected() string {
 	return fmt.Sprintf("%d-bit unsigned integer", bits[T]())
 }
 
+// isSigned returns true if T is a signed integer type.
 func isSigned[T constraints.Integer]() bool {
 	var zero T
 	return (zero - 1) < 0
+}
+
+// bits returns the number of bits used to store a represent of type T.
+func bits[T any]() int {
+	var zero T
+	return int(unsafe.Sizeof(zero)) * 8
 }
