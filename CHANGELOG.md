@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 - **[BC]** `Context` is now an interface instead of a struct
 
+## Removed
+
+- **[BC]** Remove all environment variable related features
+
 ## [0.5.1] - 2022-07-03
 
 ### Fixed
