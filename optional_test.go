@@ -159,7 +159,12 @@ var _ = Describe("type Optional", func() {
 		}).To(
 			PanicWith(
 				MatchRegexp(
-					`explicit declaration of imbue\.Optional\[(github\.com/dogmatiq/)?imbue\.Concrete1\] constructor \(optional_test\.go:\d+\) is disallowed`,
+					`explicit declaration of imbue\.Optional\[(imbue|github.com\/dogmatiq\/imbue_test)\.Concrete1\] constructor \(optional_test\.go:\d+\) is disallowed`,
+					//                                          ^^^   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+					//                                           |                 |
+					// Go v1.18 shows the wrong package name ----'                 |
+					//                                                             |
+					// Go 1.19 gets the name right, but adds the path -------------'
 				),
 			),
 		)
