@@ -159,7 +159,7 @@ var _ = Describe("type Optional", func() {
 		}).To(
 			PanicWith(
 				MatchRegexp(
-					`explicit declaration of imbue\.Optional\[imbue\.Concrete1\] constructor \(optional_test\.go:\d+\) is disallowed`,
+					`explicit declaration of imbue\.Optional\[(github\.com/dogmatiq/)?imbue\.Concrete1\] constructor \(optional_test\.go:\d+\) is disallowed`,
 				),
 			),
 		)
