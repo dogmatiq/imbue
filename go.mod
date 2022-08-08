@@ -3,7 +3,7 @@ module github.com/dogmatiq/imbue
 go 1.18
 
 require (
-	github.com/dave/jennifer v1.5.0
+	github.com/dave/jennifer v1.5.1
 	github.com/google/go-cmp v0.5.8
 	github.com/onsi/ginkgo/v2 v2.1.4
 	github.com/onsi/gomega v1.20.0
