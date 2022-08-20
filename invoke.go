@@ -1,6 +1,9 @@
 package imbue
 
-import "errors"
+import (
+	"context"
+	"errors"
+)
 
 // InvokeOption is an option that changes the behavior of a call to InvokeX().
 type InvokeOption interface {
@@ -19,4 +22,17 @@ func filterInvokeError(err error) error {
 	}
 
 	return err
+}
+
+// Invoke0 calls a function without dependencies.
+//
+// This function does not use the container at all; it is included to aid while
+// refactoring.
+func Invoke0(
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context) error,
+	options ...InvokeOption,
+) error {
+	return filterInvokeError(fn(ctx))
 }

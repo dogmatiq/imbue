@@ -208,3 +208,28 @@ var _ = Describe("func InvokeX()", func() {
 		)
 	})
 })
+
+var _ = Describe("func Invoke0()", func() {
+	var container *imbue.Container
+
+	BeforeEach(func() {
+		container = imbue.New()
+	})
+
+	AfterEach(func() {
+		container.Close()
+	})
+
+	It("calls the function", func() {
+		err := imbue.Invoke0(
+			context.Background(),
+			container,
+			func(
+				ctx context.Context,
+			) error {
+				return errors.New("<error>")
+			},
+		)
+		Expect(err).To(MatchError("<error>"))
+	})
+})
