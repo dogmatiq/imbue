@@ -1,12 +1,14 @@
 package imbue
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 	"sync"
 
 	"github.com/xlab/treeprint"
 	"golang.org/x/exp/slices"
+	"golang.org/x/sync/errgroup"
 )
 
 // Container is a dependency injection container.
@@ -20,6 +22,17 @@ type Container struct {
 func New() *Container {
 	return &Container{
 		declarations: map[reflect.Type]declaration{},
+	}
+}
+
+// WaitGroup returns a new WaitGroup that is bound to this container.
+func (c *Container) WaitGroup(ctx context.Context) *WaitGroup {
+	g, ctx := errgroup.WithContext(ctx)
+
+	return &WaitGroup{
+		con:   c,
+		ctx:   ctx,
+		group: g,
 	}
 }
 

@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 ## [Unreleased]
 
+### Added
+
+- Add `Container.WaitGroup()` and the `GoX()` functions
+
 ### Fixed
 
 - Fix data race in `Context.Defer()`

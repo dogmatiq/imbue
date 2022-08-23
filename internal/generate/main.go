@@ -25,6 +25,8 @@ func getGenerator(filename string) func(*jen.File) {
 		return generator.GenerateDecorate
 	case "invoke.gen.go":
 		return generator.GenerateInvoke
+	case "waitgroup.gen.go":
+		return generator.GenerateGo
 	case "with.gen.go":
 		return generator.GenerateWith
 	case "withgrouped.gen.go":

@@ -58,6 +58,11 @@ func contextVar() *jen.Statement {
 	return jen.Id("ctx")
 }
 
+// waitGroupVar returns the name to use for the wait group parameter.
+func waitGroupVar() *jen.Statement {
+	return jen.Id("g")
+}
+
 // constructorVar returns the name to use for the constructor function.
 func constructorVar() *jen.Statement {
 	return jen.Id(constructorFuncName)
@@ -88,6 +93,11 @@ func imbueContextType() *jen.Statement {
 	return jen.Qual(pkgPath, "Context")
 }
 
+// waitGroupType returns the type to use for the wait group parameter.
+func waitGroupType() *jen.Statement {
+	return jen.Op("*").Qual(pkgPath, "WaitGroup")
+}
+
 // containerParam returns the name and type for the container parameter.
 func containerParam() *jen.Statement {
 	return containerVar().Add(containerType())
@@ -102,6 +112,11 @@ func stdContextParam() *jen.Statement {
 // parameter.
 func imbueContextParam() *jen.Statement {
 	return contextVar().Add(imbueContextType())
+}
+
+// waitGroupParam returns the name and type for the wait group parameter.
+func waitGroupParam() *jen.Statement {
+	return waitGroupVar().Add(waitGroupType())
 }
 
 // declaringTypeString returns the type name to use for the type being declared.

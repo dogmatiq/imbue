@@ -1,5 +1,6 @@
 IMBUE_GENERATED_FILES += decorate.gen.go
 IMBUE_GENERATED_FILES += invoke.gen.go
+IMBUE_GENERATED_FILES += waitgroup.gen.go
 IMBUE_GENERATED_FILES += with.gen.go
 IMBUE_GENERATED_FILES += withgrouped.gen.go
 IMBUE_GENERATED_FILES += withnamed.gen.go
