@@ -2,22 +2,28 @@ package imbue
 
 import (
 	"fmt"
+	"sync"
 )
 
 // deferSet is a set of deferred functions.
 type deferSet struct {
+	m      sync.Mutex
 	defers []deferred
 }
 
 // Add adds a deferred function to the set.
 func (s *deferSet) Add(d deferred) {
+	s.m.Lock()
 	s.defers = append(s.defers, d)
+	s.m.Unlock()
 }
 
 // Call invokes the deferred functions in reverse order.
 func (s *deferSet) Call() (errors []error) {
+	s.m.Lock()
 	defers := s.defers
 	s.defers = nil
+	s.m.Unlock()
 
 	for _, e := range defers {
 		e := e // capture loop variable
@@ -38,8 +44,13 @@ func (s *deferSet) Call() (errors []error) {
 // TransferOwnership transfers ownership of this set's deferred function to
 // target.
 func (s *deferSet) TransferOwnership(target *deferSet) {
+	target.m.Lock()
 	target.defers = append(target.defers, s.defers...)
+	target.m.Unlock()
+
+	s.m.Lock()
 	s.defers = nil
+	s.m.Unlock()
 }
 
 // deferred is a wrapper around a function that is deferred during construction
