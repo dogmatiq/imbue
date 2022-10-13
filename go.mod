@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/dave/jennifer v1.5.1
 	github.com/google/go-cmp v0.5.9
-	github.com/onsi/ginkgo/v2 v2.3.0
+	github.com/onsi/ginkgo/v2 v2.3.1
 	github.com/onsi/gomega v1.22.1
 	github.com/xlab/treeprint v1.1.0
 	golang.org/x/exp v0.0.0-20220613132600-b0d781184e0d
