@@ -7,7 +7,7 @@ require (
 	github.com/google/go-cmp v0.5.9
 	github.com/onsi/ginkgo/v2 v2.9.0
 	github.com/onsi/gomega v1.27.2
-	github.com/xlab/treeprint v1.1.0
+	github.com/xlab/treeprint v1.2.0
 	golang.org/x/exp v0.0.0-20220613132600-b0d781184e0d
 	golang.org/x/sync v0.1.0
 )
