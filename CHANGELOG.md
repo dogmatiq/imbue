@@ -10,6 +10,19 @@ The format is based on [Keep a Changelog], and this project adheres to
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## [Unreleased]
+
+Despite the presence of breaking changes due to modified function signatures,
+this release does not alter the usage of the API under normal circumstances.
+
+### Added
+
+- Added `ContainerAware` interface, which is implemented by `Container` itself
+
+### Changed
+
+- **[BC]** `WithX()`, `WithXNamed()`, `WithXGrouped()` and `DecorateX()` now accept `ContainerAware` instead of `*Container`
+
 ## [0.6.2] - 2022-08-24
 
 ### Added

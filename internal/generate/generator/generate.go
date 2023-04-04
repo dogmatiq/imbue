@@ -78,6 +78,12 @@ func invokeFuncVar() *jen.Statement {
 	return jen.Id(invokeFuncName)
 }
 
+// containerAwareType returns the type to use for the container parameter when
+// it is not necessarily the actual container.
+func containerAwareType() *jen.Statement {
+	return jen.Qual(pkgPath, "ContainerAware")
+}
+
 // containerType returns the type to use for the container parameter.
 func containerType() *jen.Statement {
 	return jen.Op("*").Qual(pkgPath, "Container")
@@ -96,6 +102,12 @@ func imbueContextType() *jen.Statement {
 // waitGroupType returns the type to use for the wait group parameter.
 func waitGroupType() *jen.Statement {
 	return jen.Op("*").Qual(pkgPath, "WaitGroup")
+}
+
+// containerAwareParam returns the name and type for the container aware
+// parameter.
+func containerAwareParam() *jen.Statement {
+	return containerVar().Add(containerAwareType())
 }
 
 // containerParam returns the name and type for the container parameter.
@@ -245,4 +257,17 @@ func inputParams(ctxType *jen.Statement, depCount int) []jen.Code {
 	}
 
 	return params
+}
+
+func generateContainerAwareCall(code *jen.Group, body func(*jen.Group)) {
+	code.
+		Add(containerVar().Dot("withContainer")).
+		Call(
+			jen.
+				Func().
+				Params(
+					containerParam(),
+				).
+				BlockFunc(body),
+		)
 }

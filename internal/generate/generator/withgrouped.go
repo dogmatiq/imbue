@@ -45,7 +45,7 @@ func generateWithGroupedFunc(code *jen.File, depCount int) {
 		).
 		Params(
 			jen.Line().
-				Add(containerParam()),
+				Add(containerAwareParam()),
 			jen.Line().
 				Add(constructorVar()).
 				Func().
@@ -63,7 +63,9 @@ func generateWithGroupedFunc(code *jen.File, depCount int) {
 			jen.Line(),
 		).
 		BlockFunc(func(g *jen.Group) {
-			generateWithGroupedFuncBody(depCount, g)
+			generateContainerAwareCall(g, func(g *jen.Group) {
+				generateWithGroupedFuncBody(depCount, g)
+			})
 		})
 }
 

@@ -11,6 +11,11 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+// ContainerAware is an interface for types that can operate on a container.
+type ContainerAware interface {
+	withContainer(func(*Container))
+}
+
 // Container is a dependency injection container.
 type Container struct {
 	m            sync.Mutex
@@ -18,11 +23,23 @@ type Container struct {
 	defers       deferSet
 }
 
+// ContainerOption is an option that changes the behavior of a container or how
+// it is constructed.
+type ContainerOption interface {
+	applyContainerOption(*Container)
+}
+
 // New returns a new, empty container.
-func New() *Container {
-	return &Container{
+func New(options ...ContainerOption) *Container {
+	con := &Container{
 		declarations: map[reflect.Type]declaration{},
 	}
+
+	for _, opt := range options {
+		opt.applyContainerOption(con)
+	}
+
+	return con
 }
 
 // WaitGroup returns a new WaitGroup that is bound to this container.
@@ -47,6 +64,10 @@ func (c *Container) Close() error {
 	}
 
 	return nil
+}
+
+func (c *Container) withContainer(fn func(*Container)) {
+	fn(c)
 }
 
 // typeOf returns the reflect.Type for T.
