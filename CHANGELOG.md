@@ -18,7 +18,7 @@ this release does not alter the usage of the API under normal circumstances.
 ### Added
 
 - Added `Catalog` which is a collection of dependency declarations that can be reused by multiple container instances
-- Added `ContainerAware` interface, which is implemented `Container` and `Catalog`
+- Added `ContainerAware` interface, which is implemented by `Container` and `Catalog`
 
 ### Changed
 
