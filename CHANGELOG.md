@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog], and this project adheres to
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
-## [Unreleased]
+## [v0.7.0] - 2023-04-05
 
 Despite the presence of breaking changes due to modified function signatures,
 this release does not alter the usage of the API under normal circumstances.
@@ -127,6 +127,7 @@ this release does not alter the usage of the API under normal circumstances.
 [0.6.0]: https://github.com/dogmatiq/imbue/releases/tag/v0.6.0
 [0.6.1]: https://github.com/dogmatiq/imbue/releases/tag/v0.6.1
 [0.6.2]: https://github.com/dogmatiq/imbue/releases/tag/v0.6.2
+[0.7.0]: https://github.com/dogmatiq/imbue/releases/tag/v0.7.0
 
 <!-- version template
 ## [0.0.1] - YYYY-MM-DD
