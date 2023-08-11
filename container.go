@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"reflect"
+	"strings"
 	"sync"
 
 	"github.com/xlab/treeprint"
@@ -140,8 +141,8 @@ func sortDeclarations(declarations map[reflect.Type]declaration) []declaration {
 		sorted = append(sorted, d)
 	}
 
-	slices.SortFunc(sorted, func(a, b declaration) bool {
-		return a.Type().String() < b.Type().String()
+	slices.SortFunc(sorted, func(a, b declaration) int {
+		return strings.Compare(a.Type().String(), b.Type().String())
 	})
 
 	return sorted
