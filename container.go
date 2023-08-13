@@ -4,11 +4,10 @@ import (
 	"context"
 	"fmt"
 	"reflect"
-	"strings"
+	"sort"
 	"sync"
 
 	"github.com/xlab/treeprint"
-	"golang.org/x/exp/slices"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -141,9 +140,12 @@ func sortDeclarations(declarations map[reflect.Type]declaration) []declaration {
 		sorted = append(sorted, d)
 	}
 
-	slices.SortFunc(sorted, func(a, b declaration) int {
-		return strings.Compare(a.Type().String(), b.Type().String())
-	})
+	sort.Slice(
+		sorted,
+		func(i, j int) bool {
+			return sorted[i].Type().String() < sorted[j].Type().String()
+		},
+	)
 
 	return sorted
 }

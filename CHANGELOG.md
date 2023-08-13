@@ -10,6 +10,13 @@ The format is based on [Keep a Changelog], and this project adheres to
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## [Unreleased]
+
+### Fixed
+
+- Remove use of `golang.org/x/exp` package. This package is not versioned and as
+  such breaking changes can cause conflicts with other dependencies.
+
 ## [0.7.0] - 2023-04-05
 
 Despite the presence of breaking changes due to modified function signatures,
