@@ -12,10 +12,15 @@ The format is based on [Keep a Changelog], and this project adheres to
 
 ## [Unreleased]
 
+### Changed
+
+- Dropped support for Go v1.19, which reached end-of-life on 2023-08-08
+
 ### Fixed
 
-- Remove use of `golang.org/x/exp` package. This package is not versioned and as
-  such breaking changes can cause conflicts with other dependencies.
+- Fixed rendering of code locations in error messages under Go v1.21
+- Removed use of `golang.org/x/exp` package. This package is not versioned and
+  as such breaking changes can cause conflicts with other dependencies
 
 ## [0.7.0] - 2023-04-05
 
