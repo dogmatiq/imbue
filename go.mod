@@ -1,6 +1,6 @@
 module github.com/dogmatiq/imbue
 
-go 1.20
+go 1.21
 
 require (
 	github.com/dave/jennifer v1.7.0
