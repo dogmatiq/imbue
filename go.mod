@@ -1,7 +1,8 @@
 module github.com/dogmatiq/imbue
 
-go 1.22
-toolchain go1.22.5
+go 1.22.0
+
+toolchain go1.23.2
 
 require (
 	github.com/dave/jennifer v1.7.1
