@@ -1,6 +1,6 @@
 module github.com/dogmatiq/imbue
 
-go 1.25.0
+go 1.26.0
 
 require (
 	github.com/dave/jennifer v1.7.1
@@ -8,7 +8,7 @@ require (
 	github.com/onsi/ginkgo/v2 v2.32.1
 	github.com/onsi/gomega v1.43.0
 	github.com/xlab/treeprint v1.2.0
-	golang.org/x/sync v0.22.0
+	golang.org/x/sync v0.23.0
 )
 
 require (
