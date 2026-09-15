@@ -10,6 +10,19 @@ The format is based on [Keep a Changelog], and this project adheres to
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
 
+## [Unreleased]
+
+### Added
+
+- Added `WaitGroup.GoX()` methods
+
+### Deprecated
+
+- Deprecated the `GoX()` functions in favor of the equivalent `WaitGroup.GoX()`
+  methods. The functions are marked with the `//go:fix inline` directive so that
+  `go fix` can migrate call sites once the tooling supports inlining generic
+  functions.
+
 ## [0.7.1] - 2023-08-14
 
 ### Changed

@@ -5,8 +5,7 @@ package imbue
 import "context"
 
 // Go1 starts a new goroutine by calling a function with a single dependency.
-func Go1[D any](
-	g *WaitGroup,
+func (g *WaitGroup) Go1[D any](
 	fn func(context.Context, D) error,
 	options ...InvokeOption,
 ) {
@@ -16,8 +15,7 @@ func Go1[D any](
 }
 
 // Go2 starts a new goroutine by calling a function with 2 dependencies.
-func Go2[D1, D2 any](
-	g *WaitGroup,
+func (g *WaitGroup) Go2[D1, D2 any](
 	fn func(context.Context, D1, D2) error,
 	options ...InvokeOption,
 ) {
@@ -27,8 +25,7 @@ func Go2[D1, D2 any](
 }
 
 // Go3 starts a new goroutine by calling a function with 3 dependencies.
-func Go3[D1, D2, D3 any](
-	g *WaitGroup,
+func (g *WaitGroup) Go3[D1, D2, D3 any](
 	fn func(context.Context, D1, D2, D3) error,
 	options ...InvokeOption,
 ) {
@@ -38,8 +35,7 @@ func Go3[D1, D2, D3 any](
 }
 
 // Go4 starts a new goroutine by calling a function with 4 dependencies.
-func Go4[D1, D2, D3, D4 any](
-	g *WaitGroup,
+func (g *WaitGroup) Go4[D1, D2, D3, D4 any](
 	fn func(context.Context, D1, D2, D3, D4) error,
 	options ...InvokeOption,
 ) {
@@ -49,8 +45,7 @@ func Go4[D1, D2, D3, D4 any](
 }
 
 // Go5 starts a new goroutine by calling a function with 5 dependencies.
-func Go5[D1, D2, D3, D4, D5 any](
-	g *WaitGroup,
+func (g *WaitGroup) Go5[D1, D2, D3, D4, D5 any](
 	fn func(context.Context, D1, D2, D3, D4, D5) error,
 	options ...InvokeOption,
 ) {
@@ -60,8 +55,7 @@ func Go5[D1, D2, D3, D4, D5 any](
 }
 
 // Go6 starts a new goroutine by calling a function with 6 dependencies.
-func Go6[D1, D2, D3, D4, D5, D6 any](
-	g *WaitGroup,
+func (g *WaitGroup) Go6[D1, D2, D3, D4, D5, D6 any](
 	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
 	options ...InvokeOption,
 ) {
@@ -71,8 +65,7 @@ func Go6[D1, D2, D3, D4, D5, D6 any](
 }
 
 // Go7 starts a new goroutine by calling a function with 7 dependencies.
-func Go7[D1, D2, D3, D4, D5, D6, D7 any](
-	g *WaitGroup,
+func (g *WaitGroup) Go7[D1, D2, D3, D4, D5, D6, D7 any](
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
 	options ...InvokeOption,
 ) {
@@ -82,12 +75,115 @@ func Go7[D1, D2, D3, D4, D5, D6, D7 any](
 }
 
 // Go8 starts a new goroutine by calling a function with 8 dependencies.
-func Go8[D1, D2, D3, D4, D5, D6, D7, D8 any](
-	g *WaitGroup,
+func (g *WaitGroup) Go8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
 	options ...InvokeOption,
 ) {
 	g.group.Go(func() error {
 		return Invoke8(g.ctx, g.con, fn, options...)
 	})
+}
+
+// Go1 starts a new goroutine by calling a function with a single dependency.
+//
+// Deprecated: Use [WaitGroup.Go1] instead.
+//
+//go:fix inline
+func Go1[D any](
+	g *WaitGroup,
+	fn func(context.Context, D) error,
+	options ...InvokeOption,
+) {
+	g.Go1(fn, options...)
+}
+
+// Go2 starts a new goroutine by calling a function with 2 dependencies.
+//
+// Deprecated: Use [WaitGroup.Go2] instead.
+//
+//go:fix inline
+func Go2[D1, D2 any](
+	g *WaitGroup,
+	fn func(context.Context, D1, D2) error,
+	options ...InvokeOption,
+) {
+	g.Go2(fn, options...)
+}
+
+// Go3 starts a new goroutine by calling a function with 3 dependencies.
+//
+// Deprecated: Use [WaitGroup.Go3] instead.
+//
+//go:fix inline
+func Go3[D1, D2, D3 any](
+	g *WaitGroup,
+	fn func(context.Context, D1, D2, D3) error,
+	options ...InvokeOption,
+) {
+	g.Go3(fn, options...)
+}
+
+// Go4 starts a new goroutine by calling a function with 4 dependencies.
+//
+// Deprecated: Use [WaitGroup.Go4] instead.
+//
+//go:fix inline
+func Go4[D1, D2, D3, D4 any](
+	g *WaitGroup,
+	fn func(context.Context, D1, D2, D3, D4) error,
+	options ...InvokeOption,
+) {
+	g.Go4(fn, options...)
+}
+
+// Go5 starts a new goroutine by calling a function with 5 dependencies.
+//
+// Deprecated: Use [WaitGroup.Go5] instead.
+//
+//go:fix inline
+func Go5[D1, D2, D3, D4, D5 any](
+	g *WaitGroup,
+	fn func(context.Context, D1, D2, D3, D4, D5) error,
+	options ...InvokeOption,
+) {
+	g.Go5(fn, options...)
+}
+
+// Go6 starts a new goroutine by calling a function with 6 dependencies.
+//
+// Deprecated: Use [WaitGroup.Go6] instead.
+//
+//go:fix inline
+func Go6[D1, D2, D3, D4, D5, D6 any](
+	g *WaitGroup,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
+	options ...InvokeOption,
+) {
+	g.Go6(fn, options...)
+}
+
+// Go7 starts a new goroutine by calling a function with 7 dependencies.
+//
+// Deprecated: Use [WaitGroup.Go7] instead.
+//
+//go:fix inline
+func Go7[D1, D2, D3, D4, D5, D6, D7 any](
+	g *WaitGroup,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
+	options ...InvokeOption,
+) {
+	g.Go7(fn, options...)
+}
+
+// Go8 starts a new goroutine by calling a function with 8 dependencies.
+//
+// Deprecated: Use [WaitGroup.Go8] instead.
+//
+//go:fix inline
+func Go8[D1, D2, D3, D4, D5, D6, D7, D8 any](
+	g *WaitGroup,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
+	options ...InvokeOption,
+) {
+	g.Go8(fn, options...)
 }

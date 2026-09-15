@@ -36,8 +36,7 @@ func ExampleContainer_WaitGroup() {
 	g := con.WaitGroup(context.Background())
 
 	// Start some goroutines that depend on the dependencies.
-	imbue.Go1(
-		g,
+	g.Go1(
 		func(
 			ctx context.Context,
 			dep Dependency1,
@@ -46,8 +45,7 @@ func ExampleContainer_WaitGroup() {
 			return nil
 		},
 	)
-	imbue.Go1(
-		g,
+	g.Go1(
 		func(
 			ctx context.Context,
 			dep Dependency2,
