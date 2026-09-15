@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog], and this project adheres to
 ### Added
 
 - Added `WaitGroup.GoX()` methods
+- Added `Container.InvokeX()` methods
 
 ### Deprecated
 
@@ -22,6 +23,10 @@ The format is based on [Keep a Changelog], and this project adheres to
   methods. The functions are marked with the `//go:fix inline` directive so that
   `go fix` can migrate call sites once the tooling supports inlining generic
   functions.
+- Deprecated the `InvokeX()` functions in favor of the equivalent
+  `Container.InvokeX()` methods. The functions are marked with the
+  `//go:fix inline` directive so that `go fix` can migrate call sites once the
+  tooling supports inlining generic functions.
 
 ## [0.7.1] - 2023-08-14
 

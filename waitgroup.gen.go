@@ -10,7 +10,7 @@ func (g *WaitGroup) Go1[D any](
 	options ...InvokeOption,
 ) {
 	g.group.Go(func() error {
-		return Invoke1(g.ctx, g.con, fn, options...)
+		return g.con.Invoke1(g.ctx, fn, options...)
 	})
 }
 
@@ -20,7 +20,7 @@ func (g *WaitGroup) Go2[D1, D2 any](
 	options ...InvokeOption,
 ) {
 	g.group.Go(func() error {
-		return Invoke2(g.ctx, g.con, fn, options...)
+		return g.con.Invoke2(g.ctx, fn, options...)
 	})
 }
 
@@ -30,7 +30,7 @@ func (g *WaitGroup) Go3[D1, D2, D3 any](
 	options ...InvokeOption,
 ) {
 	g.group.Go(func() error {
-		return Invoke3(g.ctx, g.con, fn, options...)
+		return g.con.Invoke3(g.ctx, fn, options...)
 	})
 }
 
@@ -40,7 +40,7 @@ func (g *WaitGroup) Go4[D1, D2, D3, D4 any](
 	options ...InvokeOption,
 ) {
 	g.group.Go(func() error {
-		return Invoke4(g.ctx, g.con, fn, options...)
+		return g.con.Invoke4(g.ctx, fn, options...)
 	})
 }
 
@@ -50,7 +50,7 @@ func (g *WaitGroup) Go5[D1, D2, D3, D4, D5 any](
 	options ...InvokeOption,
 ) {
 	g.group.Go(func() error {
-		return Invoke5(g.ctx, g.con, fn, options...)
+		return g.con.Invoke5(g.ctx, fn, options...)
 	})
 }
 
@@ -60,7 +60,7 @@ func (g *WaitGroup) Go6[D1, D2, D3, D4, D5, D6 any](
 	options ...InvokeOption,
 ) {
 	g.group.Go(func() error {
-		return Invoke6(g.ctx, g.con, fn, options...)
+		return g.con.Invoke6(g.ctx, fn, options...)
 	})
 }
 
@@ -70,7 +70,7 @@ func (g *WaitGroup) Go7[D1, D2, D3, D4, D5, D6, D7 any](
 	options ...InvokeOption,
 ) {
 	g.group.Go(func() error {
-		return Invoke7(g.ctx, g.con, fn, options...)
+		return g.con.Invoke7(g.ctx, fn, options...)
 	})
 }
 
@@ -80,7 +80,7 @@ func (g *WaitGroup) Go8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	options ...InvokeOption,
 ) {
 	g.group.Go(func() error {
-		return Invoke8(g.ctx, g.con, fn, options...)
+		return g.con.Invoke8(g.ctx, fn, options...)
 	})
 }
 

@@ -5,9 +5,8 @@ package imbue
 import "context"
 
 // Invoke1 calls a function with a single dependency.
-func Invoke1[D any](
+func (con *Container) Invoke1[D any](
 	ctx context.Context,
-	con *Container,
 	fn func(context.Context, D) error,
 	options ...InvokeOption,
 ) error {
@@ -20,9 +19,8 @@ func Invoke1[D any](
 }
 
 // Invoke2 calls a function with 2 dependencies.
-func Invoke2[D1, D2 any](
+func (con *Container) Invoke2[D1, D2 any](
 	ctx context.Context,
-	con *Container,
 	fn func(context.Context, D1, D2) error,
 	options ...InvokeOption,
 ) error {
@@ -40,9 +38,8 @@ func Invoke2[D1, D2 any](
 }
 
 // Invoke3 calls a function with 3 dependencies.
-func Invoke3[D1, D2, D3 any](
+func (con *Container) Invoke3[D1, D2, D3 any](
 	ctx context.Context,
-	con *Container,
 	fn func(context.Context, D1, D2, D3) error,
 	options ...InvokeOption,
 ) error {
@@ -65,9 +62,8 @@ func Invoke3[D1, D2, D3 any](
 }
 
 // Invoke4 calls a function with 4 dependencies.
-func Invoke4[D1, D2, D3, D4 any](
+func (con *Container) Invoke4[D1, D2, D3, D4 any](
 	ctx context.Context,
-	con *Container,
 	fn func(context.Context, D1, D2, D3, D4) error,
 	options ...InvokeOption,
 ) error {
@@ -95,9 +91,8 @@ func Invoke4[D1, D2, D3, D4 any](
 }
 
 // Invoke5 calls a function with 5 dependencies.
-func Invoke5[D1, D2, D3, D4, D5 any](
+func (con *Container) Invoke5[D1, D2, D3, D4, D5 any](
 	ctx context.Context,
-	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5) error,
 	options ...InvokeOption,
 ) error {
@@ -130,9 +125,8 @@ func Invoke5[D1, D2, D3, D4, D5 any](
 }
 
 // Invoke6 calls a function with 6 dependencies.
-func Invoke6[D1, D2, D3, D4, D5, D6 any](
+func (con *Container) Invoke6[D1, D2, D3, D4, D5, D6 any](
 	ctx context.Context,
-	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
 	options ...InvokeOption,
 ) error {
@@ -170,9 +164,8 @@ func Invoke6[D1, D2, D3, D4, D5, D6 any](
 }
 
 // Invoke7 calls a function with 7 dependencies.
-func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
+func (con *Container) Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 	ctx context.Context,
-	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
 	options ...InvokeOption,
 ) error {
@@ -215,9 +208,8 @@ func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
 }
 
 // Invoke8 calls a function with 8 dependencies.
-func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
+func (con *Container) Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	ctx context.Context,
-	con *Container,
 	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
 	options ...InvokeOption,
 ) error {
@@ -262,4 +254,116 @@ func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
 	}
 
 	return filterInvokeError(fn(ctx, v1, v2, v3, v4, v5, v6, v7, v8))
+}
+
+// Invoke1 calls a function with a single dependency.
+//
+// Deprecated: Use [Container.Invoke1] instead.
+//
+//go:fix inline
+func Invoke1[D any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D) error,
+	options ...InvokeOption,
+) error {
+	return con.Invoke1(ctx, fn, options...)
+}
+
+// Invoke2 calls a function with 2 dependencies.
+//
+// Deprecated: Use [Container.Invoke2] instead.
+//
+//go:fix inline
+func Invoke2[D1, D2 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2) error,
+	options ...InvokeOption,
+) error {
+	return con.Invoke2(ctx, fn, options...)
+}
+
+// Invoke3 calls a function with 3 dependencies.
+//
+// Deprecated: Use [Container.Invoke3] instead.
+//
+//go:fix inline
+func Invoke3[D1, D2, D3 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3) error,
+	options ...InvokeOption,
+) error {
+	return con.Invoke3(ctx, fn, options...)
+}
+
+// Invoke4 calls a function with 4 dependencies.
+//
+// Deprecated: Use [Container.Invoke4] instead.
+//
+//go:fix inline
+func Invoke4[D1, D2, D3, D4 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4) error,
+	options ...InvokeOption,
+) error {
+	return con.Invoke4(ctx, fn, options...)
+}
+
+// Invoke5 calls a function with 5 dependencies.
+//
+// Deprecated: Use [Container.Invoke5] instead.
+//
+//go:fix inline
+func Invoke5[D1, D2, D3, D4, D5 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5) error,
+	options ...InvokeOption,
+) error {
+	return con.Invoke5(ctx, fn, options...)
+}
+
+// Invoke6 calls a function with 6 dependencies.
+//
+// Deprecated: Use [Container.Invoke6] instead.
+//
+//go:fix inline
+func Invoke6[D1, D2, D3, D4, D5, D6 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6) error,
+	options ...InvokeOption,
+) error {
+	return con.Invoke6(ctx, fn, options...)
+}
+
+// Invoke7 calls a function with 7 dependencies.
+//
+// Deprecated: Use [Container.Invoke7] instead.
+//
+//go:fix inline
+func Invoke7[D1, D2, D3, D4, D5, D6, D7 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7) error,
+	options ...InvokeOption,
+) error {
+	return con.Invoke7(ctx, fn, options...)
+}
+
+// Invoke8 calls a function with 8 dependencies.
+//
+// Deprecated: Use [Container.Invoke8] instead.
+//
+//go:fix inline
+func Invoke8[D1, D2, D3, D4, D5, D6, D7, D8 any](
+	ctx context.Context,
+	con *Container,
+	fn func(context.Context, D1, D2, D3, D4, D5, D6, D7, D8) error,
+	options ...InvokeOption,
+) error {
+	return con.Invoke8(ctx, fn, options...)
 }

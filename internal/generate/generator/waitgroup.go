@@ -79,11 +79,11 @@ func generateGoMethodBody(depCount int, code *jen.Group) {
 						Block(
 							jen.
 								Return(
-									jen.
-										Qual(pkgPath, fmt.Sprintf("Invoke%d", depCount)).
+									waitGroupVar().
+										Dot("con").
+										Dot(fmt.Sprintf("Invoke%d", depCount)).
 										Call(
 											waitGroupVar().Dot("ctx"),
-											waitGroupVar().Dot("con"),
 											invokeFuncVar(),
 											jen.Id("options").Op("..."),
 										),

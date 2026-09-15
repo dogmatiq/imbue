@@ -26,13 +26,29 @@ func filterInvokeError(err error) error {
 
 // Invoke0 calls a function without dependencies.
 //
+// This method does not use the container at all; it is included to aid while
+// refactoring.
+func (con *Container) Invoke0(
+	ctx context.Context,
+	fn func(context.Context) error,
+	options ...InvokeOption,
+) error {
+	return filterInvokeError(fn(ctx))
+}
+
+// Invoke0 calls a function without dependencies.
+//
 // This function does not use the container at all; it is included to aid while
 // refactoring.
+//
+// Deprecated: Use [Container.Invoke0] instead.
+//
+//go:fix inline
 func Invoke0(
 	ctx context.Context,
 	con *Container,
 	fn func(context.Context) error,
 	options ...InvokeOption,
 ) error {
-	return filterInvokeError(fn(ctx))
+	return con.Invoke0(ctx, fn, options...)
 }
