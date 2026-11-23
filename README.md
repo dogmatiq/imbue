@@ -1,13 +1,16 @@
 <div align="center">
 
-# Imbue
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://dogmatiq.io/res/img/dynamic/repo/imbue/banner/dark.svg">
+  <img alt="Dogmatiq imbue" src="https://dogmatiq.io/res/img/dynamic/repo/imbue/banner/light.svg" height="44">
+</picture>
 
 Imbue is a type-safe dependency injection container for Go.
 
-[![Documentation](https://img.shields.io/badge/go.dev-documentation-007d9c?&style=for-the-badge)](https://pkg.go.dev/github.com/dogmatiq/imbue)
-[![Latest Version](https://img.shields.io/github/tag/dogmatiq/imbue.svg?&style=for-the-badge&label=semver)](https://github.com/dogmatiq/imbue/releases)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/dogmatiq/imbue/ci.yml?style=for-the-badge&branch=main)](https://github.com/dogmatiq/imbue/actions/workflows/ci.yml)
-[![Code Coverage](https://img.shields.io/codecov/c/github/dogmatiq/imbue/main.svg?style=for-the-badge)](https://codecov.io/github/dogmatiq/imbue)
+[![API reference](https://dogmatiq.io/res/img/dynamic/repo/imbue/badge/docs.svg)](https://pkg.go.dev/github.com/dogmatiq/imbue)
+[![Latest version](https://dogmatiq.io/res/img/dynamic/repo/imbue/badge/semver.svg)](https://github.com/dogmatiq/imbue/releases)
+[![Build status](https://dogmatiq.io/res/img/dynamic/repo/imbue/badge/build.svg)](https://github.com/dogmatiq/imbue/actions/workflows/ci.yml)
+[![Code coverage](https://dogmatiq.io/res/img/dynamic/repo/imbue/badge/coverage.svg)](https://codecov.io/github/dogmatiq/imbue)
 
 </div>
 
